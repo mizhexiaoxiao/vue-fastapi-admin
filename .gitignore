@@ -1,0 +1,15 @@
+__pycache__/
+.idea/
+venv/
+.mypy_cache/
+.vscode
+.ruff_cache/
+.pytest_cache/
+
+
+db.sqlite3
+db.sqlite3-journal
+db.sqlite3-shm
+db.sqlite3-wal
+
+.DS_Store
