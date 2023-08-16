@@ -6,7 +6,14 @@
 
 <h1 align="center">vue-fastapi-admin</h1>
 
-基于FastAPI + Vue3 + Naive UI的现代化前后端分离开发平台，融合了RBAC权限管理、动态路由和JWT鉴权，助力中小型应用快速搭建。
+基于 FastAPI + Vue3 + Naive UI 的现代化前后端分离开发平台，融合了 RBAC 权限管理、动态路由和 JWT 鉴权，助力中小型应用快速搭建，也可用于学习参考。
+
+### 特性
+- **最流行技术栈**：基于 Python 3.11 和 FastAPI 高性能异步框架，结合 Vue3 和 Vite 等前沿技术进行开发，同时使用高效的 npm 包管理器 pnpm。
+- **代码规范**：项目内置丰富的规范插件，确保代码质量和一致性，有效提高团队协作效率。
+- **动态路由**：后端动态路由，结合 RBAC（Role-Based Access Control）权限模型，提供精细的菜单路由控制。
+- **JWT鉴权**：使用 JSON Web Token（JWT）进行身份验证和授权，增强应用的安全性。
+- **细粒度权限控制**：实现按钮和接口级别的权限控制，确保不同用户或角色在界面操作和接口访问时具有不同的权限限制。
 
 ### 登录页
 
@@ -97,13 +104,13 @@ make run
 cd web
 ```
 
-安装依赖(建议使用pnpm: https://pnpm.io/zh/installation)
+2. 安装依赖(建议使用pnpm: https://pnpm.io/zh/installation)
 ```sh
 npm i -g pnpm # 已安装可忽略
 pnpm i # 或者 npm i
 ```
 
-启动
+3. 启动
 ```sh
 pnpm dev
 ```
