@@ -60,10 +60,50 @@ docker build --no-cache . -t vue-fastapi-admin
 docker run -d --restart=always --name=vue-fastapi-admin -p 9999:80 vue-fastapi-admin
 ```
 
-### 访问
+##### 访问
 
-浏览器打开http://localhost:9999
+http://localhost:9999
 
 username：admin
 
 password：123456
+
+### 本地启动
+#### 后端
+启动项目需要以下环境：
+- Python 3.11
+- [Poetry](https://python-poetry.org/docs/#installing-with-the-official-installer)
+
+1. 创建虚拟环境
+```sh
+poetry shell
+```
+2. 安装依赖
+```sh
+poetry install
+```
+3. 启动服务
+```sh
+make run
+```
+服务现在应该正在运行，访问 http://localhost:9999/docs 查看API文档
+
+#### 前端
+启动项目需要以下环境：
+- node v18.8.0+
+
+1. 进入前端目录
+```sh
+cd web
+```
+
+安装依赖(建议使用pnpm: https://pnpm.io/zh/installation)
+```sh
+npm i -g pnpm # 已安装可忽略
+pnpm i # 或者 npm i
+```
+
+启动
+```sh
+pnpm dev
+```
