@@ -13,3 +13,4 @@ db.sqlite3-shm
 db.sqlite3-wal
 
 .DS_Store
+._.DS_Store

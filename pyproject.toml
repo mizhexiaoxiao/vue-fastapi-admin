@@ -24,14 +24,19 @@ loguru = "^0.7.0"
 line-length = 120
 target-version = ["py310", "py311"]
 
+[[tool.poetry.source]]
+name = "tsinghua"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple/"
+priority = "primary"
+
 [tool.ruff]
 line-length = 120
 extend-select = [
-  "I",    # isort
+  # "I",    # isort
 #   "B",    # flake8-bugbear
 #   "C4",   # flake8-comprehensions
 #   "PGH",  # pygrep-hooks
-  "RUF",  # ruff
+  # "RUF",  # ruff
 #   "W",    # pycodestyle
 #   "YTT",  # flake8-2020
 ]
