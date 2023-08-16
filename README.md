@@ -1,4 +1,11 @@
-# vue-fastapi-admin
+<p align="center">
+  <a href="https://github.com/mizhexiaoxiao/vue-fastapi-admin">
+    <img alt="Vue FastAPI Admin Logo" width="200" src="https://github.com/mizhexiaoxiao/vue-fastapi-admin/blob/main/web/src/assets/svg/logo.svg">
+  </a>
+</p>
+
+<h1 align="center">vue-fastapi-admin</h1>
+
 基于FastAPI + Vue3 + Naive UI的现代化前后端分离开发平台，融合了RBAC权限管理、动态路由和JWT鉴权，助力中小型应用快速搭建。
 
 ### 登录页
