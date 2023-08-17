@@ -40,25 +40,53 @@ export const basicRoutes = [
     meta: { order: 99 },
   },
   {
-    name: '403',
-    path: '/403',
-    component: () => import('@/views/error-page/403.vue'),
-    isHidden: true,
-  },
-  {
-    name: '404',
-    path: '/404',
-    component: () => import('@/views/error-page/404.vue'),
-    isHidden: true,
-  },
-  {
-    name: 'Login',
-    path: '/login',
-    component: () => import('@/views/login/index.vue'),
-    isHidden: true,
+    name: 'ErrorPage',
+    path: '/error-page',
+    component: Layout,
+    redirect: '/error-page/404',
     meta: {
-      title: '登录页',
+      title: '错误页',
+      icon: 'mdi:alert-circle-outline',
+      order: 99,
     },
+    children: [
+      {
+        name: 'ERROR-401',
+        path: '401',
+        component: () => import('@/views/error-page/401.vue'),
+        meta: {
+          title: '401',
+          icon: 'material-symbols:authenticator',
+        },
+      },
+      {
+        name: 'ERROR-403',
+        path: '403',
+        component: () => import('@/views/error-page/403.vue'),
+        meta: {
+          title: '403',
+          icon: 'solar:forbidden-circle-line-duotone',
+        },
+      },
+      {
+        name: 'ERROR-404',
+        path: '404',
+        component: () => import('@/views/error-page/404.vue'),
+        meta: {
+          title: '404',
+          icon: 'tabler:error-404',
+        },
+      },
+      {
+        name: 'ERROR-500',
+        path: '500',
+        component: () => import('@/views/error-page/500.vue'),
+        meta: {
+          title: '500',
+          icon: 'clarity:rack-server-outline-alerted',
+        },
+      },
+    ],
   },
 ]
 

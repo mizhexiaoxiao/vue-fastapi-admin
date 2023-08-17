@@ -1,8 +1,8 @@
 <template>
   <AppPage>
-    <n-result m-auto status="403">
+    <n-result m-auto status="401">
       <template #icon>
-        <icon-custom-forbidden text-400px text-primary></icon-custom-forbidden>
+        <icon-custom-unauthorized text-400px text-primary></icon-custom-unauthorized>
       </template>
       <template #footer>
         <n-button type="primary" @click="replace('/')">返回首页</n-button>
