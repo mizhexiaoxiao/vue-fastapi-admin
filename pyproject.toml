@@ -2,7 +2,7 @@
 name = "vue-fastapi-admin"
 version = "0.1.0"
 description = "Vue Fastapi admin"
-authors = ["王津校 <jinxiao.wang@tenclass.com>"]
+authors = ["mizhexiaoxiao <mizhexiaoxiao@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
