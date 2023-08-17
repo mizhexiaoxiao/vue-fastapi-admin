@@ -1,9 +1,5 @@
 import axios from 'axios'
 import { resReject, resResolve, reqReject, reqResolve } from './interceptors'
-import { getProxyConfig } from '../../../settings'
-
-const proxyConfig = getProxyConfig(import.meta.env.VITE_PROXY_TYPE)
-const isUseProxy = false
 
 export function createAxios(options = {}) {
   const defaultOptions = {
@@ -19,5 +15,5 @@ export function createAxios(options = {}) {
 }
 
 export const request = createAxios({
-  baseURL: isUseProxy ? proxyConfig.prefix : proxyConfig.target,
+  baseURL: import.meta.env.VITE_BASE_API,
 })
