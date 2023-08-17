@@ -41,10 +41,7 @@ export async function resReject(error) {
     window.$message?.error(message)
     return Promise.reject({ code, message, error })
   }
-  const { data, status, config } = error.response
-  console.log('respon', data, config)
-  console.log('status', status)
-  console.log('config', config.noNeedTip)
+  const { data, status } = error.response
   if (data?.code === 401) {
     if (isDialogShow) return
     try {

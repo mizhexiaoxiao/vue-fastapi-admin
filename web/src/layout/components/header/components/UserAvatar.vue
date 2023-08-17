@@ -31,7 +31,6 @@ const options = [
 
 function handleSelect(key) {
   if (key === 'profile') {
-    console.log('push profile')
     router.push('/profile')
   } else if (key === 'logout') {
     $dialog.confirm({

@@ -48,7 +48,6 @@ export async function addDynamicRoutes() {
     })
     router.hasRoute(EMPTY_ROUTE.name) && router.removeRoute(EMPTY_ROUTE.name)
     router.addRoute(NOT_FOUND_ROUTE)
-    console.log('routes', router.getRoutes())
   } catch (error) {
     const userStore = useUserStore()
     await userStore.logout()

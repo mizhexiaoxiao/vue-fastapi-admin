@@ -343,12 +343,7 @@ async function updateRoleAuthorized() {
               :block-line="true"
               :selectable="false"
               cascade
-              @update:checked-keys="
-                (v) => {
-                  console.log(v)
-                  api_ids = v
-                }
-              "
+              @update:checked-keys="(v) => (api_ids = v)"
             />
           </NTabPane>
         </NTabs>

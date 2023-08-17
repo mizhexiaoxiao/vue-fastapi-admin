@@ -14,7 +14,6 @@ const icons = ref(iconData)
 // const icons = ref(iconData.filter((icon) => icon.includes(choosed.value))) // 可选图标列表
 
 function filterIcons() {
-  console.log('filterIcons', choosed.value)
   icons.value = iconData.filter((item) => item.includes(choosed.value))
 }
 

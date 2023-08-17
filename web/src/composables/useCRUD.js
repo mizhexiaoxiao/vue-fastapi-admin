@@ -37,13 +37,11 @@ export default function ({ name, initForm = {}, doCreate, doDelete, doUpdate, re
 
   /** 保存 */
   function handleSave(...callbacks) {
-    console.log('handlesave')
     if (!['edit', 'add'].includes(modalAction.value)) {
       modalVisible.value = false
       return
     }
     modalFormRef.value?.validate(async (err) => {
-      console.log('validate error', err)
       if (err) return
       const actions = {
         add: {
