@@ -22,12 +22,12 @@ export const basicRoutes = [
   },
   {
     name: '个人中心',
-    path: '/profile',
+    path: '/',
     component: Layout,
     isHidden: true,
     children: [
       {
-        path: '/profile',
+        path: 'profile',
         component: () => import('@/views/profile/index.vue'),
         name: '个人中心',
         meta: {
@@ -87,6 +87,18 @@ export const basicRoutes = [
         },
       },
     ],
+  },
+  {
+    name: '403',
+    path: '/403',
+    component: () => import('@/views/error-page/403.vue'),
+    isHidden: true,
+  },
+  {
+    name: '404',
+    path: '/404',
+    component: () => import('@/views/error-page/404.vue'),
+    isHidden: true,
   },
   {
     name: 'Login',
