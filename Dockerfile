@@ -10,9 +10,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/re
 FROM python:3.11-slim
 
 WORKDIR /opt/vue-fastapi-admin
-COPY /app ./app
-COPY pyproject.toml .
-COPY poetry.lock .
+ADD . .
 COPY /deploy/entrypoint.sh .
 
 RUN sed -i s@/deb.debian.org/@/mirrors.aliyun.com/@g /etc/apt/sources.list.d/debian.sources \
