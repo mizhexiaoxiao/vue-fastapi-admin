@@ -13,7 +13,7 @@ from app.core.init_app import (
 try:
     from app.settings.config import settings
 except ImportError:
-    raise SettingNotFound("Can not import settings. Create settings file from template.config.py")
+    raise SettingNotFound("Can not import settings")
 
 
 def create_app() -> FastAPI:
