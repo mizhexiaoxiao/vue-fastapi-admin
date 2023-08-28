@@ -50,6 +50,8 @@ class Settings(BaseSettings):
                 "default_connection": "sqlite",
             },
         },
+        "use_tz": False,
+        "timezone": "Asia/Shanghai",
     }
 
 

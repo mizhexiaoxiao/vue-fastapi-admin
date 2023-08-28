@@ -119,3 +119,7 @@ pnpm i # 或者 npm i
 ```sh
 pnpm dev
 ```
+
+### 进群交流
+
+![image](https://github.com/mizhexiaoxiao/vue-fastapi-admin/blob/main/deploy/sample-picture/group.jpg)

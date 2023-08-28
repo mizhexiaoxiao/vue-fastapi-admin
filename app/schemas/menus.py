@@ -7,8 +7,8 @@ from .base import BaseResponse, SuccessExtra
 
 
 class MenuType(str, Enum):
-    CATALOG = "catalog"
-    MENU = "menu"
+    CATALOG = "catalog"  # 目录
+    MENU = "menu"  # 菜单
 
 
 class BaseMenu(BaseModel):
