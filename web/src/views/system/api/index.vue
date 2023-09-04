@@ -132,6 +132,7 @@ const columns = [
             {
               size: 'small',
               type: 'primary',
+              style: 'margin-right: 8px;',
               onClick: () => {
                 handleEdit(row)
                 modalForm.value.roles = row.roles.map((e) => (e = e.id))
@@ -158,7 +159,6 @@ const columns = [
                   {
                     size: 'small',
                     type: 'error',
-                    style: 'margin-left: 8px;',
                   },
                   {
                     default: () => '删除',
@@ -181,13 +181,18 @@ const columns = [
   <CommonPage show-footer title="API列表">
     <template #action>
       <div>
-        <NButton v-permission="'post/api/v1/api/create'" type="primary" @click="handleAdd">
+        <NButton
+          v-permission="'post/api/v1/api/create'"
+          class="float-right mr-15"
+          type="primary"
+          @click="handleAdd"
+        >
           <TheIcon icon="material-symbols:add" :size="18" class="mr-5" />新建API
         </NButton>
         <NButton
           v-permission="'post/api/v1/api/refresh'"
+          class="float-right mr-15"
           type="warning"
-          class="ml-16"
           @click="handleRefreshApi"
         >
           <TheIcon icon="material-symbols:refresh" :size="18" class="mr-5" />刷新API

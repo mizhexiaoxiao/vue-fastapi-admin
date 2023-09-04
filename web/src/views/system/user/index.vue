@@ -92,7 +92,7 @@ const columns = [
   {
     title: '用户角色',
     key: 'role',
-    width: 80,
+    width: 60,
     align: 'center',
     render(row) {
       const roles = row.roles ?? []
@@ -108,7 +108,7 @@ const columns = [
     title: '超级用户',
     key: 'is_superuser',
     align: 'center',
-    width: 70,
+    width: 40,
     render(row) {
       return h(
         NTag,
@@ -121,14 +121,15 @@ const columns = [
     title: '上次登录时间',
     key: 'last_login',
     align: 'center',
-    width: 70,
+    width: 80,
+    ellipsis: { tooltip: true },
     render(row) {
       return h(
         NButton,
         { size: 'small', type: 'text', ghost: true },
         {
           default: () => (row.last_login !== null ? formatDate(row.last_login) : null),
-          icon: renderIcon('mdi:update', { size: 18 }),
+          icon: renderIcon('mdi:update', { size: 16 }),
         }
       )
     },
@@ -136,9 +137,8 @@ const columns = [
   {
     title: '禁用',
     key: 'is_active',
-    width: 30,
+    width: 50,
     align: 'center',
-    fixed: 'left',
     render(row) {
       return h(NSwitch, {
         size: 'small',
@@ -165,6 +165,7 @@ const columns = [
             {
               size: 'small',
               type: 'primary',
+              style: 'margin-right: 8px;',
               onClick: () => {
                 // roles => role_ids
                 handleEdit(row)
@@ -192,7 +193,6 @@ const columns = [
                   {
                     size: 'small',
                     type: 'error',
-                    style: 'margin-left: 8px;',
                   },
                   {
                     default: () => '删除',

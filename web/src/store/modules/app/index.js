@@ -7,6 +7,7 @@ export const useAppStore = defineStore('app', {
     return {
       reloadFlag: true,
       collapsed: false,
+      fullScreen: true,
       /** keepAlive路由的key，重新赋值可重置keepAlive */
       aliveKeys: {},
       isDark,
@@ -30,18 +31,19 @@ export const useAppStore = defineStore('app', {
     setCollapsed(collapsed) {
       this.collapsed = collapsed
     },
+    setFullScreen(fullScreen) {
+      this.fullScreen = fullScreen
+    },
     setAliveKeys(key, val) {
       this.aliveKeys[key] = val
     },
-      /** 设置暗黑模式 */
-      setDark(isDark) {
-        this.isDark = isDark
-      },
-      /** 切换/关闭 暗黑模式 */
-      toggleDark() {
-        this.isDark = !this.isDark
-      },
+    /** 设置暗黑模式 */
+    setDark(isDark) {
+      this.isDark = isDark
+    },
+    /** 切换/关闭 暗黑模式 */
+    toggleDark() {
+      this.isDark = !this.isDark
+    },
   },
 })
-
-

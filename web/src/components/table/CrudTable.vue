@@ -8,6 +8,7 @@
     :loading="loading"
     :columns="columns"
     :data="tableData"
+    :scroll-x="scrollX"
     :row-key="(row) => row[rowKey]"
     :pagination="isPagination ? pagination : false"
     @update:checked-row-keys="onChecked"
@@ -16,7 +17,6 @@
 </template>
 
 <script setup>
-
 const props = defineProps({
   /**
    * @remote true: 后端分页  false： 前端分页
@@ -34,7 +34,7 @@ const props = defineProps({
   },
   scrollX: {
     type: Number,
-    default: 1200,
+    default: 450,
   },
   rowKey: {
     type: String,
