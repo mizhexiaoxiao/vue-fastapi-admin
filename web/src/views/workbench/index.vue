@@ -2,22 +2,17 @@
   <AppPage :show-footer="false">
     <div flex-1>
       <n-card rounded-10>
-        <div flex items-center>
-          <img rounded-full width="60" :src="userStore.avatar" />
-          <div ml-20>
-            <p text-20>Hello, {{ userStore.name }}</p>
-            <p mt-5 text-14 op-60>今天又是元气满满的一天!</p>
+        <div flex items-center justify-between>
+          <div flex items-center>
+            <img rounded-full width="60" :src="userStore.avatar" />
+            <div ml-10>
+              <p text-20 font-semibold>hello, {{ userStore.name }}</p>
+              <p mt-5 text-14 op-60>今天又是元气满满的一天!</p>
+            </div>
           </div>
-          <div ml-auto flex items-center>
-            <n-space :size="24" :wrap="false">
-              <n-statistic
-                v-for="item in statisticData"
-                :key="item.id"
-                class="whitespace-nowrap"
-                v-bind="item"
-              ></n-statistic>
-            </n-space>
-          </div>
+          <n-space :size="12" :wrap="false">
+            <n-statistic v-for="item in statisticData" :key="item.id" v-bind="item"></n-statistic>
+          </n-space>
         </div>
       </n-card>
 
@@ -29,7 +24,7 @@
           <n-card
             v-for="i in 9"
             :key="i"
-            class="mb-10 mt-10 w-300 flex-shrink-0 cursor-pointer"
+            class="mb-10 mt-10 w-300 cursor-pointer"
             hover:card-shadow
             title="Vue FastAPI Admin"
             size="small"

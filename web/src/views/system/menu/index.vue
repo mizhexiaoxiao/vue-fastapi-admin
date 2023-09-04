@@ -77,13 +77,12 @@ const columns = [
   },
   { title: '排序', key: 'order', width: 30, ellipsis: { tooltip: true } },
   { title: '访问路径', key: 'path', width: 60, ellipsis: { tooltip: true } },
-  { title: '跳转路径', key: 'redirect', width: 80, ellipsis: { tooltip: true } },
-  { title: '组件路径', key: 'component', width: 80, ellipsis: { tooltip: true } },
+  { title: '跳转路径', key: 'redirect', width: 60, ellipsis: { tooltip: true } },
+  { title: '组件路径', key: 'component', width: 60, ellipsis: { tooltip: true } },
   {
-    title: 'KeepAlive',
+    title: '保活',
     key: 'keepalive',
-    width: 30,
-    fixed: 'left',
+    width: 40,
     render(row) {
       return h(NSwitch, {
         size: 'small',
@@ -96,8 +95,7 @@ const columns = [
   {
     title: '隐藏',
     key: 'is_hidden',
-    width: 30,
-    fixed: 'left',
+    width: 40,
     render(row) {
       return h(NSwitch, {
         size: 'small',
@@ -118,7 +116,7 @@ const columns = [
   {
     title: '操作',
     key: 'actions',
-    width: 115,
+    width: 80,
     align: 'center',
     fixed: 'right',
     render(row) {

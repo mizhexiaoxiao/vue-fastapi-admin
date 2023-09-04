@@ -37,5 +37,38 @@ import AppTags from './components/tags/index.vue'
 import { useAppStore } from '@/store'
 import { header, tags } from '~/settings'
 
+// 移动端适配
+import { useBreakpoints } from '@vueuse/core'
+
 const appStore = useAppStore()
+const breakpointsEnum = {
+  xl: 1600,
+  lg: 1199,
+  md: 991,
+  sm: 666,
+  xs: 575,
+}
+const breakpoints = reactive(useBreakpoints(breakpointsEnum))
+const isMobile = breakpoints.smaller('sm')
+const isPad = breakpoints.between('sm', 'md')
+const isPC = breakpoints.greater('md')
+watchEffect(() => {
+  if (isMobile.value) {
+    // Mobile
+    appStore.setCollapsed(true)
+    appStore.setFullScreen(false)
+  }
+
+  if (isPad.value) {
+    // IPad
+    appStore.setCollapsed(true)
+    appStore.setFullScreen(false)
+  }
+
+  if (isPC.value) {
+    // PC
+    appStore.setCollapsed(false)
+    appStore.setFullScreen(true)
+  }
+})
 </script>

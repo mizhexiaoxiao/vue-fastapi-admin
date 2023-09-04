@@ -125,7 +125,7 @@ const columns = [
   {
     title: '操作',
     key: 'actions',
-    width: 150,
+    width: 80,
     align: 'center',
     fixed: 'right',
     render(row) {
@@ -136,6 +136,7 @@ const columns = [
             {
               size: 'small',
               type: 'primary',
+              style: 'margin-right: 8px;',
               onClick: () => {
                 handleEdit(row)
               },
@@ -161,7 +162,7 @@ const columns = [
                   {
                     size: 'small',
                     type: 'error',
-                    style: 'margin-left: 10px;',
+                    style: 'margin-right: 8px;',
                   },
                   {
                     default: () => '删除',
@@ -179,7 +180,6 @@ const columns = [
             {
               size: 'small',
               type: 'primary',
-              style: 'margin-left: 10px;',
               onClick: async () => {
                 active.value = true
                 role_id.value = row.id

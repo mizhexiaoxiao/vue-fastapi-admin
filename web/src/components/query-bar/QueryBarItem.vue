@@ -8,7 +8,7 @@
     >
       {{ label }}
     </label>
-    <div :style="{ width: contentWidth + 'px' }" flex-shrink-0>
+    <div>
       <slot />
     </div>
   </div>
