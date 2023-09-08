@@ -65,7 +65,6 @@ async def create_user(
 async def update_user(
     user_in: UserUpdate,
 ) -> BaseResponse:
-    print(user_in.dict())
     user_controller = UserController()
     user = await user_controller.update(obj_in=user_in)
     await user_controller.update_roles(user, user_in.roles)

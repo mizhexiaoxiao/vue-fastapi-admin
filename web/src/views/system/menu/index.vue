@@ -7,9 +7,6 @@ import {
   NInput,
   NInputNumber,
   NPopconfirm,
-  NRadio,
-  NRadioGroup,
-  NSpace,
   NSwitch,
   NTreeSelect,
 } from 'naive-ui'
@@ -29,6 +26,7 @@ defineOptions({ name: '菜单管理' })
 const $table = ref(null)
 const queryItems = ref({})
 const vPermission = resolveDirective('permission')
+const menuDisabled = ref(false)
 
 // 表单初始化内容
 const initForm = {
@@ -133,6 +131,7 @@ const columns = [
                 initForm.parent_id = row.id
                 initForm.menu_type = 'menu'
                 showMenuType.value = false
+                menuDisabled.value = false
                 handleAdd()
               },
             },
@@ -189,7 +188,7 @@ const columns = [
     },
   },
 ]
-// 修改是否隐藏
+// 修改是否keepalive
 async function handleUpdateKeepalive(row) {
   if (!row.id) return
   row.publishing = true
@@ -217,6 +216,7 @@ function handleClickAdd() {
   initForm.order = 1
   initForm.keepalive = true
   showMenuType.value = true
+  menuDisabled.value = true
   handleAdd()
 }
 
@@ -233,7 +233,7 @@ async function getTreeSelect() {
   <CommonPage show-footer title="菜单列表">
     <template #action>
       <NButton v-permission="'post/api/v1/menu/create'" type="primary" @click="handleClickAdd">
-        <TheIcon icon="material-symbols:add" :size="18" class="mr-5" />新建菜单
+        <TheIcon icon="material-symbols:add" :size="18" class="mr-5" />新建根菜单
       </NButton>
     </template>
 
@@ -245,7 +245,6 @@ async function getTreeSelect() {
       :columns="columns"
       :get-data="api.getMenus"
       :single-line="true"
-      default-expand-all="true"
     >
     </CrudTable>
 
@@ -264,14 +263,6 @@ async function getTreeSelect() {
         :label-width="80"
         :model="modalForm"
       >
-        <NFormItem v-if="showMenuType" label="菜单类型" path="type">
-          <NRadioGroup v-model:value="modalForm.menu_type" name="radiogroup">
-            <NSpace>
-              <NRadio value="catalog"> 目录 </NRadio>
-              <NRadio value="menu"> 菜单 </NRadio>
-            </NSpace>
-          </NRadioGroup>
-        </NFormItem>
         <NFormItem label="上级菜单" path="parent_id">
           <NTreeSelect
             v-model:value="modalForm.parent_id"
@@ -279,6 +270,7 @@ async function getTreeSelect() {
             label-field="name"
             :options="menuOptions"
             default-expand-all="true"
+            :disabled="menuDisabled"
           />
         </NFormItem>
         <NFormItem
@@ -286,11 +278,11 @@ async function getTreeSelect() {
           path="name"
           :rule="{
             required: true,
-            message: '请输入菜单名称',
+            message: '请输入唯一菜单名称',
             trigger: ['input', 'blur'],
           }"
         >
-          <NInput v-model:value="modalForm.name" placeholder="请输入菜单名称" />
+          <NInput v-model:value="modalForm.name" placeholder="请输入唯一菜单名称" />
         </NFormItem>
         <NFormItem
           label="访问路径"
@@ -298,19 +290,24 @@ async function getTreeSelect() {
           :rule="{
             required: true,
             message: '请输入访问路径',
-            trigger: ['input', 'blur'],
+            trigger: ['blur'],
           }"
         >
           <NInput v-model:value="modalForm.path" placeholder="请输入访问路径" />
         </NFormItem>
         <NFormItem v-if="modalForm.menu_type === 'menu'" label="组件路径" path="component">
-          <NInput v-model:value="modalForm.component" placeholder="请输入组件路径" />
+          <NInput
+            v-model:value="modalForm.component"
+            placeholder="请输入组件路径，例如：/system/user"
+          />
         </NFormItem>
         <NFormItem label="跳转路径" path="redirect">
           <NInput
             v-model:value="modalForm.redirect"
             :disabled="modalForm.parent_id !== 0"
-            placeholder="只有一级菜单可以设置跳转路径"
+            :placeholder="
+              modalForm.parent_id !== 0 ? '只有一级菜单可以设置跳转路径' : '请输入跳转路径'
+            "
           />
         </NFormItem>
         <NFormItem label="菜单图标" path="icon">
