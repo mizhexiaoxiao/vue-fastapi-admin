@@ -80,7 +80,7 @@ async def init_menus():
         parent_menu = await Menu.create(
             menu_type=MenuType.CATALOG,
             name="系统管理",
-            path="/system",
+            path="system",
             order=1,
             parent_id=0,
             icon="carbon:gui-management",

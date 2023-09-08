@@ -35,12 +35,11 @@ export async function addDynamicRoutes() {
     router.addRoute(EMPTY_ROUTE)
     return
   }
-
   // 有token的情况
+  const userStore = useUserStore()
+  const permissionStore = usePermissionStore()
+  !userStore.userId && (await userStore.getUserInfo())
   try {
-    const userStore = useUserStore()
-    const permissionStore = usePermissionStore()
-    !userStore.userId && (await userStore.getUserInfo())
     const accessRoutes = await permissionStore.generateRoutes()
     await permissionStore.getAccessApis()
     accessRoutes.forEach((route) => {
@@ -49,6 +48,7 @@ export async function addDynamicRoutes() {
     router.hasRoute(EMPTY_ROUTE.name) && router.removeRoute(EMPTY_ROUTE.name)
     router.addRoute(NOT_FOUND_ROUTE)
   } catch (error) {
+    console.error('error', error)
     const userStore = useUserStore()
     await userStore.logout()
   }

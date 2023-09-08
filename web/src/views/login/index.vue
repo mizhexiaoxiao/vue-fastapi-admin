@@ -54,7 +54,6 @@
 
 <script setup>
 import { lStorage, setToken } from '@/utils'
-import { useStorage } from '@vueuse/core'
 import bgImg from '@/assets/images/login_bg.webp'
 import api from '@/api'
 import { addDynamicRoutes } from '@/router'
@@ -79,7 +78,6 @@ function initLoginInfo() {
   }
 }
 
-const isRemember = useStorage('isRemember', false)
 const loading = ref(false)
 async function handleLogin() {
   const { username, password } = loginInfo.value
@@ -93,14 +91,10 @@ async function handleLogin() {
     const res = await api.login({ username, password: password.toString() })
     $message.success('登录成功')
     setToken(res.data.access_token)
-    if (isRemember.value) {
-      lStorage.set('loginInfo', { username, password })
-    } else {
-      lStorage.remove('loginInfo')
-    }
     await addDynamicRoutes()
     if (query.redirect) {
       const path = query.redirect
+      console.log('path', { path, query })
       Reflect.deleteProperty(query, 'redirect')
       router.push({ path, query })
     } else {
