@@ -26,12 +26,9 @@ async def list_api(
         q &= Q(summary__contains=summary)
     if tags:
         q &= Q(tags__contains=tags)
-    total, api_objs = await api_controller.list(page=page, page_size=page_size, search=q, order=["id"])
-    result = []
-    for api in api_objs:
-        api_dict = await api.to_dict(m2m=False)
-        result.append(api_dict)
-    return SuccessExtra(data=result, total=total, page=page, page_size=page_size)
+    total, api_objs = await api_controller.list(page=page, page_size=page_size, search=q, order=["tags", "id"])
+    data = [await obj.to_dict() for obj in api_objs]
+    return SuccessExtra(data=data, total=total, page=page, page_size=page_size)
 
 
 @router.get("/get", summary="查看Api")
@@ -39,16 +36,16 @@ async def get_api(
     id: int = Query(..., description="Api"),
 ):
     api_obj = await api_controller.get(id=id)
-    api_dict = await api_obj.to_dict()
-    return Success(code=200, data=api_dict)
+    data = await api_obj.to_dict()
+    return Success(data=data)
 
 
 @router.post("/create", summary="创建Api")
 async def create_api(
     api_in: ApiCreate,
 ):
-    new_api = await api_controller.create(obj_in=api_in)
-    return Success(msg="Created Successfully", data=new_api)
+    await api_controller.create(obj_in=api_in)
+    return Success(msg="Created Successfully")
 
 
 @router.post("/update", summary="更新Api")

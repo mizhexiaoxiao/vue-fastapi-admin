@@ -1,9 +1,7 @@
 from datetime import datetime
-from typing import List, Optional
+from typing import Optional
 
 from pydantic import BaseModel, Field
-
-from .base import BaseResponse, SuccessExtra
 
 
 class BaseRole(BaseModel):
@@ -28,21 +26,10 @@ class RoleUpdate(BaseModel):
     desc: Optional[str] = Field(example="管理员角色")
 
     def update_dict(self):
-        return self.dict(exclude_unset=True, exclude={"id"})
+        return self.model_dump(exclude_unset=True, exclude={"id"})
 
 
 class RoleUpdateMenusApis(BaseModel):
     id: int
-    menu_ids: List[int] = []
-    api_infos: List[dict] = []
-
-
-"""Response"""
-
-
-class RoleOutList(SuccessExtra):
-    data: Optional[List[BaseRole]]
-
-
-class RoleOut(BaseResponse):
-    data: Optional[BaseRole]
+    menu_ids: list[int] = []
+    api_infos: list[dict] = []

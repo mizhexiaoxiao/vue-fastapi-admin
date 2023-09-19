@@ -18,4 +18,4 @@ class ApiUpdate(BaseApi):
     id: int
 
     def update_dict(self):
-        return self.dict(exclude_unset=True, exclude={"id"})
+        return self.model_dump(exclude_unset=True, exclude={"id"})

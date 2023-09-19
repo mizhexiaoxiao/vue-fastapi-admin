@@ -6,7 +6,7 @@ from app.controllers.user import UserController, user_controller
 from app.core.ctx import CTX_USER_ID
 from app.core.dependency import DependAuth
 from app.models.admin import Api, Menu, Role, User
-from app.schemas.base import BaseResponse, Fail, Success
+from app.schemas.base import Fail, Success
 from app.schemas.login import *
 from app.schemas.users import UpdatePassword
 from app.settings import settings
@@ -17,13 +17,13 @@ router = APIRouter()
 
 
 @router.post("/access_token", summary="获取token")
-async def login_access_token(credentials: CredentialsSchema) -> BaseResponse:
+async def login_access_token(credentials: CredentialsSchema):
     user: User = await user_controller.authenticate(credentials)
     await user_controller.update_last_login(user.id)
     access_token_expires = timedelta(minutes=settings.JWT_ACCESS_TOKEN_EXPIRE_MINUTES)
     expire = datetime.utcnow() + access_token_expires
 
-    result = JWTOut(
+    data = JWTOut(
         access_token=create_access_token(
             data=JWTPayload(
                 user_id=user.id,
@@ -34,23 +34,21 @@ async def login_access_token(credentials: CredentialsSchema) -> BaseResponse:
         ),
         username=user.username,
     )
-
-    return BaseResponse(code=200, data=result)
+    return Success(data=data.model_dump())
 
 
 @router.get("/userinfo", summary="查看用户信息", dependencies=[DependAuth])
 async def get_userinfo():
     user_id = CTX_USER_ID.get()
     user_obj = await user_controller.get(id=user_id)
-    to_dict = await user_obj.to_dict()
-    to_dict.pop("password")
-    to_dict["avatar"] = "https://avatars.githubusercontent.com/u/54677442?v=4"
-
-    return BaseResponse(code=200, data=to_dict)
+    data = await user_obj.to_dict()
+    data.pop("password")
+    data["avatar"] = "https://avatars.githubusercontent.com/u/54677442?v=4"
+    return Success(data=data)
 
 
 @router.get("/usermenu", summary="查看用户菜单", dependencies=[DependAuth])
-async def get_user_menu() -> BaseResponse:
+async def get_user_menu():
     user_id = CTX_USER_ID.get()
     user_obj = await User.filter(id=user_id).first()
     menus: list[Menu] = []
@@ -78,7 +76,7 @@ async def get_user_menu() -> BaseResponse:
 
 
 @router.get("/userapi", summary="查看用户API", dependencies=[DependAuth])
-async def get_user_api() -> BaseResponse:
+async def get_user_api():
     user_id = CTX_USER_ID.get()
     user_obj = await User.filter(id=user_id).first()
     if user_obj.is_superuser:
@@ -95,7 +93,7 @@ async def get_user_api() -> BaseResponse:
 
 
 @router.post("/update_password", summary="更新用户密码", dependencies=[DependAuth])
-async def update_user_password(req_in: UpdatePassword) -> BaseResponse:
+async def update_user_password(req_in: UpdatePassword):
     user_controller = UserController()
     user = await user_controller.get(req_in.id)
     verified = verify_password(req_in.old_password, user.password)
