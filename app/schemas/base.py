@@ -1,26 +1,52 @@
-from typing import Generic, Optional, TypeVar
+from typing import Any, Optional
 
-from pydantic import BaseModel
-from pydantic.generics import GenericModel
-
-DataT = TypeVar("DataT")
+from fastapi.responses import JSONResponse
 
 
-class BaseResponse(GenericModel, BaseModel, Generic[DataT]):
-    code: int
-    msg: str = ""
-    data: Optional[DataT] = None
+class Success(JSONResponse):
+    def __init__(
+        self,
+        code: int = 200,
+        msg: Optional[str] = "OK",
+        data: Optional[Any] = None,
+        **kwargs,
+    ):
+        content = {"code": code, "msg": msg, "data": data}
+        content.update(kwargs)
+        super().__init__(content=content, status_code=code)
 
 
-class Success(BaseResponse):
-    code: int = 200
+class Fail(JSONResponse):
+    def __init__(
+        self,
+        code: int = 400,
+        msg: Optional[str] = None,
+        data: Optional[Any] = None,
+        **kwargs,
+    ):
+        content = {"code": code, "msg": msg, "data": data}
+        content.update(kwargs)
+        super().__init__(content=content, status_code=code)
 
 
-class Fail(BaseResponse):
-    code: int = -1
-
-
-class SuccessExtra(Success):
-    total: int
-    page: int
-    page_size: int
+class SuccessExtra(JSONResponse):
+    def __init__(
+        self,
+        code: int = 200,
+        msg: Optional[str] = None,
+        data: Optional[Any] = None,
+        total: int = 0,
+        page: int = 1,
+        page_size: int = 20,
+        **kwargs,
+    ):
+        content = {
+            "code": code,
+            "msg": msg,
+            "data": data,
+            "total": total,
+            "page": page,
+            "page_size": page_size,
+        }
+        content.update(kwargs)
+        super().__init__(content=content, status_code=code)

@@ -1,9 +1,7 @@
 from enum import Enum
-from typing import List, Optional
+from typing import Optional
 
 from pydantic import BaseModel, Field
-
-from .base import BaseResponse, SuccessExtra
 
 
 class MenuType(str, Enum):
@@ -30,7 +28,6 @@ class BaseMenu(BaseModel):
 class MenuCreate(BaseModel):
     menu_type: MenuType = Field(default=MenuType.CATALOG.value)
     name: str = Field(example="用户管理")
-    remark: Optional[dict] = Field(example={})
     icon: Optional[str] = "ph:user-list-bold"
     path: str = Field(example="/system/user")
     order: Optional[int] = Field(example=1)
@@ -45,7 +42,6 @@ class MenuUpdate(BaseModel):
     id: int
     menu_type: Optional[MenuType] = Field(example=MenuType.CATALOG.value)
     name: Optional[str] = Field(example="用户管理")
-    remark: Optional[dict] = Field(example={})
     icon: Optional[str] = "ph:user-list-bold"
     path: Optional[str] = Field(example="/system/user")
     order: Optional[int] = Field(example=1)
@@ -56,15 +52,4 @@ class MenuUpdate(BaseModel):
     redirect: Optional[str] = ""
 
     def update_dict(self):
-        return self.dict(exclude_unset=True, exclude={"id"})
-
-
-"""Response"""
-
-
-class MenuOutList(SuccessExtra):
-    data: Optional[List[BaseMenu]]
-
-
-class MenuOut(BaseResponse):
-    data: Optional[BaseMenu]
+        return self.model_dump(exclude_unset=True, exclude={"id"})

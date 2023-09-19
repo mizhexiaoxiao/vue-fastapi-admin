@@ -1,7 +1,7 @@
 import os
 import typing
 
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
@@ -15,7 +15,7 @@ class Settings(BaseSettings):
     CORS_ALLOW_METHODS: typing.List = ["*"]
     CORS_ALLOW_HEADERS: typing.List = ["*"]
 
-    DEBUG = True
+    DEBUG: bool = True
     DB_URL: str = "sqlite://db.sqlite3"
     DB_CONNECTIONS: dict = {
         "default": {
@@ -37,7 +37,7 @@ class Settings(BaseSettings):
     SECRET_KEY: str = "3488a63e1765035d386f05409663f55c83bfae3b3c61a932744b20ad14244dcf"  # openssl rand -hex 32
     JWT_ALGORITHM: str = "HS256"
     JWT_ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7  # 7 day
-    TORTOISE_ORM = {
+    TORTOISE_ORM: dict = {
         "connections": {
             "sqlite": {
                 "engine": "tortoise.backends.sqlite",
