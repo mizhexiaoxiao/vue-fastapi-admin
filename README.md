@@ -121,5 +121,8 @@ pnpm dev
 ```
 
 ### 进群交流
+<img alt="Vue FastAPI Admin Logo" width="400" src="https://github.com/mizhexiaoxiao/vue-fastapi-admin/blob/main/deploy/sample-picture/group.jpg">
 
-![image](https://github.com/mizhexiaoxiao/vue-fastapi-admin/blob/main/deploy/sample-picture/group.jpg)
+### Visitors Count
+
+<img align="left" src = "https://profile-counter.glitch.me/vue-fastapi-admin/count.svg" alt="Loading">
