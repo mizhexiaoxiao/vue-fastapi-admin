@@ -1,0 +1,11 @@
+{
+  "app_name": "Vue FastAPI Admin",
+  "views": {
+    "login": {
+      "text_login": "Login",
+      "message_input_username_password": "Please enter username and password",
+      "message_verifying": "Verifying...",
+      "message_login_success": "Login successful"
+    }
+  }
+}

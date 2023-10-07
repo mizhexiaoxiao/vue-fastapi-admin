@@ -10,6 +10,7 @@ import { setupStore } from '@/store'
 import App from './App.vue'
 import { setupDirectives } from './directives'
 import { useResize } from '@/utils'
+import i18n from '~/i18n'
 
 async function setupApp() {
   const app = createApp(App)
@@ -19,6 +20,7 @@ async function setupApp() {
   await setupRouter(app)
   setupDirectives(app)
   app.use(useResize)
+  app.use(i18n)
   app.mount('#app')
 }
 

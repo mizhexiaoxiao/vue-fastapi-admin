@@ -11,7 +11,7 @@
 
       <div w-320 flex-col px-20 py-35>
         <h5 f-c-c text-24 font-normal color="#6a6a6a">
-          <icon-custom-logo mr-10 text-50 color-primary />{{ title }}
+          <icon-custom-logo mr-10 text-50 color-primary />{{ $t('app_name') }}
         </h5>
         <div mt-30>
           <n-input
@@ -44,7 +44,7 @@
             :loading="loading"
             @click="handleLogin"
           >
-            登录
+            {{ $t('views.login.text_login') }}
           </n-button>
         </div>
       </div>
@@ -57,11 +57,11 @@ import { lStorage, setToken } from '@/utils'
 import bgImg from '@/assets/images/login_bg.webp'
 import api from '@/api'
 import { addDynamicRoutes } from '@/router'
-
-const title = import.meta.env.VITE_TITLE
+import {useI18n} from 'vue-i18n'
 
 const router = useRouter()
 const { query } = useRoute()
+const {t} = useI18n({ useScope: "global" })
 
 const loginInfo = ref({
   username: '',
@@ -82,14 +82,14 @@ const loading = ref(false)
 async function handleLogin() {
   const { username, password } = loginInfo.value
   if (!username || !password) {
-    $message.warning('请输入用户名和密码')
+    $message.warning(t('views.login.message_input_username_password'))
     return
   }
   try {
     loading.value = true
-    $message.loading('正在验证...')
+    $message.loading(t('views.login.message_login_success'))
     const res = await api.login({ username, password: password.toString() })
-    $message.success('登录成功')
+    $message.success(t('views.login.message_login_success'))
     setToken(res.data.access_token)
     await addDynamicRoutes()
     if (query.redirect) {
