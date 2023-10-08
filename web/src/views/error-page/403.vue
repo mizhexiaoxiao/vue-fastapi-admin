@@ -5,7 +5,7 @@
         <icon-custom-forbidden text-400px text-primary></icon-custom-forbidden>
       </template>
       <template #footer>
-        <n-button type="primary" @click="replace('/')">返回首页</n-button>
+        <n-button type="primary" @click="replace('/')">{{ $t('views.errors.text_back_to_home') }}</n-button>
       </template>
     </n-result>
   </AppPage>

@@ -6,6 +6,19 @@
       "message_input_username_password": "请输入用户名和密码",
       "message_verifying": "正在验证...",
       "message_login_success": "登录成功"
+    },
+    "workbench": {
+      "label_workbench": "工作台",
+      "text_hello": "hello, {username}",
+      "text_welcome": "今天又是元气满满的一天!",
+      "label_number_of_items": "项目数",
+      "label_upcoming": "待办",
+      "label_information": "消息",
+      "label_project": "项目",
+      "label_more": "更多"
+    },
+    "errors": {
+      "text_back_to_home": "返回首页"
     }
   }
 }

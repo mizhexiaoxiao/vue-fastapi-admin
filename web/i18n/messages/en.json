@@ -6,6 +6,19 @@
       "message_input_username_password": "Please enter username and password",
       "message_verifying": "Verifying...",
       "message_login_success": "Login successful"
+    },
+    "workbench": {
+      "label_workbench": "Workbench",
+      "text_hello": "hello, {username}",
+      "text_welcome": "Today is another day full of energy!",
+      "label_number_of_items": "Number of items",
+      "label_upcoming": "Upcoming",
+      "label_information": "Information",
+      "label_project": "Project",
+      "label_more": "More"
+    },
+    "errors": {
+      "text_back_to_home": "Back to home"
     }
   }
 }
