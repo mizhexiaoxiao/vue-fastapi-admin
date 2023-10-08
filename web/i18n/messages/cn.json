@@ -1,5 +1,12 @@
 {
   "app_name": "Vue FastAPI Admin",
+  "header": {
+    "label_profile": "个人信息",
+    "label_logout": "退出登录",
+    "label_logout_dialog_title": "提示",
+    "text_logout_confirm": "确认退出？",
+    "text_logout_success": "已退出登录"
+  },
   "views": {
     "login": {
       "text_login": "登录",

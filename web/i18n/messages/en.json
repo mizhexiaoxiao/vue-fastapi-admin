@@ -1,5 +1,12 @@
 {
   "app_name": "Vue FastAPI Admin",
+  "header": {
+    "label_profile": "Profile",
+    "label_logout": "Logout",
+    "label_logout_dialog_title": "Hint",
+    "text_logout_confirm": "Logout confirm",
+    "text_logout_success": "Logout success"
+  },
   "views": {
     "login": {
       "text_login": "Login",
