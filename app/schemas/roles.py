@@ -17,7 +17,7 @@ class BaseRole(BaseModel):
 
 class RoleCreate(BaseModel):
     name: str = Field(example="管理员")
-    desc: str = Field("", examples="管理员角色")
+    desc: str = Field("", example="管理员角色")
 
 
 class RoleUpdate(BaseModel):
