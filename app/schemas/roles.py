@@ -7,23 +7,23 @@ from pydantic import BaseModel, Field
 class BaseRole(BaseModel):
     id: int
     name: str
-    desc: Optional[str]
-    users: Optional[list]
-    menus: Optional[list]
-    apis: Optional[list]
+    desc: str = ""
+    users: Optional[list] = []
+    menus: Optional[list] = []
+    apis: Optional[list] = []
     created_at: Optional[datetime]
     updated_at: Optional[datetime]
 
 
 class RoleCreate(BaseModel):
     name: str = Field(example="管理员")
-    desc: Optional[str] = Field(example="管理员角色")
+    desc: str = Field("", examples="管理员角色")
 
 
 class RoleUpdate(BaseModel):
     id: int = Field(example=1)
-    name: Optional[str] = Field(example="管理员")
-    desc: Optional[str] = Field(example="管理员角色")
+    name: str = Field(example="管理员")
+    desc: str = Field("", example="管理员角色")
 
     def update_dict(self):
         return self.model_dump(exclude_unset=True, exclude={"id"})
