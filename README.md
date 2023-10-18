@@ -121,6 +121,10 @@ pnpm dev
 ```
 
 ### 进群交流
+进群的条件是给项目一个star，小小的star是作者维护下去的动力。
+
+你可以在群里提出任何疑问，我会尽快回复答疑。
+
 <img alt="Vue FastAPI Admin Logo" width="400" src="https://github.com/mizhexiaoxiao/vue-fastapi-admin/blob/main/deploy/sample-picture/group.jpg">
 
 ### Visitors Count
