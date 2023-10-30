@@ -1,4 +1,5 @@
 {
+  "lang": "中文",
   "app_name": "Vue FastAPI Admin",
   "header": {
     "label_profile": "个人信息",

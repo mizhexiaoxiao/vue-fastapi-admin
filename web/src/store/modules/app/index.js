@@ -11,6 +11,7 @@ export const useAppStore = defineStore('app', {
       /** keepAlive路由的key，重新赋值可重置keepAlive */
       aliveKeys: {},
       isDark,
+      locale: 'en'
     }
   },
   actions: {
@@ -45,5 +46,8 @@ export const useAppStore = defineStore('app', {
     toggleDark() {
       this.isDark = !this.isDark
     },
+    setLocale(locale) {
+      this.locale = locale
+    }
   },
 })

@@ -1,4 +1,5 @@
 {
+  "lang": "English",
   "app_name": "Vue FastAPI Admin",
   "header": {
     "label_profile": "Profile",
