@@ -1,8 +1,11 @@
+import i18n from '~/i18n'
+const {t} = i18n.global
+
 const Layout = () => import('@/layout/index.vue')
 
 export const basicRoutes = [
   {
-    name: '工作台',
+    name: t('views.workbench.label_workbench'),
     path: '/',
     component: Layout,
     redirect: '/workbench', // 默认跳转到首页
@@ -10,9 +13,9 @@ export const basicRoutes = [
       {
         path: 'workbench',
         component: () => import('@/views/workbench/index.vue'),
-        name: '工作台',
+        name: t('views.workbench.label_workbench'),
         meta: {
-          title: '工作台',
+          title: t('views.workbench.label_workbench'),
           icon: 'icon-park-outline:workbench',
           affix: true,
         },
@@ -21,7 +24,7 @@ export const basicRoutes = [
     meta: { order: 0 },
   },
   {
-    name: '个人中心',
+    name: t('views.profile.label_profile'),
     path: '/',
     component: Layout,
     isHidden: true,
@@ -29,9 +32,9 @@ export const basicRoutes = [
       {
         path: 'profile',
         component: () => import('@/views/profile/index.vue'),
-        name: '个人中心',
+        name: t('views.profile.label_profile'),
         meta: {
-          title: '个人中心',
+          title: t('views.profile.label_profile'),
           icon: 'user',
           affix: true,
         },
@@ -45,7 +48,7 @@ export const basicRoutes = [
     component: Layout,
     redirect: '/error-page/404',
     meta: {
-      title: '错误页',
+      title: t('views.errors.label_error'),
       icon: 'mdi:alert-circle-outline',
       order: 99,
     },

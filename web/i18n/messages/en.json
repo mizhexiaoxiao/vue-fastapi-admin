@@ -24,8 +24,38 @@
       "label_project": "Project",
       "label_more": "More"
     },
+    "profile": {
+      "label_profile": "Profile",
+      "label_modify_information": "Modify your information",
+      "label_change_password": "Change password",
+      "label_avatar": "Avatar",
+      "label_username": "Username",
+      "label_email": "Email",
+      "label_old_password": "Old password",
+      "label_new_password": "New password",
+      "label_confirm_password": "Password confirmation",
+      "placeholder_username": "Please fill in your name",
+      "placeholder_email": "Please fill in your email address",
+      "placeholder_old_password": "Please enter the old password",
+      "placeholder_new_password": "Please enter a new password",
+      "placeholder_confirm_password": "Please enter the confirm password",
+      "message_username_required": "Please enter username",
+      "message_old_password_required": "Please enter the old password",
+      "message_new_password_required": "Please enter a new password",
+      "message_password_confirmation_required":  "Please enter confirm password",
+      "message_password_confirmation_diff": "Two password inputs are inconsistent"
+    },
     "errors": {
+      "label_error": "Error",
       "text_back_to_home": "Back to home"
+    }
+  },
+  "common": {
+    "text": {
+      "update_success": "Update success"
+    },
+    "buttons": {
+      "update": "Update"
     }
   }
 }

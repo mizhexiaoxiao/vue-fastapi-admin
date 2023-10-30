@@ -24,8 +24,38 @@
       "label_project": "项目",
       "label_more": "更多"
     },
+    "profile": {
+      "label_profile": "个人中心",
+      "label_modify_information": "修改信息",
+      "label_change_password": "修改密码",
+      "label_avatar": "头像",
+      "label_username": "用户姓名",
+      "label_email": "邮箱",
+      "label_old_password": "旧密码",
+      "label_new_password": "新密码",
+      "label_confirm_password":  "确认密码",
+      "placeholder_username": "请填写姓名",
+      "placeholder_email": "请填写邮箱",
+      "placeholder_old_password": "请输入旧密码",
+      "placeholder_new_password": "请输入新密码",
+      "placeholder_confirm_password":  "请再次输入新密码",
+      "message_username_required": "请输入昵称",
+      "message_old_password_required": "请输入旧密码",
+      "message_new_password_required": "请输入新密码",
+      "message_password_confirmation_required":  "请再次输入密码",
+      "message_password_confirmation_diff": "两次密码输入不一致"
+    },
     "errors": {
+      "label_error": "错误页",
       "text_back_to_home": "返回首页"
+    }
+  },
+  "common": {
+    "text": {
+      "update_success": "修改成功"
+    },
+    "buttons": {
+      "update": "修改"
     }
   }
 }
