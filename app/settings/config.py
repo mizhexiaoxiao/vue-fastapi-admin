@@ -53,6 +53,7 @@ class Settings(BaseSettings):
         "use_tz": False,
         "timezone": "Asia/Shanghai",
     }
+    DATETIME_FORMAT: str = "%Y-%m-%d %H:%M:%S"
 
 
 settings = Settings()
