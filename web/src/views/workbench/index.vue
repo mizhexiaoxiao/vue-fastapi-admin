@@ -44,7 +44,7 @@ import { useI18n } from 'vue-i18n'
 const dummyText = "一个基于 Vue3.0、FastAPI、Naive UI 的轻量级后台管理模板"
 const {t} = useI18n({ useScope: "global" })
 
-const statisticData = [
+const statisticData = computed(() => [
   {
     id: 0,
     label: t('views.workbench.label_number_of_items'),
@@ -60,7 +60,7 @@ const statisticData = [
     label: t('views.workbench.label_information'),
     value: '12',
   },
-]
+])
 
 const userStore = useUserStore()
 </script>
