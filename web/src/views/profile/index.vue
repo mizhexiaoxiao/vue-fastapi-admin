@@ -1,12 +1,13 @@
 <script setup>
 import { ref } from 'vue'
 import { NButton, NForm, NFormItem, NInput, NTabPane, NTabs, NImage } from 'naive-ui'
-
+import {useI18n} from "vue-i18n";
 import CommonPage from '@/components/page/CommonPage.vue'
 import { useUserStore } from '@/store'
 import api from '@/api'
 import { is } from '~/src/utils'
 
+const {t} = useI18n()
 const userStore = useUserStore()
 const isLoading = ref(false)
 
@@ -26,7 +27,7 @@ async function updateProfile() {
       .then(() => {
         userStore.setUserInfo(infoForm.value)
         isLoading.value = false
-        $message.success('修改成功')
+        $message.success(t('common.text.update_success'))
       })
       .catch(() => {
         isLoading.value = false
@@ -37,7 +38,7 @@ const infoFormRules = {
   username: [
     {
       required: true,
-      message: '请输入昵称',
+      message: t('views.profile.message_username_required'),
       trigger: ['input', 'blur', 'change'],
     },
   ],
@@ -77,31 +78,31 @@ const passwordFormRules = {
   old_password: [
     {
       required: true,
-      message: '请输入旧密码',
+      message: t('views.profile.message_old_password_required'),
       trigger: ['input', 'blur', 'change'],
     },
   ],
   new_password: [
     {
       required: true,
-      message: '请输入新密码',
+      message: t('views.profile.message_new_password_required'),
       trigger: ['input', 'blur', 'change'],
     },
   ],
   confirm_password: [
     {
       required: true,
-      message: '请再次输入密码',
+      message: t('views.profile.message_password_confirmation_required'),
       trigger: ['input', 'blur'],
     },
     {
       validator: validatePasswordStartWith,
-      message: '两次密码输入不一致',
+      message: t('views.profile.message_password_confirmation_diff'),
       trigger: 'input',
     },
     {
       validator: validatePasswordSame,
-      message: '两次密码输入不一致',
+      message: t('views.profile.message_password_confirmation_diff'),
       trigger: ['blur', 'password-input'],
     },
   ],
@@ -121,7 +122,7 @@ function validatePasswordSame(rule, value) {
 <template>
   <CommonPage :show-header="false">
     <NTabs type="line" animated>
-      <NTabPane name="website" tab="修改信息">
+      <NTabPane name="website" :tab="$t('views.profile.label_modify_information')">
         <div class="m-30 flex items-center">
           <NForm
             ref="infoFormRef"
@@ -132,56 +133,56 @@ function validatePasswordSame(rule, value) {
             :rules="infoFormRules"
             class="w-400"
           >
-            <NFormItem label="头像" path="avatar">
+            <NFormItem :label="$t('views.profile.label_avatar')" path="avatar">
               <NImage width="100" :src="infoForm.avatar"></NImage>
             </NFormItem>
-            <NFormItem label="用户姓名" path="username">
-              <NInput v-model:value="infoForm.username" type="text" placeholder="请填写姓名" />
+            <NFormItem :label="$t('views.profile.label_username')" path="username">
+              <NInput v-model:value="infoForm.username" type="text" :placeholder="$t('views.profile.placeholder_username')" />
             </NFormItem>
-            <NFormItem label="邮箱" path="email">
-              <NInput v-model:value="infoForm.email" type="text" placeholder="请填写邮箱" />
+            <NFormItem :label="$t('views.profile.label_email')" path="email">
+              <NInput v-model:value="infoForm.email" type="text" :placeholder="$t('views.profile.placeholder_email')" />
             </NFormItem>
-            <NButton type="primary" :loading="isLoading" @click="updateProfile"> 修改 </NButton>
+            <NButton type="primary" :loading="isLoading" @click="updateProfile"> {{$t("common.buttons.update")}} </NButton>
           </NForm>
         </div>
       </NTabPane>
-      <NTabPane name="contact" tab="修改密码">
+      <NTabPane name="contact" :tab="$t('views.profile.label_change_password')">
         <NForm
           ref="passwordFormRef"
           label-placement="left"
           label-align="left"
           :model="passwordForm"
-          label-width="100"
+          label-width="200"
           :rules="passwordFormRules"
-          class="m-30 w-400"
+          class="m-30 w-500"
         >
-          <NFormItem label="旧密码" path="old_password">
+          <NFormItem :label="$t('views.profile.label_old_password')" path="old_password">
             <NInput
               v-model:value="passwordForm.old_password"
               type="password"
               show-password-on="mousedown"
-              placeholder="请输入旧密码"
+              :placeholder="$t('views.profile.placeholder_old_password')"
             />
           </NFormItem>
-          <NFormItem label="新密码" path="new_password">
+          <NFormItem :label="$t('views.profile.label_new_password')" path="new_password">
             <NInput
               v-model:value="passwordForm.new_password"
               :disabled="!passwordForm.old_password"
               type="password"
               show-password-on="mousedown"
-              placeholder="请输入新密码"
+              :placeholder="$t('views.profile.placeholder_new_password')"
             />
           </NFormItem>
-          <NFormItem label="确认密码" path="confirm_password">
+          <NFormItem :label="$t('views.profile.label_confirm_password')" path="confirm_password">
             <NInput
               v-model:value="passwordForm.confirm_password"
               :disabled="!passwordForm.new_password"
               type="password"
               show-password-on="mousedown"
-              placeholder="请再次输入新密码"
+              :placeholder="$t('views.profile.placeholder_confirm_password')"
             />
           </NFormItem>
-          <NButton type="primary" :loading="isLoading" @click="updatePassword"> 修改 </NButton>
+          <NButton type="primary" :loading="isLoading" @click="updatePassword"> {{$t("common.buttons.update")}} </NButton>
         </NForm>
       </NTabPane>
     </NTabs>
