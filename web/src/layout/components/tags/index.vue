@@ -1,7 +1,7 @@
 <template>
   <ScrollX ref="scrollXRef" class="bg-white dark:bg-dark!">
     <n-tag
-      v-for="tag in tagsStore.tags"
+      v-for="tag in tagsStore.all"
       ref="tabRefs"
       :key="tag.path"
       class="mx-5 cursor-pointer rounded-4 px-15 hover:color-primary"
@@ -44,9 +44,8 @@ const contextMenuOption = reactive({
 watch(
   () => route.path,
   () => {
-    const { name, fullPath: path } = route
-    const title = route.meta?.title
-    tagsStore.addTag({ name, path, title })
+    const { fullPath: path } = route
+    tagsStore.addTag({ path })
   },
   { immediate: true }
 )
