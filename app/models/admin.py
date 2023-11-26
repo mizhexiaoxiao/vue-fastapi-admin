@@ -50,6 +50,7 @@ class Menu(BaseModel, TimestampMixin):
     name = fields.CharField(max_length=20, description="菜单名称")
     remark = fields.JSONField(null=True, description="保留字段", blank=True)
     menu_type = fields.CharEnumField(MenuType, null=True, blank=True, description="菜单类型")
+    lang_key = fields.CharField(max_length=100, null=True, blank=True, description="i18n translation key")
     icon = fields.CharField(max_length=100, null=True, blank=True, description="菜单图标")
     path = fields.CharField(max_length=100, description="菜单路径")
     order = fields.IntField(default=0, description="排序")

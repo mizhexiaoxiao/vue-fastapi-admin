@@ -80,6 +80,7 @@ async def init_menus():
         parent_menu = await Menu.create(
             menu_type=MenuType.CATALOG,
             name="系统管理",
+            lang_key="views.system.label_system",
             path="system",
             order=1,
             parent_id=0,
@@ -93,6 +94,7 @@ async def init_menus():
             Menu(
                 menu_type=MenuType.MENU,
                 name="用户管理",
+                lang_key="views.system.user.label_user",
                 path="user",
                 order=1,
                 parent_id=parent_menu.id,
@@ -104,6 +106,7 @@ async def init_menus():
             Menu(
                 menu_type=MenuType.MENU,
                 name="角色管理",
+                lang_key="views.system.role.label_role",
                 path="role",
                 order=2,
                 parent_id=parent_menu.id,
@@ -115,6 +118,7 @@ async def init_menus():
             Menu(
                 menu_type=MenuType.MENU,
                 name="菜单管理",
+                lang_key="views.system.menu.label_menu",
                 path="menu",
                 order=3,
                 parent_id=parent_menu.id,
@@ -126,6 +130,7 @@ async def init_menus():
             Menu(
                 menu_type=MenuType.MENU,
                 name="API管理",
+                lang_key="views.system.api.label_api",
                 path="api",
                 order=4,
                 parent_id=parent_menu.id,
