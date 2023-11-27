@@ -28,7 +28,7 @@ watchDebounced(
     filterIcons()
     emit('update:value', choosed.value)
   },
-  { debounce: 200 }
+  { debounce: 200 },
 )
 </script>
 

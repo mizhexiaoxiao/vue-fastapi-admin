@@ -48,7 +48,7 @@ watch(
     const title = route.meta?.title
     tagsStore.addTag({ name, path, title })
   },
-  { immediate: true }
+  { immediate: true },
 )
 
 watch(
@@ -60,7 +60,7 @@ watch(
     const { offsetLeft: x, offsetWidth: width } = activeTabElement
     scrollXRef.value?.handleScroll(x + width, width)
   },
-  { immediate: true }
+  { immediate: true },
 )
 
 const handleTagClick = (path) => {

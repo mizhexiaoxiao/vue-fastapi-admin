@@ -13,7 +13,7 @@ import { renderIcon } from '@/utils'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 
-const {t} = useI18n()
+const { t } = useI18n()
 
 const router = useRouter()
 

@@ -99,7 +99,7 @@ const columns = [
       const group = []
       for (let i = 0; i < roles.length; i++)
         group.push(
-          h(NTag, { type: 'info', style: { margin: '2px 3px' } }, { default: () => roles[i].name })
+          h(NTag, { type: 'info', style: { margin: '2px 3px' } }, { default: () => roles[i].name }),
         )
       return h('span', group)
     },
@@ -113,7 +113,7 @@ const columns = [
       return h(
         NTag,
         { type: 'info', style: { margin: '2px 3px' } },
-        { default: () => (row.is_superuser ? '是' : '否') }
+        { default: () => (row.is_superuser ? '是' : '否') },
       )
     },
   },
@@ -130,7 +130,7 @@ const columns = [
         {
           default: () => (row.last_login !== null ? formatDate(row.last_login) : null),
           icon: renderIcon('mdi:update', { size: 16 }),
-        }
+        },
       )
     },
   },
@@ -175,9 +175,9 @@ const columns = [
             {
               default: () => '编辑',
               icon: renderIcon('material-symbols:edit', { size: 16 }),
-            }
+            },
           ),
-          [[vPermission, 'post/api/v1/user/update']]
+          [[vPermission, 'post/api/v1/user/update']],
         ),
         h(
           NPopconfirm,
@@ -197,12 +197,12 @@ const columns = [
                   {
                     default: () => '删除',
                     icon: renderIcon('material-symbols:delete-outline', { size: 16 }),
-                  }
+                  },
                 ),
-                [[vPermission, 'delete/api/v1/user/delete']]
+                [[vPermission, 'delete/api/v1/user/delete']],
               ),
             default: () => h('div', {}, '确定删除该用户吗?'),
-          }
+          },
         ),
       ]
     },

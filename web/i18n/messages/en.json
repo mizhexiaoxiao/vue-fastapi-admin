@@ -43,7 +43,7 @@
       "message_username_required": "Please enter username",
       "message_old_password_required": "Please enter the old password",
       "message_new_password_required": "Please enter a new password",
-      "message_password_confirmation_required":  "Please enter confirm password",
+      "message_password_confirmation_required": "Please enter confirm password",
       "message_password_confirmation_diff": "Two password inputs are inconsistent"
     },
     "errors": {

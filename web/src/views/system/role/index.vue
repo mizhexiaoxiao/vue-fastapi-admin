@@ -144,9 +144,9 @@ const columns = [
             {
               default: () => '编辑',
               icon: renderIcon('material-symbols:edit-outline', { size: 16 }),
-            }
+            },
           ),
-          [[vPermission, 'post/api/v1/role/update']]
+          [[vPermission, 'post/api/v1/role/update']],
         ),
         h(
           NPopconfirm,
@@ -167,12 +167,12 @@ const columns = [
                   {
                     default: () => '删除',
                     icon: renderIcon('material-symbols:delete-outline', { size: 16 }),
-                  }
+                  },
                 ),
-                [[vPermission, 'delete/api/v1/role/delete']]
+                [[vPermission, 'delete/api/v1/role/delete']],
               ),
             default: () => h('div', {}, '确定删除该角色吗?'),
-          }
+          },
         ),
         withDirectives(
           h(
@@ -195,9 +195,9 @@ const columns = [
             {
               default: () => '设置权限',
               icon: renderIcon('material-symbols:edit-outline', { size: 16 }),
-            }
+            },
           ),
-          [[vPermission, 'get/api/v1/role/authorized']]
+          [[vPermission, 'get/api/v1/role/authorized']],
         ),
       ]
     },

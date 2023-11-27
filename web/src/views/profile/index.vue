@@ -1,13 +1,13 @@
 <script setup>
 import { ref } from 'vue'
 import { NButton, NForm, NFormItem, NInput, NTabPane, NTabs, NImage } from 'naive-ui'
-import {useI18n} from "vue-i18n";
+import { useI18n } from 'vue-i18n'
 import CommonPage from '@/components/page/CommonPage.vue'
 import { useUserStore } from '@/store'
 import api from '@/api'
 import { is } from '~/src/utils'
 
-const {t} = useI18n()
+const { t } = useI18n()
 const userStore = useUserStore()
 const isLoading = ref(false)
 
@@ -137,12 +137,22 @@ function validatePasswordSame(rule, value) {
               <NImage width="100" :src="infoForm.avatar"></NImage>
             </NFormItem>
             <NFormItem :label="$t('views.profile.label_username')" path="username">
-              <NInput v-model:value="infoForm.username" type="text" :placeholder="$t('views.profile.placeholder_username')" />
+              <NInput
+                v-model:value="infoForm.username"
+                type="text"
+                :placeholder="$t('views.profile.placeholder_username')"
+              />
             </NFormItem>
             <NFormItem :label="$t('views.profile.label_email')" path="email">
-              <NInput v-model:value="infoForm.email" type="text" :placeholder="$t('views.profile.placeholder_email')" />
+              <NInput
+                v-model:value="infoForm.email"
+                type="text"
+                :placeholder="$t('views.profile.placeholder_email')"
+              />
             </NFormItem>
-            <NButton type="primary" :loading="isLoading" @click="updateProfile"> {{$t("common.buttons.update")}} </NButton>
+            <NButton type="primary" :loading="isLoading" @click="updateProfile">
+              {{ $t('common.buttons.update') }}
+            </NButton>
           </NForm>
         </div>
       </NTabPane>
@@ -182,7 +192,9 @@ function validatePasswordSame(rule, value) {
               :placeholder="$t('views.profile.placeholder_confirm_password')"
             />
           </NFormItem>
-          <NButton type="primary" :loading="isLoading" @click="updatePassword"> {{$t("common.buttons.update")}} </NButton>
+          <NButton type="primary" :loading="isLoading" @click="updatePassword">
+            {{ $t('common.buttons.update') }}
+          </NButton>
         </NForm>
       </NTabPane>
     </NTabs>

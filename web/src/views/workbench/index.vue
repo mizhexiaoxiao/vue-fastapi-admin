@@ -6,7 +6,9 @@
           <div flex items-center>
             <img rounded-full width="60" :src="userStore.avatar" />
             <div ml-10>
-              <p text-20 font-semibold> {{ $t('views.workbench.text_hello', {username: userStore.name}) }}</p>
+              <p text-20 font-semibold>
+                {{ $t('views.workbench.text_hello', { username: userStore.name }) }}
+              </p>
               <p mt-5 text-14 op-60>{{ $t('views.workbench.text_welcome') }}</p>
             </div>
           </div>
@@ -16,9 +18,15 @@
         </div>
       </n-card>
 
-      <n-card :title="$t('views.workbench.label_project')" size="small" :segmented="true" mt-15 rounded-10>
+      <n-card
+        :title="$t('views.workbench.label_project')"
+        size="small"
+        :segmented="true"
+        mt-15
+        rounded-10
+      >
         <template #header-extra>
-          <n-button text type="primary">{{$t('views.workbench.label_more')}}</n-button>
+          <n-button text type="primary">{{ $t('views.workbench.label_more') }}</n-button>
         </template>
         <div flex flex-wrap justify-between>
           <n-card
@@ -29,7 +37,7 @@
             title="Vue FastAPI Admin"
             size="small"
           >
-            <p op-60>{{dummyText}}</p>
+            <p op-60>{{ dummyText }}</p>
           </n-card>
         </div>
       </n-card>
@@ -41,8 +49,8 @@
 import { useUserStore } from '@/store'
 import { useI18n } from 'vue-i18n'
 
-const dummyText = "一个基于 Vue3.0、FastAPI、Naive UI 的轻量级后台管理模板"
-const {t} = useI18n({ useScope: "global" })
+const dummyText = '一个基于 Vue3.0、FastAPI、Naive UI 的轻量级后台管理模板'
+const { t } = useI18n({ useScope: 'global' })
 
 const statisticData = computed(() => [
   {
