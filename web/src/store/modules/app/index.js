@@ -4,7 +4,7 @@ import { sStorage } from '@/utils'
 import i18n from '~/i18n'
 
 const currentLocale = sStorage.get('locale')
-const {locale} = i18n.global
+const { locale } = i18n.global
 
 const isDark = useDark()
 export const useAppStore = defineStore('app', {
@@ -16,7 +16,7 @@ export const useAppStore = defineStore('app', {
       /** keepAlive路由的key，重新赋值可重置keepAlive */
       aliveKeys: {},
       isDark,
-      locale: currentLocale || 'en'
+      locale: currentLocale || 'en',
     }
   },
   actions: {
@@ -55,6 +55,6 @@ export const useAppStore = defineStore('app', {
       this.locale = newLocale
       locale.value = newLocale
       sStorage.set('locale', newLocale)
-    }
+    },
   },
 })

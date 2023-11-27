@@ -57,11 +57,11 @@ import { lStorage, setToken } from '@/utils'
 import bgImg from '@/assets/images/login_bg.webp'
 import api from '@/api'
 import { addDynamicRoutes } from '@/router'
-import {useI18n} from 'vue-i18n'
+import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
 const { query } = useRoute()
-const {t} = useI18n({ useScope: "global" })
+const { t } = useI18n({ useScope: 'global' })
 
 const loginInfo = ref({
   username: '',

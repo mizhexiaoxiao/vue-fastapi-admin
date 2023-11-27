@@ -19,5 +19,5 @@ import FullScreen from './components/FullScreen.vue'
 import UserAvatar from './components/UserAvatar.vue'
 import GithubSite from './components/GithubSite.vue'
 import ThemeMode from './components/ThemeMode.vue'
-import Languages from './components/Languages.vue';
+import Languages from './components/Languages.vue'
 </script>

@@ -141,9 +141,9 @@ const columns = [
             {
               default: () => '编辑',
               icon: renderIcon('material-symbols:edit', { size: 16 }),
-            }
+            },
           ),
-          [[vPermission, 'post/api/v1/api/update']]
+          [[vPermission, 'post/api/v1/api/update']],
         ),
         h(
           NPopconfirm,
@@ -163,12 +163,12 @@ const columns = [
                   {
                     default: () => '删除',
                     icon: renderIcon('material-symbols:delete-outline', { size: 16 }),
-                  }
+                  },
                 ),
-                [[vPermission, 'delete/api/v1/api/delete']]
+                [[vPermission, 'delete/api/v1/api/delete']],
               ),
             default: () => h('div', {}, '确定删除该API吗?'),
-          }
+          },
         ),
       ]
     },
