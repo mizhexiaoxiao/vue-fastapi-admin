@@ -28,7 +28,7 @@ async def list_user(
     if email:
         q &= Q(email__contains=email)
     total, user_objs = await user_controller.list(page=page, page_size=page_size, search=q)
-    data = [await obj.to_dict(m2m=True) for obj in user_objs]
+    data = [await obj.to_dict(m2m=True, exclude_fields=["password"]) for obj in user_objs]
     return SuccessExtra(data=data, total=total, page=page, page_size=page_size)
 
 
@@ -38,7 +38,7 @@ async def get_user(
 ):
     user_controller = UserController()
     user_obj = await user_controller.get(id=user_id)
-    user_dict = await user_obj.to_dict()
+    user_dict = await user_obj.to_dict(exclude_fields=["password"])
     return Success(data=user_dict)
 
 
