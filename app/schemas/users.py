@@ -30,8 +30,8 @@ class UserCreate(BaseModel):
 
 class UserUpdate(BaseModel):
     id: int
-    email: Optional[EmailStr]
-    username: Optional[str]
+    email: EmailStr
+    username: str
     is_active: Optional[bool] = True
     is_superuser: Optional[bool] = False
     roles: Optional[List[int]] = []
