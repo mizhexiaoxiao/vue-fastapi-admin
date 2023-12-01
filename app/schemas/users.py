@@ -30,7 +30,6 @@ class UserCreate(BaseModel):
 
 class UserUpdate(BaseModel):
     id: int
-    password: Optional[str]
     email: Optional[EmailStr]
     username: Optional[str]
     is_active: Optional[bool] = True
