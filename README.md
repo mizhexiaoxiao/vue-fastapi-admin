@@ -6,6 +6,8 @@
 
 <h1 align="center">vue-fastapi-admin</h1>
 
+[English](./README-en.md) | 简体中文
+
 基于 FastAPI + Vue3 + Naive UI 的现代化前后端分离开发平台，融合了 RBAC 权限管理、动态路由和 JWT 鉴权，助力中小型应用快速搭建，也可用于学习参考。
 
 ### 特性
