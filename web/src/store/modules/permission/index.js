@@ -2,30 +2,33 @@ import { defineStore } from 'pinia'
 import { basicRoutes, vueModules } from '@/router/routes'
 import Layout from '@/layout/index.vue'
 import api from '@/api'
+import i18n from '@/i18n'
+
+const {t} = i18n.global
 
 // * 后端路由相关函数
 // 根据后端传来数据构建出前端路由
 function buildRoutes(routes = []) {
   return routes.map((e) => ({
-    name: e.name,
+    name: e.lang_key ? t(e.lang_key) : e.name,
     path: e.component !== 'Layout' ? '/' : '/' + e.path, // 处理目录是一级菜单的情况
     component: shallowRef(Layout), // ? 不使用 shallowRef 控制台会有 warning
     isHidden: e.is_hidden,
     redirect: e.redirect,
     meta: {
-      title: e.name,
+      title: e.lang_key ? t(e.lang_key) : e.name,
       icon: e.icon,
       order: e.order,
       keepAlive: e.keepalive,
     },
     children: e.children.map((e_child) => ({
-      name: e_child.name,
+      name: e_child.lang_key ? t(e_child.lang_key) : e_child.name,
       path: e_child.path, // 父路径 + 当前菜单路径
       // ! 读取动态加载的路由模块
       component: vueModules[`/src/views${e_child.component}/index.vue`],
       isHidden: e_child.is_hidden,
       meta: {
-        title: e_child.name,
+        title: e_child.lang_key ? t(e_child.lang_key) : e_child.name,
         icon: e_child.icon,
         order: e_child.order,
         keepAlive: e_child.keepalive,

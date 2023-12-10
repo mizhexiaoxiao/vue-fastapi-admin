@@ -43,8 +43,66 @@
       "message_username_required": "Please enter username",
       "message_old_password_required": "Please enter the old password",
       "message_new_password_required": "Please enter a new password",
-      "message_password_confirmation_required":  "Please enter confirm password",
+      "message_password_confirmation_required": "Please enter confirm password",
       "message_password_confirmation_diff": "Two password inputs are inconsistent"
+    },
+    "system": {
+      "label_system": "System Management",
+      "user_management": {
+        "label_user_management": "User Management",
+        "label_user": "User",
+        "label_user_list": "User List",
+        "button_add_user": "Add User",
+        "query_form": {
+          "label_username": "username",
+          "placeholder_username": "username",
+          "label_email": "email",
+          "placeholder_email": "email"
+        },
+        "table": {
+          "column_avatar": "Avatar",
+          "column_username": "Username",
+          "column_email": "Email",
+          "column_role": "Role",
+          "column_is_superuser": "Is Superuser",
+          "column_last_login": "Last Login",
+          "column_is_active": "Is Active",
+          "column_actions": "Actions"
+        },
+        "user_form": {
+          "label_username": "username",
+          "placeholder_username": "username",
+          "label_email": "email",
+          "placeholder_email": "email",
+          "label_password": "password",
+          "placeholder_password": "password",
+          "label_confirmPassword": "confirm\npassword",
+          "placeholder_confirmPassword": "confirm password",
+          "label_roles": "roles",
+          "label_is_superuser": "is superuser?",
+          "label_is_active": "is active?",
+          "message_username_required": "Please enter username",
+          "message_email_required": "Please enter email",
+          "message_email_type": "Not an email",
+          "message_password_required": "Please enter a password",
+          "message_password_confirmation_required": "Please enter confirm password",
+          "message_password_confirmation_diff": "Two password inputs are inconsistent",
+          "message_role_required": "Please enter roles",
+          "message_cannot_inactive": "The currently logged in user cannot be disabled",
+          "message_user_inactivated": "User is disabled",
+          "message_user_activated": "User is enabled"
+        },
+        "message_confirm_remove_user": "Are you sure you want to remove this user?"
+      },
+      "role": {
+        "label_role": "Role Management"
+      },
+      "menu": {
+        "label_menu": "Menu Management"
+      },
+      "api": {
+        "label_api": "API Management"
+      }
     },
     "errors": {
       "label_error": "Error",
@@ -52,11 +110,24 @@
     }
   },
   "common": {
+    "label": {
+      "add": "Add ",
+      "edit": "Edit ",
+      "view": "View "
+    },
     "text": {
+      "yes": "Yes",
+      "no": "No",
       "update_success": "Update success"
     },
     "buttons": {
-      "update": "Update"
+      "update": "Update",
+      "edit": "Edit",
+      "remove": "Remove",
+      "reset": "Reset",
+      "search": "Search",
+      "cancel": "Cancel",
+      "save": "Save"
     }
   }
 }

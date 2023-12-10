@@ -46,17 +46,88 @@
       "message_password_confirmation_required":  "请再次输入密码",
       "message_password_confirmation_diff": "两次密码输入不一致"
     },
+    "system": {
+      "label_system": "系统管理",
+      "user_management": {
+        "label_user_management": "用户管理",
+        "label_user": "用户",
+        "label_user_list": "用户列表",
+        "button_add_user": "新建用户",
+        "query_form": {
+          "label_username": "名称",
+          "placeholder_username": "请输入用户名称",
+          "label_email": "邮箱",
+          "placeholder_email": "请输入邮箱"
+        },
+        "table": {
+          "column_avatar": "头像",
+          "column_username": "名称",
+          "column_email": "邮箱",
+          "column_role": "用户角色",
+          "column_is_superuser": "Is 超级用户",
+          "column_last_login": "Last 上次登录时间",
+          "column_is_active": "Is 禁用",
+          "column_actions": "操作"
+        },
+        "user_form": {
+          "label_username": "用户名称",
+          "placeholder_username": "请输入用户名称",
+          "label_email": "邮箱",
+          "placeholder_email": "请输入邮箱",
+          "label_password": "密码",
+          "placeholder_password": "请输入密码",
+          "label_confirmPassword": "确认密码",
+          "placeholder_confirmPassword": "请确认密码",
+          "label_roles": "角色",
+          "label_is_superuser": "超级用户",
+          "label_is_active": "禁用",
+          "message_username_required": "请输入名称",
+          "message_email_required": "请输入邮箱地址",
+          "message_email_type": "邮箱格式错误",
+          "message_password_required": "请输入密码",
+          "message_password_confirmation_required": "请再次输入密码",
+          "message_password_confirmation_diff": "两次密码输入不一致",
+          "message_role_required": "请至少选择一个角色",
+          "message_cannot_inactive": "当前登录用户不可禁用！",
+          "message_user_inactivated": "已禁用该用户",
+          "message_user_activated": "已取消禁用该用户"
+        },
+        "message_confirm_remove_user": "确定删除该用户吗?"
+      },
+      "role": {
+        "label_role": "角色管理"
+      },
+      "menu": {
+        "label_menu":  "菜单管理"
+      },
+      "api": {
+        "label_api":  "API管理"
+      }
+    },
     "errors": {
       "label_error": "错误页",
       "text_back_to_home": "返回首页"
     }
   },
   "common": {
+    "label": {
+      "add": "新增",
+      "edit": "编辑",
+      "view": "查看"
+    },
     "text": {
+      "yes": "是",
+      "no": "否",
       "update_success": "修改成功"
     },
     "buttons": {
-      "update": "修改"
+      "update": "修改",
+      "edit": "编辑",
+      "remove": "删除",
+      "reset": "重置",
+      "search": "搜索",
+      "cancel": "取消",
+      "save": "保存"
     }
   }
 }

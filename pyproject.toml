@@ -20,6 +20,7 @@ isort = "^5.12.0"
 ruff = "^0.0.281"
 loguru = "^0.7.0"
 pydantic-settings = "^2.0.3"
+aerich = "^0.7.2"
 
 [tool.black]
 line-length = 120
@@ -28,6 +29,11 @@ target-version = ["py310", "py311"]
 [[tool.poetry.source]]
 name = "tsinghua"
 url = "https://pypi.tuna.tsinghua.edu.cn/simple/"
+priority = "primary"
+
+
+[[tool.poetry.source]]
+name = "PyPI"
 priority = "primary"
 
 [tool.ruff]
@@ -45,3 +51,7 @@ ignore = [
     "F403",
     "F405",
 ]
+[tool.aerich]
+tortoise_orm = "app.settings.TORTOISE_ORM"
+location = "./migrations"
+src_folder = "./."

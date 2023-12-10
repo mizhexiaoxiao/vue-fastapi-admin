@@ -14,8 +14,8 @@
     <n-space wrap :size="[35, 15]">
       <slot />
       <div>
-        <n-button secondary type="primary" @click="emit('reset')">重置</n-button>
-        <n-button ml-20 type="primary" @click="emit('search')">搜索</n-button>
+        <n-button secondary type="primary" @click="emit('reset')">{{ $t('common.buttons.reset') }}</n-button>
+        <n-button ml-20 type="primary" @click="emit('search')">{{ $t('common.buttons.search') }}</n-button>
       </div>
     </n-space>
   </div>
