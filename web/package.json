@@ -8,7 +8,8 @@
     "preview": "vite preview",
     "lint": "eslint --ext .js,.vue .",
     "lint:fix": "eslint --fix --ext .js,.vue .",
-    "lint:staged": "lint-staged"
+    "lint:staged": "lint-staged",
+    "prettier": "npx prettier --write ."
   },
   "dependencies": {
     "@iconify/json": "^2.2.101",

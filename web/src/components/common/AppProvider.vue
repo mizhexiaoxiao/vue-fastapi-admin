@@ -22,13 +22,13 @@
 <script setup>
 import { defineComponent, h } from 'vue'
 import {
-    zhCN,
-    dateZhCN,
-    darkTheme,
-    useLoadingBar,
-    useDialog,
-    useMessage,
-    useNotification,
+  zhCN,
+  dateZhCN,
+  darkTheme,
+  useLoadingBar,
+  useDialog,
+  useMessage,
+  useNotification,
 } from 'naive-ui'
 import { useCssVar } from '@vueuse/core'
 import { kebabCase } from 'lodash-es'

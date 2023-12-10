@@ -1,24 +1,22 @@
 export function useResize(el, cb) {
   const observer = new ResizeObserver((entries) => {
-    cb(entries[0].contentRect);
-  });
-  observer.observe(el);
-  return observer;
+    cb(entries[0].contentRect)
+  })
+  observer.observe(el)
+  return observer
 }
 
 const install = (app) => {
-  let observer;
+  let observer
 
   app.directive('resize', {
     mounted(el, binding) {
-      observer = useResize(el, binding.value);
+      observer = useResize(el, binding.value)
     },
     beforeUnmount() {
-      observer?.disconnect();
+      observer?.disconnect()
     },
-  });
-};
+  })
+}
 
-useResize.install = install;
-
-  
+useResize.install = install

@@ -53,7 +53,7 @@ const isEmpty = computed(() => props.empty && !props.loading && network.value)
 const showPlaceholder = computed(() => props.loading || isEmpty.value || !network.value)
 
 const networkErrorDesc = computed(() =>
-  props.showNetworkReload ? `${NETWORK_ERROR_MSG}, 点击重试` : NETWORK_ERROR_MSG
+  props.showNetworkReload ? `${NETWORK_ERROR_MSG}, 点击重试` : NETWORK_ERROR_MSG,
 )
 
 function handleReload() {
@@ -71,7 +71,7 @@ const stopHandle = watch(
     if (!newValue) {
       network.value = window.navigator.onLine
     }
-  }
+  },
 )
 
 onUnmounted(() => {

@@ -41,8 +41,7 @@ async def login_access_token(credentials: CredentialsSchema):
 async def get_userinfo():
     user_id = CTX_USER_ID.get()
     user_obj = await user_controller.get(id=user_id)
-    data = await user_obj.to_dict()
-    data.pop("password")
+    data = await user_obj.to_dict(exclude_fields=["password"])
     data["avatar"] = "https://avatars.githubusercontent.com/u/54677442?v=4"
     return Success(data=data)
 

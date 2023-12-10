@@ -3,5 +3,5 @@ import * as cn from './cn.json'
 
 export default {
   en,
-  cn
+  cn,
 }

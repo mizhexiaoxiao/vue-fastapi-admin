@@ -13,7 +13,6 @@ export function resolveResError(code, message) {
       break
     case 401:
       message = message ?? '登录已过期'
-      useUserStore().logout()
       break
     case 403:
       message = message ?? '没有权限'

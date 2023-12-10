@@ -35,9 +35,7 @@ async def get_role(
 
 
 @router.post("/create", summary="创建角色")
-async def create_role(
-    role_in: RoleCreate,
-):
+async def create_role(role_in: RoleCreate):
     if await role_controller.is_exist(name=role_in.name):
         raise HTTPException(
             status_code=400,

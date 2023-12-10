@@ -135,9 +135,9 @@ const columns = [
                 handleAdd()
               },
             },
-            { default: () => '子菜单', icon: renderIcon('material-symbols:add', { size: 16 }) }
+            { default: () => '子菜单', icon: renderIcon('material-symbols:add', { size: 16 }) },
           ),
-          [[vPermission, 'post/api/v1/menu/create']]
+          [[vPermission, 'post/api/v1/menu/create']],
         ),
         withDirectives(
           h(
@@ -154,9 +154,9 @@ const columns = [
             {
               default: () => '编辑',
               icon: renderIcon('material-symbols:edit-outline', { size: 16 }),
-            }
+            },
           ),
-          [[vPermission, 'post/api/v1/menu/update']]
+          [[vPermission, 'post/api/v1/menu/update']],
         ),
         h(
           NPopconfirm,
@@ -177,12 +177,12 @@ const columns = [
                   {
                     default: () => '删除',
                     icon: renderIcon('material-symbols:delete-outline', { size: 16 }),
-                  }
+                  },
                 ),
-                [[vPermission, 'delete/api/v1/menu/delete']]
+                [[vPermission, 'delete/api/v1/menu/delete']],
               ),
             default: () => h('div', {}, '确定删除该菜单吗?'),
-          }
+          },
         ),
       ]
     },
