@@ -15,12 +15,12 @@ export const useTagsStore = defineStore('tag', {
       return this.tags.findIndex((item) => item.path === this.activeTag)
     },
     all() {
-      this.tags.map(tag => {
-        let route = router.resolve({path: tag.path})
+      this.tags.map((tag) => {
+        let route = router.resolve({ path: tag.path })
         tag.title = route.meta?.title || route.name
       })
       return this.tags
-    }
+    },
   },
   actions: {
     setActiveTag(path) {

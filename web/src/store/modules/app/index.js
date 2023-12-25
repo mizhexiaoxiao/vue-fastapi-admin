@@ -55,6 +55,6 @@ export const useAppStore = defineStore('app', {
       this.locale = newLocale
       locale.value = newLocale
       lStorage.set('locale', newLocale)
-    }
+    },
   },
 })

@@ -13,7 +13,9 @@
       <footer flex justify-end>
         <slot name="footer">
           <n-button @click="show = false">{{ $t('common.buttons.cancel') }}</n-button>
-          <n-button :loading="loading" ml-20 type="primary" @click="emit('save')">{{$t('common.buttons.save')}}</n-button>
+          <n-button :loading="loading" ml-20 type="primary" @click="emit('save')">{{
+            $t('common.buttons.save')
+          }}</n-button>
         </slot>
       </footer>
     </template>

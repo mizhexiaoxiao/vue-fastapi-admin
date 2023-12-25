@@ -25,14 +25,14 @@ import { useCRUD } from '@/composables'
 import api from '@/api'
 import TheIcon from '@/components/icon/TheIcon.vue'
 import { useUserStore } from '@/store'
-import {useI18n} from "vue-i18n";
+import { useI18n } from 'vue-i18n'
 
 defineOptions({ name: '用户列表' })
 
 const $table = ref(null)
 const queryItems = ref({})
 const vPermission = resolveDirective('permission')
-const {t} = useI18n({ useScope: "global" })
+const { t } = useI18n({ useScope: 'global' })
 
 const {
   modalVisible,
@@ -115,7 +115,7 @@ const columns = [
       return h(
         NTag,
         { type: 'info', style: { margin: '2px 3px' } },
-        { default: () => (row.is_superuser ? t('common.text.yes') : t('common.text.no')) }
+        { default: () => (row.is_superuser ? t('common.text.yes') : t('common.text.no')) },
       )
     },
   },
@@ -204,7 +204,7 @@ const columns = [
                 [[vPermission, 'delete/api/v1/user/delete']],
               ),
             default: () => h('div', {}, t('views.system.user.message_confirm_remove_user')),
-          }
+          },
         ),
       ]
     },
@@ -229,9 +229,11 @@ async function handleUpdateDisable(row) {
   row.roles = role_ids
   try {
     await api.updateUser(row)
-    $message?.success(row.is_active ?
-        t('views.system.user_management.user_form.message_user_activated') :
-        t('views.system.user_management.user_form.message_user_inactivated'))
+    $message?.success(
+      row.is_active
+        ? t('views.system.user_management.user_form.message_user_activated')
+        : t('views.system.user_management.user_form.message_user_inactivated'),
+    )
     $table.value?.handleSearch()
   } catch (err) {
     // 有异常恢复原来的状态
@@ -355,13 +357,28 @@ const validateAddUser = {
         :model="modalForm"
         :rules="validateAddUser"
       >
-        <NFormItem :label="$t('views.system.user_management.user_form.label_username')" path="username">
-          <NInput v-model:value="modalForm.username" clearable :placeholder="$t('views.system.user_management.user_form.placeholder_username')" />
+        <NFormItem
+          :label="$t('views.system.user_management.user_form.label_username')"
+          path="username"
+        >
+          <NInput
+            v-model:value="modalForm.username"
+            clearable
+            :placeholder="$t('views.system.user_management.user_form.placeholder_username')"
+          />
         </NFormItem>
         <NFormItem :label="$t('views.system.user_management.user_form.label_email')" path="email">
-          <NInput v-model:value="modalForm.email" clearable :placeholder="$t('views.system.user_management.user_form.placeholder_email')" />
+          <NInput
+            v-model:value="modalForm.email"
+            clearable
+            :placeholder="$t('views.system.user_management.user_form.placeholder_email')"
+          />
         </NFormItem>
-        <NFormItem v-if="modalAction === 'add'" :label="$t('views.system.user_management.user_form.label_password')" path="password">
+        <NFormItem
+          v-if="modalAction === 'add'"
+          :label="$t('views.system.user_management.user_form.label_password')"
+          path="password"
+        >
           <NInput
             v-model:value="modalForm.password"
             show-password-on="mousedown"
@@ -370,7 +387,11 @@ const validateAddUser = {
             :placeholder="$t('views.system.user_management.user_form.placeholder_password')"
           />
         </NFormItem>
-        <NFormItem v-if="modalAction === 'add'" :label="$t('views.system.user_management.user_form.label_confirmPassword')" path="confirmPassword">
+        <NFormItem
+          v-if="modalAction === 'add'"
+          :label="$t('views.system.user_management.user_form.label_confirmPassword')"
+          path="confirmPassword"
+        >
           <NInput
             v-model:value="modalForm.confirmPassword"
             show-password-on="mousedown"
@@ -391,7 +412,10 @@ const validateAddUser = {
             </NSpace>
           </NCheckboxGroup>
         </NFormItem>
-        <NFormItem :label="$t('views.system.user_management.user_form.label_is_superuser')" path="is_superuser">
+        <NFormItem
+          :label="$t('views.system.user_management.user_form.label_is_superuser')"
+          path="is_superuser"
+        >
           <NSwitch
             v-model:value="modalForm.is_superuser"
             size="small"
@@ -399,7 +423,10 @@ const validateAddUser = {
             :unchecked-value="false"
           ></NSwitch>
         </NFormItem>
-        <NFormItem :label="$t('views.system.user_management.user_form.label_is_active')" path="is_active">
+        <NFormItem
+          :label="$t('views.system.user_management.user_form.label_is_active')"
+          path="is_active"
+        >
           <NSwitch
             v-model:value="modalForm.is_active"
             :checked-value="false"

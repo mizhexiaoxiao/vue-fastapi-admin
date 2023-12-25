@@ -4,7 +4,7 @@ import Layout from '@/layout/index.vue'
 import api from '@/api'
 import i18n from '@/i18n'
 
-const {t} = i18n.global
+const { t } = i18n.global
 
 // * 后端路由相关函数
 // 根据后端传来数据构建出前端路由
