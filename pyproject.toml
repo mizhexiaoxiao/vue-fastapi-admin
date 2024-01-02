@@ -14,12 +14,12 @@ pydantic = "^2.3.0"
 email-validator = "^2.0.0.post2"
 passlib = "^1.7.4"
 pyjwt = "^2.7.0"
-bcrypt = "^4.0.1"
 black = "^23.7.0"
 isort = "^5.12.0"
 ruff = "^0.0.281"
 loguru = "^0.7.0"
 pydantic-settings = "^2.0.3"
+argon2-cffi = "^23.1.0"
 
 [tool.black]
 line-length = 120
