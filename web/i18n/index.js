@@ -1,15 +1,15 @@
 import { createI18n } from 'vue-i18n'
-import { sStorage } from '@/utils'
+import { lStorage } from '@/utils'
 
 import messages from './messages'
 
-const currentLocale = sStorage.get('locale')
+const currentLocale = lStorage.get('locale')
 
 const i18n = createI18n({
   legacy: false,
   globalInjection: true,
-  locale: currentLocale || 'en',
-  fallbackLocale: 'en',
+  locale: currentLocale || 'cn',
+  fallbackLocale: 'cn',
   messages: messages,
 })
 
