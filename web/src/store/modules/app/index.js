@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia'
 import { useDark } from '@vueuse/core'
-import { sStorage } from '@/utils'
+import { lStorage } from '@/utils'
 import i18n from '~/i18n'
 
-const currentLocale = sStorage.get('locale')
+const currentLocale = lStorage.get('locale')
 const { locale } = i18n.global
 
 const isDark = useDark()
@@ -54,7 +54,7 @@ export const useAppStore = defineStore('app', {
     setLocale(newLocale) {
       this.locale = newLocale
       locale.value = newLocale
-      sStorage.set('locale', newLocale)
+      lStorage.set('locale', newLocale)
     },
   },
 })
