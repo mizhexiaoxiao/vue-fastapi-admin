@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
-@router.get("/list", summary="查看用户列表", dependencies=[DependPermisson])
+@router.get("/list", summary="查看用户列表")
 async def list_user(
     page: int = Query(1, description="页码"),
     page_size: int = Query(10, description="每页数量"),
@@ -32,7 +32,7 @@ async def list_user(
     return SuccessExtra(data=data, total=total, page=page, page_size=page_size)
 
 
-@router.get("/get", summary="查看用户", dependencies=[DependPermisson])
+@router.get("/get", summary="查看用户")
 async def get_user(
     user_id: int = Query(..., description="用户ID"),
 ):
@@ -42,7 +42,7 @@ async def get_user(
     return Success(data=user_dict)
 
 
-@router.post("/create", summary="创建用户", dependencies=[DependPermisson])
+@router.post("/create", summary="创建用户")
 async def create_user(
     user_in: UserCreate,
 ):
@@ -58,7 +58,7 @@ async def create_user(
     return Success(msg="Created Successfully")
 
 
-@router.post("/update", summary="更新用户", dependencies=[DependPermisson])
+@router.post("/update", summary="更新用户")
 async def update_user(
     user_in: UserUpdate,
 ):
@@ -68,7 +68,7 @@ async def update_user(
     return Success(msg="Updated Successfully")
 
 
-@router.delete("/delete", summary="删除用户", dependencies=[DependPermisson])
+@router.delete("/delete", summary="删除用户")
 async def delete_user(
     user_id: int = Query(..., description="用户ID"),
 ):
