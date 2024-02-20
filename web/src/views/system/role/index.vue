@@ -90,10 +90,6 @@ function buildApiTree(data) {
 
 onMounted(() => {
   $table.value?.handleSearch()
-  api.getMenus({ page: 1, page_size: 9999 }).then((res) => (menuOption.value = res.data))
-  api
-    .getApis({ page: 1, page_size: 9999 })
-    .then((res) => (apiOption.value = buildApiTree(res.data)))
 })
 
 const columns = [
@@ -144,9 +140,9 @@ const columns = [
             {
               default: () => '编辑',
               icon: renderIcon('material-symbols:edit-outline', { size: 16 }),
-            },
+            }
           ),
-          [[vPermission, 'post/api/v1/role/update']],
+          [[vPermission, 'post/api/v1/role/update']]
         ),
         h(
           NPopconfirm,
@@ -167,12 +163,12 @@ const columns = [
                   {
                     default: () => '删除',
                     icon: renderIcon('material-symbols:delete-outline', { size: 16 }),
-                  },
+                  }
                 ),
-                [[vPermission, 'delete/api/v1/role/delete']],
+                [[vPermission, 'delete/api/v1/role/delete']]
               ),
             default: () => h('div', {}, '确定删除该角色吗?'),
-          },
+          }
         ),
         withDirectives(
           h(
@@ -181,23 +177,36 @@ const columns = [
               size: 'small',
               type: 'primary',
               onClick: async () => {
-                active.value = true
-                role_id.value = row.id
-                const result = await api.getRoleAuthorized({ id: row.id })
-                menu_ids.value = result.data.menus.map((v) => {
-                  return v.id
-                })
-                api_ids.value = result.data.apis.map((v) => {
-                  return v.method.toLowerCase() + v.path
-                })
+                try {
+                  // 使用 Promise.all 来同时发送所有请求
+                  const [menusResponse, apisResponse, roleAuthorizedResponse] = await Promise.all([
+                    api.getMenus({ page: 1, page_size: 9999 }),
+                    api.getApis({ page: 1, page_size: 9999 }),
+                    api.getRoleAuthorized({ id: row.id }),
+                  ])
+
+                  // 处理每个请求的响应
+                  menuOption.value = menusResponse.data
+                  apiOption.value = buildApiTree(apisResponse.data)
+                  menu_ids.value = roleAuthorizedResponse.data.menus.map((v) => v.id)
+                  api_ids.value = roleAuthorizedResponse.data.apis.map(
+                    (v) => v.method.toLowerCase() + v.path
+                  )
+
+                  active.value = true
+                  role_id.value = row.id
+                } catch (error) {
+                  // 错误处理
+                  console.error('Error loading data:', error)
+                }
               },
             },
             {
               default: () => '设置权限',
               icon: renderIcon('material-symbols:edit-outline', { size: 16 }),
-            },
+            }
           ),
-          [[vPermission, 'get/api/v1/role/authorized']],
+          [[vPermission, 'get/api/v1/role/authorized']]
         ),
       ]
     },

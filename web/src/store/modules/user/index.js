@@ -37,11 +37,15 @@ export const useUserStore = defineStore('user', {
     async getUserInfo() {
       try {
         const res = await api.getUserInfo()
+        if (res.code === 401) {
+          this.logout()
+          return
+        }
         const { id, username, email, avatar, roles, is_superuser, is_active } = res.data
         this.userInfo = { id, username, email, avatar, roles, is_superuser, is_active }
-        return Promise.resolve(res.data)
+        return res.data
       } catch (error) {
-        return Promise.reject(error)
+        return error
       }
     },
     async logout() {
