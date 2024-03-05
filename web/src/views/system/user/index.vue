@@ -320,7 +320,7 @@ const validateAddUser = {
             clearable
             type="text"
             placeholder="请输入用户名称"
-            @keypress.enter="$table?.handleSearch"
+            @keypress.enter="$table?.handleSearch()"
           />
         </QueryBarItem>
         <QueryBarItem label="邮箱" :label-width="40">
@@ -329,7 +329,7 @@ const validateAddUser = {
             clearable
             type="text"
             placeholder="请输入邮箱"
-            @keypress.enter="$table?.handleSearch"
+            @keypress.enter="$table?.handleSearch()"
           />
         </QueryBarItem>
       </template>
