@@ -213,7 +213,7 @@ const columns = [
             clearable
             type="text"
             placeholder="请输入API路径"
-            @keypress.enter="$table?.handleSearch"
+            @keypress.enter="$table?.handleSearch()"
           />
         </QueryBarItem>
         <QueryBarItem label="API简介" :label-width="70">
@@ -222,7 +222,7 @@ const columns = [
             clearable
             type="text"
             placeholder="请输入API简介"
-            @keypress.enter="$table?.handleSearch"
+            @keypress.enter="$table?.handleSearch()"
           />
         </QueryBarItem>
         <QueryBarItem label="Tags" :label-width="40">
@@ -231,7 +231,7 @@ const columns = [
             clearable
             type="text"
             placeholder="请输入API模块"
-            @keypress.enter="$table?.handleSearch"
+            @keypress.enter="$table?.handleSearch()"
           />
         </QueryBarItem>
       </template>
