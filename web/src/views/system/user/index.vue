@@ -49,7 +49,7 @@ const {
   doCreate: api.createUser,
   doUpdate: api.updateUser,
   doDelete: api.deleteUser,
-  // refresh: () => $table.value?.handleSearch(),
+  refresh: () => $table.value?.handleSearch(),
 })
 
 const roleOption = ref([])
