@@ -12,6 +12,10 @@ import {
   NSwitch,
   NTag,
   NPopconfirm,
+  NLayout,
+  NLayoutSider,
+  NLayoutContent,
+  NTreeSelect,
 } from 'naive-ui'
 
 import CommonPage from '@/components/page/CommonPage.vue'
@@ -53,10 +57,12 @@ const {
 })
 
 const roleOption = ref([])
+const deptOption = ref([])
 
 onMounted(() => {
   $table.value?.handleSearch()
   api.getRoleList({ page: 1, page_size: 9999 }).then((res) => (roleOption.value = res.data))
+  api.getDepts().then((res) => (deptOption.value = res.data))
 })
 
 const columns = [
@@ -103,6 +109,13 @@ const columns = [
         )
       return h('span', group)
     },
+  },
+  {
+    title: '部门',
+    key: 'dept.name',
+    align: 'center',
+    width: 40,
+    ellipsis: { tooltip: true },
   },
   {
     title: '超级用户',
@@ -169,6 +182,7 @@ const columns = [
               onClick: () => {
                 // roles => role_ids
                 handleEdit(row)
+                modalForm.value.dept_id = row.dept?.id
                 modalForm.value.roles = row.roles.map((e) => (e = e.id))
               },
             },
@@ -225,6 +239,7 @@ async function handleUpdateDisable(row) {
     role_ids.push(e.id)
   })
   row.roles = role_ids
+  row.dept_id = row.dept?.id
   try {
     await api.updateUser(row)
     $message?.success(row.is_active ? '已取消禁用该用户' : '已禁用该用户')
@@ -234,6 +249,16 @@ async function handleUpdateDisable(row) {
     row.is_active = row.is_active === false ? true : false
   } finally {
     row.publishing = false
+  }
+}
+
+const nodeProps = ({ option }) => {
+  return {
+    onClick() {
+      api.getUserList({ dept_id: option.id }).then((res) => {
+        $table.value.tableData = res.data
+      })
+    },
   }
 }
 
@@ -299,110 +324,138 @@ const validateAddUser = {
 </script>
 
 <template>
-  <!-- 业务页面 -->
-  <CommonPage show-footer title="用户列表">
-    <template #action>
-      <NButton v-permission="'post/api/v1/user/create'" type="primary" @click="handleAdd">
-        <TheIcon icon="material-symbols:add" :size="18" class="mr-5" />新建用户
-      </NButton>
-    </template>
-    <!-- 表格 -->
-    <CrudTable
-      ref="$table"
-      v-model:query-items="queryItems"
-      :columns="columns"
-      :get-data="api.getUserList"
-    >
-      <template #queryBar>
-        <QueryBarItem label="名称" :label-width="40">
-          <NInput
-            v-model:value="queryItems.username"
-            clearable
-            type="text"
-            placeholder="请输入用户名称"
-            @keypress.enter="$table?.handleSearch()"
-          />
-        </QueryBarItem>
-        <QueryBarItem label="邮箱" :label-width="40">
-          <NInput
-            v-model:value="queryItems.email"
-            clearable
-            type="text"
-            placeholder="请输入邮箱"
-            @keypress.enter="$table?.handleSearch()"
-          />
-        </QueryBarItem>
-      </template>
-    </CrudTable>
-
-    <!-- 新增/编辑 弹窗 -->
-    <CrudModal
-      v-model:visible="modalVisible"
-      :title="modalTitle"
-      :loading="modalLoading"
-      @save="handleSave"
-    >
-      <NForm
-        ref="modalFormRef"
-        label-placement="left"
-        label-align="left"
-        :label-width="80"
-        :model="modalForm"
-        :rules="validateAddUser"
+  <NLayout has-sider wh-full>
+    <NLayoutSider bordered content-style="padding: 24px;">
+      <h1>部门管理</h1>
+      <br />
+      <NTree
+        block-line
+        :data="deptOption"
+        key-field="id"
+        label-field="name"
+        default-expand-all
+        :node-props="nodeProps"
       >
-        <NFormItem label="用户名称" path="username">
-          <NInput v-model:value="modalForm.username" clearable placeholder="请输入用户名称" />
-        </NFormItem>
-        <NFormItem label="邮箱" path="email">
-          <NInput v-model:value="modalForm.email" clearable placeholder="请输入邮箱" />
-        </NFormItem>
-        <NFormItem v-if="modalAction === 'add'" label="密码" path="password">
-          <NInput
-            v-model:value="modalForm.password"
-            show-password-on="mousedown"
-            type="password"
-            clearable
-            placeholder="请输入密码"
-          />
-        </NFormItem>
-        <NFormItem v-if="modalAction === 'add'" label="确认密码" path="confirmPassword">
-          <NInput
-            v-model:value="modalForm.confirmPassword"
-            show-password-on="mousedown"
-            type="password"
-            clearable
-            placeholder="请确认密码"
-          />
-        </NFormItem>
-        <NFormItem label="角色" path="roles">
-          <NCheckboxGroup v-model:value="modalForm.roles">
-            <NSpace item-style="display: flex;">
-              <NCheckbox
-                v-for="item in roleOption"
-                :key="item.id"
-                :value="item.id"
-                :label="item.name"
+      </NTree>
+    </NLayoutSider>
+    <NLayoutContent>
+      <CommonPage show-footer title="用户列表">
+        <template #action>
+          <NButton v-permission="'post/api/v1/user/create'" type="primary" @click="handleAdd">
+            <TheIcon icon="material-symbols:add" :size="18" class="mr-5" />新建用户
+          </NButton>
+        </template>
+        <!-- 表格 -->
+        <CrudTable
+          ref="$table"
+          v-model:query-items="queryItems"
+          :columns="columns"
+          :get-data="api.getUserList"
+        >
+          <template #queryBar>
+            <QueryBarItem label="名称" :label-width="40">
+              <NInput
+                v-model:value="queryItems.username"
+                clearable
+                type="text"
+                placeholder="请输入用户名称"
+                @keypress.enter="$table?.handleSearch()"
               />
-            </NSpace>
-          </NCheckboxGroup>
-        </NFormItem>
-        <NFormItem label="超级用户" path="is_superuser">
-          <NSwitch
-            v-model:value="modalForm.is_superuser"
-            size="small"
-            :checked-value="true"
-            :unchecked-value="false"
-          ></NSwitch>
-        </NFormItem>
-        <NFormItem label="禁用" path="is_active">
-          <NSwitch
-            v-model:value="modalForm.is_active"
-            :checked-value="false"
-            :unchecked-value="true"
-            :default-value="true"
-          />
-        </NFormItem>
-      </NForm>
-    </CrudModal>
-  </CommonPage>
+            </QueryBarItem>
+            <QueryBarItem label="邮箱" :label-width="40">
+              <NInput
+                v-model:value="queryItems.email"
+                clearable
+                type="text"
+                placeholder="请输入邮箱"
+                @keypress.enter="$table?.handleSearch()"
+              />
+            </QueryBarItem>
+          </template>
+        </CrudTable>
+
+        <!-- 新增/编辑 弹窗 -->
+        <CrudModal
+          v-model:visible="modalVisible"
+          :title="modalTitle"
+          :loading="modalLoading"
+          @save="handleSave"
+        >
+          <NForm
+            ref="modalFormRef"
+            label-placement="left"
+            label-align="left"
+            :label-width="80"
+            :model="modalForm"
+            :rules="validateAddUser"
+          >
+            <NFormItem label="用户名称" path="username">
+              <NInput v-model:value="modalForm.username" clearable placeholder="请输入用户名称" />
+            </NFormItem>
+            <NFormItem label="邮箱" path="email">
+              <NInput v-model:value="modalForm.email" clearable placeholder="请输入邮箱" />
+            </NFormItem>
+            <NFormItem v-if="modalAction === 'add'" label="密码" path="password">
+              <NInput
+                v-model:value="modalForm.password"
+                show-password-on="mousedown"
+                type="password"
+                clearable
+                placeholder="请输入密码"
+              />
+            </NFormItem>
+            <NFormItem v-if="modalAction === 'add'" label="确认密码" path="confirmPassword">
+              <NInput
+                v-model:value="modalForm.confirmPassword"
+                show-password-on="mousedown"
+                type="password"
+                clearable
+                placeholder="请确认密码"
+              />
+            </NFormItem>
+            <NFormItem label="角色" path="roles">
+              <NCheckboxGroup v-model:value="modalForm.roles">
+                <NSpace item-style="display: flex;">
+                  <NCheckbox
+                    v-for="item in roleOption"
+                    :key="item.id"
+                    :value="item.id"
+                    :label="item.name"
+                  />
+                </NSpace>
+              </NCheckboxGroup>
+            </NFormItem>
+            <NFormItem label="超级用户" path="is_superuser">
+              <NSwitch
+                v-model:value="modalForm.is_superuser"
+                size="small"
+                :checked-value="true"
+                :unchecked-value="false"
+              ></NSwitch>
+            </NFormItem>
+            <NFormItem label="禁用" path="is_active">
+              <NSwitch
+                v-model:value="modalForm.is_active"
+                :checked-value="false"
+                :unchecked-value="true"
+                :default-value="true"
+              />
+            </NFormItem>
+            <NFormItem label="部门" path="dept_id">
+              <NTreeSelect
+                v-model:value="modalForm.dept_id"
+                :options="deptOption"
+                key-field="id"
+                label-field="name"
+                placeholder="请选择部门"
+                clearable
+                default-expand-all
+              ></NTreeSelect>
+            </NFormItem>
+          </NForm>
+        </CrudModal>
+      </CommonPage>
+    </NLayoutContent>
+  </NLayout>
+  <!-- 业务页面 -->
 </template>

@@ -25,7 +25,6 @@ import { formatDate, renderIcon } from '@/utils'
 import { useCRUD } from '@/composables'
 import api from '@/api'
 import TheIcon from '@/components/icon/TheIcon.vue'
-import { uniq } from 'lodash-es'
 
 defineOptions({ name: '角色管理' })
 
