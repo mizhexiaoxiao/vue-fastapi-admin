@@ -128,5 +128,6 @@ function onChecked(rowKeys) {
 defineExpose({
   handleSearch,
   handleReset,
+  tableData,
 })
 </script>
