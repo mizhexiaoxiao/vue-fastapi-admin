@@ -50,6 +50,3 @@ class MenuUpdate(BaseModel):
     component: str = Field(example="/system/user")
     keepalive: Optional[bool] = False
     redirect: Optional[str] = ""
-
-    def update_dict(self):
-        return self.model_dump(exclude_unset=True, exclude={"id"})

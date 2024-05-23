@@ -28,7 +28,7 @@ class UserController(CRUDBase[User, UserCreate, UserUpdate]):
         return obj
 
     async def update(self, obj_in: UserUpdate) -> User:
-        return await super().update(id=obj_in.id, obj_in=obj_in.update_dict())
+        return await super().update(id=obj_in.id, obj_in=obj_in)
 
     async def update_last_login(self, id: int) -> None:
         user = await self.model.get(id=id)

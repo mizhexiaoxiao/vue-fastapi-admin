@@ -36,9 +36,6 @@ class UserUpdate(BaseModel):
     is_superuser: Optional[bool] = False
     roles: Optional[List[int]] = []
 
-    def update_dict(self):
-        return self.model_dump(exclude_unset=True, exclude={"roles", "id"})
-
 
 class UpdatePassword(BaseModel):
     id: int = Field(description="用户ID")

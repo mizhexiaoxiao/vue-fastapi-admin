@@ -52,7 +52,7 @@ async def create_api(
 async def update_api(
     api_in: ApiUpdate,
 ):
-    await api_controller.update(id=api_in.id, obj_in=api_in.update_dict())
+    await api_controller.update(id=api_in.id, obj_in=api_in)
     return Success(msg="Update Successfully")
 
 

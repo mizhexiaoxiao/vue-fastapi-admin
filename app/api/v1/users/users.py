@@ -5,7 +5,6 @@ from fastapi.exceptions import HTTPException
 from tortoise.expressions import Q
 
 from app.controllers.user import UserController
-from app.core.dependency import DependPermisson
 from app.schemas.base import Success, SuccessExtra
 from app.schemas.users import *
 

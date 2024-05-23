@@ -7,10 +7,10 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-fastapi = "^0.100.0"
-uvicorn = "^0.23.1"
-tortoise-orm = "^0.19.3"
-pydantic = "^2.3.0"
+fastapi = "0.111.0"
+uvicorn = "^0.23.0"
+tortoise-orm = "^0.20.1"
+pydantic = "^2.7.1"
 email-validator = "^2.0.0.post2"
 passlib = "^1.7.4"
 pyjwt = "^2.7.0"
@@ -20,6 +20,8 @@ ruff = "^0.0.281"
 loguru = "^0.7.0"
 pydantic-settings = "^2.0.3"
 argon2-cffi = "^23.1.0"
+pydantic-core = "^2.18.2"
+annotated-types = "^0.6.0"
 
 [tool.black]
 line-length = 120

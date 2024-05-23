@@ -1,3 +1,4 @@
+import asyncio
 from datetime import datetime
 
 from tortoise import fields, models
@@ -20,17 +21,17 @@ class BaseModel(models.Model):
                     value = value.strftime(settings.DATETIME_FORMAT)
                 d[field] = value
         if m2m:
-            for field in self._meta.m2m_fields:
-                if field not in exclude_fields:
-                    values = [value for value in await getattr(self, field).all().values()]
-                    for value in values:
-                        value.update(
-                            (k, v.strftime(settings.DATETIME_FORMAT))
-                            for k, v in value.items()
-                            if isinstance(v, datetime)
-                        )
-                    d[field] = values
+            tasks = [self.__fetch_m2m_field(field) for field in self._meta.m2m_fields if field not in exclude_fields]
+            results = await asyncio.gather(*tasks)
+            for field, values in results:
+                d[field] = values
         return d
+
+    async def __fetch_m2m_field(self, field):
+        values = [value for value in await getattr(self, field).all().values()]
+        for value in values:
+            value.update((k, v.strftime(settings.DATETIME_FORMAT)) for k, v in value.items() if isinstance(v, datetime))
+        return field, values
 
     class Meta:
         abstract = True

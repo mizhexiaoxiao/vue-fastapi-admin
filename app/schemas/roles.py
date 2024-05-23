@@ -25,9 +25,6 @@ class RoleUpdate(BaseModel):
     name: str = Field(example="管理员")
     desc: str = Field("", example="管理员角色")
 
-    def update_dict(self):
-        return self.model_dump(exclude_unset=True, exclude={"id"})
-
 
 class RoleUpdateMenusApis(BaseModel):
     id: int
