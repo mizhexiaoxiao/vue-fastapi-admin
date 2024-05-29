@@ -7,6 +7,7 @@ from tortoise.expressions import Q
 from app.controllers.user import UserController
 from app.schemas.base import Success, SuccessExtra
 from app.schemas.users import *
+from app.controllers.dept import dept_controller
 
 logger = logging.getLogger(__name__)
 
@@ -19,6 +20,7 @@ async def list_user(
     page_size: int = Query(10, description="每页数量"),
     username: str = Query("", description="用户名称，用于搜索"),
     email: str = Query("", description="邮箱地址"),
+    dept_id: int = Query(None, description="部门ID")
 ):
     user_controller = UserController()
     q = Q()
@@ -26,8 +28,14 @@ async def list_user(
         q &= Q(username__contains=username)
     if email:
         q &= Q(email__contains=email)
+    if dept_id is not None:
+        q &= Q(dept_id=dept_id)
     total, user_objs = await user_controller.list(page=page, page_size=page_size, search=q)
     data = [await obj.to_dict(m2m=True, exclude_fields=["password"]) for obj in user_objs]
+    for item in data:
+        dept_id = item.pop("dept_id", None)
+        item["dept"] = await (await dept_controller.get(id=dept_id)).to_dict() if dept_id else {}
+
     return SuccessExtra(data=data, total=total, page=page, page_size=page_size)
 
 
