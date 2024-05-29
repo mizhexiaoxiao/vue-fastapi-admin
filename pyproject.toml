@@ -22,6 +22,7 @@ pydantic-settings = "^2.0.3"
 argon2-cffi = "^23.1.0"
 pydantic-core = "^2.18.2"
 annotated-types = "^0.6.0"
+setuptools = "^70.0.0"
 
 [tool.black]
 line-length = 120
