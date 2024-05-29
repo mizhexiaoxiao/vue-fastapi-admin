@@ -134,5 +134,16 @@ async def init_menus():
                 component="/system/api",
                 keepalive=True,
             ),
+            Menu(
+                menu_type=MenuType.MENU,
+                name="部门管理",
+                path="dept",
+                order=5,
+                parent_id=parent_menu.id,
+                icon="mingcute:department-line",
+                is_hidden=False,
+                component="/system/dept",
+                keepalive=True,
+            ),
         ]
         await Menu.bulk_create(children_menu)

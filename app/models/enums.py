@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import Enum, StrEnum
 
 
 class EnumBase(Enum):
@@ -9,14 +9,6 @@ class EnumBase(Enum):
     @classmethod
     def get_member_names(cls):
         return [name for name in cls._member_names_]
-
-
-class IntEnum(int, EnumBase):
-    ...
-
-
-class StrEnum(str, EnumBase):
-    ...
 
 
 class MethodType(StrEnum):
