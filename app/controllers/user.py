@@ -46,9 +46,9 @@ class UserController(CRUDBase[User, UserCreate, UserUpdate]):
             raise HTTPException(status_code=400, detail="用户已被禁用")
         return user
 
-    async def update_roles(self, user: User, roles: List[int]) -> None:
+    async def update_roles(self, user: User, role_ids: List[int]) -> None:
         await user.roles.clear()
-        for role_id in roles:
+        for role_id in role_ids:
             role_obj = await role_controller.get(id=role_id)
             await user.roles.add(role_obj)
 

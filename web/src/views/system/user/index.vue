@@ -67,21 +67,6 @@ onMounted(() => {
 
 const columns = [
   {
-    title: '头像',
-    key: 'avatar',
-    width: 50,
-    align: 'center',
-    render(row) {
-      return h(NImage, {
-        height: 50,
-        imgProps: { style: { 'border-radius': '3px' } },
-        src: row.avatar,
-        'fallback-src': 'http://dummyimage.com/400x400', // 加载失败
-        'show-toolbar-tooltip': true,
-      })
-    },
-  },
-  {
     title: '名称',
     key: 'username',
     width: 60,
@@ -180,10 +165,10 @@ const columns = [
               type: 'primary',
               style: 'margin-right: 8px;',
               onClick: () => {
-                // roles => role_ids
                 handleEdit(row)
                 modalForm.value.dept_id = row.dept?.id
-                modalForm.value.roles = row.roles.map((e) => (e = e.id))
+                modalForm.value.role_ids = row.roles.map((e) => (e = e.id))
+                delete modalForm.value.dept
               },
             },
             {
@@ -238,7 +223,7 @@ async function handleUpdateDisable(row) {
   row.roles.forEach((e) => {
     role_ids.push(e.id)
   })
-  row.roles = role_ids
+  row.role_ids = role_ids
   row.dept_id = row.dept?.id
   try {
     await api.updateUser(row)
@@ -252,12 +237,20 @@ async function handleUpdateDisable(row) {
   }
 }
 
+let lastClickedNodeId = null
+
 const nodeProps = ({ option }) => {
   return {
     onClick() {
-      api.getUserList({ dept_id: option.id }).then((res) => {
-        $table.value.tableData = res.data
-      })
+      if (lastClickedNodeId === option.id) {
+        $table.value?.handleSearch()
+        lastClickedNodeId = null
+      } else {
+        api.getUserList({ dept_id: option.id }).then((res) => {
+          $table.value.tableData = res.data
+          lastClickedNodeId = option.id
+        })
+      }
     },
   }
 }
@@ -325,8 +318,14 @@ const validateAddUser = {
 
 <template>
   <NLayout has-sider wh-full>
-    <NLayoutSider bordered content-style="padding: 24px;">
-      <h1>部门管理</h1>
+    <NLayoutSider
+      bordered
+      content-style="padding: 24px;"
+      :collapsed-width="0"
+      :width="240"
+      show-trigger="arrow-circle"
+    >
+      <h1>部门列表</h1>
       <br />
       <NTree
         block-line
@@ -413,8 +412,8 @@ const validateAddUser = {
                 placeholder="请确认密码"
               />
             </NFormItem>
-            <NFormItem label="角色" path="roles">
-              <NCheckboxGroup v-model:value="modalForm.roles">
+            <NFormItem label="角色" path="role_ids">
+              <NCheckboxGroup v-model:value="modalForm.role_ids">
                 <NSpace item-style="display: flex;">
                   <NCheckbox
                     v-for="item in roleOption"

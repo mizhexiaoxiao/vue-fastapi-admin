@@ -8,7 +8,7 @@ import api from '@/api'
 function buildRoutes(routes = []) {
   return routes.map((e) => ({
     name: e.name,
-    path: e.component !== 'Layout' ? '/' : '/' + e.path, // 处理目录是一级菜单的情况
+    path: e.path, // 处理目录是一级菜单的情况
     component: shallowRef(Layout), // ? 不使用 shallowRef 控制台会有 warning
     isHidden: e.is_hidden,
     redirect: e.redirect,

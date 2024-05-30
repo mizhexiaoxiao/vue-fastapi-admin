@@ -61,7 +61,7 @@ async def create_user(
             detail="The user with this email already exists in the system.",
         )
     new_user = await user_controller.create(obj_in=user_in)
-    await user_controller.update_roles(new_user, user_in.roles)
+    await user_controller.update_roles(new_user, user_in.role_ids)
     return Success(msg="Created Successfully")
 
 
@@ -71,7 +71,7 @@ async def update_user(
 ):
     user_controller = UserController()
     user = await user_controller.update(obj_in=user_in)
-    await user_controller.update_roles(user, user_in.roles)
+    await user_controller.update_roles(user, user_in.role_ids)
     return Success(msg="Updated Successfully")
 
 
