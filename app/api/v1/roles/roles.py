@@ -47,7 +47,7 @@ async def create_role(role_in: RoleCreate):
 
 @router.post("/update", summary="更新角色")
 async def update_role(role_in: RoleUpdate):
-    await role_controller.update(id=role_in.id, obj_in=role_in.update_dict())
+    await role_controller.update(id=role_in.id, obj_in=role_in)
     return Success(msg="Updated Successfully")
 
 

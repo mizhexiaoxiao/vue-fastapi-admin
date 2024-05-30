@@ -16,13 +16,15 @@ async def list_menu(
     page: int = Query(1, description="页码"),
     page_size: int = Query(10, description="每页数量"),
 ):
-    parent_menus = await menu_controller.model.filter(parent_id=0).order_by("order")
-    res_menu = []
-    for menu in parent_menus:
-        child_menu = await menu_controller.model.filter(parent_id=menu.id).order_by("order")
+    async def get_menu_with_children(menu_id: int):
+        menu = await menu_controller.model.get(id=menu_id)
         menu_dict = await menu.to_dict()
-        menu_dict["children"] = [await obj.to_dict() for obj in child_menu]
-        res_menu.append(menu_dict)
+        child_menus = await menu_controller.model.filter(parent_id=menu_id).order_by("order")
+        menu_dict["children"] = [await get_menu_with_children(child.id) for child in child_menus]
+        return menu_dict
+
+    parent_menus = await menu_controller.model.filter(parent_id=0).order_by("order")
+    res_menu = [await get_menu_with_children(menu.id) for menu in parent_menus]
     return SuccessExtra(data=res_menu, total=len(res_menu), page=page, page_size=page_size)
 
 
@@ -46,7 +48,7 @@ async def create_menu(
 async def update_menu(
     menu_in: MenuUpdate,
 ):
-    await menu_controller.update(id=menu_in.id, obj_in=menu_in.update_dict())
+    await menu_controller.update(id=menu_in.id, obj_in=menu_in)
     return Success(msg="Updated Success")
 
 

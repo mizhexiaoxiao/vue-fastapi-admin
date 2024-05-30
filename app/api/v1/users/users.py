@@ -5,7 +5,6 @@ from fastapi.exceptions import HTTPException
 from tortoise.expressions import Q
 
 from app.controllers.user import UserController
-from app.core.dependency import DependPermisson
 from app.schemas.base import Success, SuccessExtra
 from app.schemas.users import *
 from app.controllers.dept import dept_controller
@@ -62,7 +61,7 @@ async def create_user(
             detail="The user with this email already exists in the system.",
         )
     new_user = await user_controller.create(obj_in=user_in)
-    await user_controller.update_roles(new_user, user_in.roles)
+    await user_controller.update_roles(new_user, user_in.role_ids)
     return Success(msg="Created Successfully")
 
 
@@ -72,7 +71,7 @@ async def update_user(
 ):
     user_controller = UserController()
     user = await user_controller.update(obj_in=user_in)
-    await user_controller.update_roles(user, user_in.roles)
+    await user_controller.update_roles(user, user_in.role_ids)
     return Success(msg="Updated Successfully")
 
 

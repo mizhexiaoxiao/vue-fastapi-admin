@@ -34,7 +34,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         if isinstance(obj_in, Dict):
             obj_dict = obj_in
         else:
-            obj_dict = obj_in.model_dump(exclude_unset=True)
+            obj_dict = obj_in.model_dump(exclude_unset=True, exclude={"id"})
         obj = await self.get(id=id)
         obj = obj.update_from_dict(obj_dict)
         await obj.save()

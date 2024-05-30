@@ -80,7 +80,7 @@ async def init_menus():
         parent_menu = await Menu.create(
             menu_type=MenuType.CATALOG,
             name="系统管理",
-            path="system",
+            path="/system",
             order=1,
             parent_id=0,
             icon="carbon:gui-management",
@@ -134,5 +134,39 @@ async def init_menus():
                 component="/system/api",
                 keepalive=True,
             ),
+            Menu(
+                menu_type=MenuType.MENU,
+                name="部门管理",
+                path="dept",
+                order=5,
+                parent_id=parent_menu.id,
+                icon="mingcute:department-line",
+                is_hidden=False,
+                component="/system/dept",
+                keepalive=True,
+            ),
         ]
         await Menu.bulk_create(children_menu)
+        parent_menu = await Menu.create(
+            menu_type=MenuType.CATALOG,
+            name="一级菜单",
+            path="/",
+            order=2,
+            parent_id=0,
+            icon="mdi-fan-speed-1",
+            is_hidden=False,
+            component="Layout",
+            keepalive=True,
+            redirect="",
+        )
+        await Menu.create(
+            menu_type=MenuType.MENU,
+            name="一级菜单",
+            path="top-menu",
+            order=1,
+            parent_id=parent_menu.id,
+            icon="mdi-fan-speed-1",
+            is_hidden=False,
+            component="/top-menu",
+            keepalive=True,
+        )

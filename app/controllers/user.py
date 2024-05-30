@@ -28,7 +28,7 @@ class UserController(CRUDBase[User, UserCreate, UserUpdate]):
         return obj
 
     async def update(self, obj_in: UserUpdate) -> User:
-        return await super().update(id=obj_in.id, obj_in=obj_in.update_dict())
+        return await super().update(id=obj_in.id, obj_in=obj_in)
 
     async def update_last_login(self, id: int) -> None:
         user = await self.model.get(id=id)
@@ -46,9 +46,9 @@ class UserController(CRUDBase[User, UserCreate, UserUpdate]):
             raise HTTPException(status_code=400, detail="用户已被禁用")
         return user
 
-    async def update_roles(self, user: User, roles: List[int]) -> None:
+    async def update_roles(self, user: User, role_ids: List[int]) -> None:
         await user.roles.clear()
-        for role_id in roles:
+        for role_id in role_ids:
             role_obj = await role_controller.get(id=role_id)
             await user.roles.add(role_obj)
 

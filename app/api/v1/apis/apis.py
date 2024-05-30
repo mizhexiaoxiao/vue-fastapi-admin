@@ -10,7 +10,6 @@ from app.schemas.apis import *
 
 router = APIRouter()
 
-
 @router.get("/list", summary="查看API列表")
 async def list_api(
     page: int = Query(1, description="页码"),
@@ -52,7 +51,7 @@ async def create_api(
 async def update_api(
     api_in: ApiUpdate,
 ):
-    await api_controller.update(id=api_in.id, obj_in=api_in.update_dict())
+    await api_controller.update(id=api_in.id, obj_in=api_in)
     return Success(msg="Update Successfully")
 
 
