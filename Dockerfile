@@ -21,7 +21,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked,id=core-apt \
     && apt-get update \
     && apt-get install -y --no-install-recommends gcc python3-dev bash nginx vim curl procps net-tools
 
-RUN pip install poetry -i https://pypi.tuna.tsinghua.edu.cn/simple\
+RUN pip install poetry -i https://pypi.tuna.tsinghua.edu.cn/simple \
     && poetry config virtualenvs.create false \
     && poetry install
 
