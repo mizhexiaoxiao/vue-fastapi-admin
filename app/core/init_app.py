@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware import Middleware
 from fastapi.middleware.cors import CORSMiddleware
-from tortoise.contrib.fastapi import register_tortoise
 
 from app.api import api_router
 from app.controllers.user import UserCreate, user_controller
@@ -36,16 +35,6 @@ def make_middlewares():
         Middleware(BackGroundTaskMiddleware),
     ]
     return middleware
-
-
-def register_db(app: FastAPI, db_url=None):
-    register_tortoise(
-        app,
-        # db_url='sqlite://db.sqlite3',
-        # modules={'models':['app.models', "aerich.models"]},
-        config=settings.TORTOISE_ORM,
-        generate_schemas=True,
-    )
 
 
 def register_exceptions(app: FastAPI):

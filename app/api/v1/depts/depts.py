@@ -1,8 +1,7 @@
 from fastapi import APIRouter, Query
 
 from app.controllers.dept import dept_controller
-from app.log import logger
-from app.schemas import Success, SuccessExtra
+from app.schemas import Success
 from app.schemas.depts import *
 
 router = APIRouter()

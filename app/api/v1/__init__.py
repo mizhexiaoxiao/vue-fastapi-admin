@@ -4,10 +4,10 @@ from app.core.dependency import DependPermisson
 
 from .apis import apis_router
 from .base import base_router
+from .depts import depts_router
 from .menus import menus_router
 from .roles import roles_router
 from .users import users_router
-from .depts import depts_router
 
 v1_router = APIRouter()
 

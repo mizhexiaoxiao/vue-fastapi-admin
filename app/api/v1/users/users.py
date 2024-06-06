@@ -4,10 +4,10 @@ from fastapi import APIRouter, Query
 from fastapi.exceptions import HTTPException
 from tortoise.expressions import Q
 
+from app.controllers.dept import dept_controller
 from app.controllers.user import UserController
 from app.schemas.base import Success, SuccessExtra
 from app.schemas.users import *
-from app.controllers.dept import dept_controller
 
 logger = logging.getLogger(__name__)
 
@@ -20,7 +20,7 @@ async def list_user(
     page_size: int = Query(10, description="每页数量"),
     username: str = Query("", description="用户名称，用于搜索"),
     email: str = Query("", description="邮箱地址"),
-    dept_id: int = Query(None, description="部门ID")
+    dept_id: int = Query(None, description="部门ID"),
 ):
     user_controller = UserController()
     q = Q()
