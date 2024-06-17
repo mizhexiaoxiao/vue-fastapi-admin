@@ -5,6 +5,10 @@ const Layout = () => import('@/layout/index.vue')
 
 export const basicRoutes = [
   {
+    path: '/',
+    redirect: '/workbench', // 默认跳转到首页
+  },
+  {
     name: t('views.workbench.label_workbench'),
     path: '/',
     component: Layout,
