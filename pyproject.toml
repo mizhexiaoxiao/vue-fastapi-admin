@@ -8,7 +8,6 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 fastapi = "0.111.0"
-uvicorn = "^0.23.0"
 tortoise-orm = "^0.20.1"
 pydantic = "^2.7.1"
 email-validator = "^2.0.0.post2"
@@ -23,6 +22,8 @@ argon2-cffi = "^23.1.0"
 pydantic-core = "^2.18.2"
 annotated-types = "^0.6.0"
 setuptools = "^70.0.0"
+uvicorn = "^0.30.1"
+h11 = "^0.14.0"
 
 [tool.black]
 line-length = 120
