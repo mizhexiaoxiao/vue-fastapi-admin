@@ -2,8 +2,7 @@ FROM node:18.12.0-alpine3.16 as web
 
 WORKDIR /opt/vue-fastapi-admin
 COPY /web ./web
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories \
-    && cd /opt/vue-fastapi-admin/web && npm i -g pnpm --registry=https://registry.npmmirror.com \
+RUN cd /opt/vue-fastapi-admin/web && npm i -g pnpm --registry=https://registry.npmmirror.com \
     && pnpm i --registry=https://registry.npmmirror.com && pnpm run build
 
 
