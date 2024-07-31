@@ -74,7 +74,23 @@ const emit = defineEmits(['update:queryItems', 'onChecked', 'onDataChange'])
 const loading = ref(false)
 const initQuery = { ...props.queryItems }
 const tableData = ref([])
-const pagination = reactive({ page: 1, page_size: 10 })
+const pagination = reactive({
+  page: 1,
+  page_size: 10,
+  pageSizes: [10, 20, 50, 100],
+  showSizePicker: true,
+  prefix({ itemCount }) {
+    return `共 ${itemCount} 条`
+  },
+  onChange: (page) => {
+    pagination.page = page
+  },
+  onUpdatePageSize: (pageSize) => {
+    pagination.page_size = pageSize
+    pagination.page = 1
+    handleQuery()
+  },
+})
 
 async function handleQuery() {
   try {
@@ -90,7 +106,7 @@ async function handleQuery() {
       ...paginationParams,
     })
     tableData.value = data
-    pagination.itemCount = total
+    pagination.itemCount = total || 0
   } catch (error) {
     tableData.value = []
     pagination.itemCount = 0

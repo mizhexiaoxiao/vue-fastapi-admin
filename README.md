@@ -190,7 +190,20 @@ pnpm dev
 
 你可以在群里提出任何疑问，我会尽快回复答疑。
 
-<img alt="Vue FastAPI Admin Logo" width="400" src="https://github.com/mizhexiaoxiao/vue-fastapi-admin/blob/main/deploy/sample-picture/group.jpg">
+<img width="300" src="https://github.com/mizhexiaoxiao/vue-fastapi-admin/blob/main/deploy/sample-picture/group.jpg">
+
+## 打赏
+如果项目有帮助到你，可以请作者喝杯咖啡~
+
+<div style="display: flex">
+    <img src="https://github.com/mizhexiaoxiao/vue-fastapi-admin/blob/main/deploy/sample-picture/1.jpg" width="300">
+    <img src="https://github.com/mizhexiaoxiao/vue-fastapi-admin/blob/main/deploy/sample-picture/2.jpg" width="300">
+</div>
+
+## 定制开发
+如果有基于该项目的定制需求或其他合作，请添加下方微信，备注来意
+
+<img width="300" src="https://github.com/mizhexiaoxiao/vue-fastapi-admin/blob/main/deploy/sample-picture/3.jpg">
 
 ### Visitors Count
 
