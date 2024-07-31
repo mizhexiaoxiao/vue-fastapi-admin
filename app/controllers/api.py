@@ -1,14 +1,14 @@
+from fastapi.routing import APIRoute
+
 from app.core.crud import CRUDBase
+from app.log import logger
 from app.models.admin import Api
 from app.schemas.apis import ApiCreate, ApiUpdate
-from fastapi.routing import APIRoute
-from app.log import logger
 
 
 class ApiController(CRUDBase[Api, ApiCreate, ApiUpdate]):
     def __init__(self):
         super().__init__(model=Api)
-
 
     async def refresh_api(self):
         from app import app
@@ -39,5 +39,6 @@ class ApiController(CRUDBase[Api, ApiCreate, ApiUpdate]):
                 else:
                     logger.debug(f"API Created {method} {path}")
                     await Api.create(**dict(method=method, path=path, summary=summary, tags=tags))
+
 
 api_controller = ApiController()

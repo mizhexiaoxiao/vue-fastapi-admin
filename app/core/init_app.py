@@ -20,7 +20,7 @@ from app.models.admin import Menu
 from app.schemas.menus import MenuType
 from app.settings.config import settings
 
-from .middlewares import BackGroundTaskMiddleware
+from .middlewares import BackGroundTaskMiddleware, HttpAuditLogMiddleware
 
 
 def make_middlewares():
@@ -33,6 +33,14 @@ def make_middlewares():
             allow_headers=settings.CORS_ALLOW_HEADERS,
         ),
         Middleware(BackGroundTaskMiddleware),
+        Middleware(
+            HttpAuditLogMiddleware,
+            methods=["GET", "POST", "PUT", "DELETE"],
+            exclude_paths=[
+                "/docs",
+                "/openapi.json",
+            ],
+        ),
     ]
     return middleware
 
@@ -134,6 +142,17 @@ async def init_menus():
                 component="/system/dept",
                 keepalive=False,
             ),
+            Menu(
+                menu_type=MenuType.MENU,
+                name="审计日志",
+                path="auditlog",
+                order=6,
+                parent_id=parent_menu.id,
+                icon="ph:clipboard-text-bold",
+                is_hidden=False,
+                component="/system/auditlog",
+                keepalive=False,
+            )
         ]
         await Menu.bulk_create(children_menu)
         parent_menu = await Menu.create(

@@ -79,3 +79,14 @@ class DeptClosure(BaseModel, TimestampMixin):
     ancestor = fields.IntField(description="父代")
     descendant = fields.IntField(description="子代")
     level = fields.IntField(default=0, description="深度")
+
+
+class AuditLog(BaseModel, TimestampMixin):
+    user_id = fields.IntField(description="用户ID", index=True)
+    username = fields.CharField(max_length=64, default="", description="用户名称", index=True)
+    module = fields.CharField(max_length=64, default="", description="功能模块", index=True)
+    summary = fields.CharField(max_length=128, default="", description="请求描述", index=True)
+    method = fields.CharField(max_length=10, default="", description="请求方法", index=True)
+    path = fields.CharField(max_length=255, default="", description="请求路径", index=True)
+    status = fields.IntField(default=-1, description="状态码", index=True)
+    response_time = fields.IntField(default=0, description="响应时间(单位ms)")
