@@ -1,8 +1,8 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from fastapi import APIRouter
 
-from app.controllers.user import UserController, user_controller
+from app.controllers.user import user_controller
 from app.core.ctx import CTX_USER_ID
 from app.core.dependency import DependAuth
 from app.models.admin import Api, Menu, Role, User
@@ -21,7 +21,7 @@ async def login_access_token(credentials: CredentialsSchema):
     user: User = await user_controller.authenticate(credentials)
     await user_controller.update_last_login(user.id)
     access_token_expires = timedelta(minutes=settings.JWT_ACCESS_TOKEN_EXPIRE_MINUTES)
-    expire = datetime.utcnow() + access_token_expires
+    expire = datetime.now(timezone.utc) + access_token_expires
 
     data = JWTOut(
         access_token=create_access_token(
@@ -91,10 +91,10 @@ async def get_user_api():
     return Success(data=apis)
 
 
-@router.post("/update_password", summary="更新用户密码", dependencies=[DependAuth])
+@router.post("/update_password", summary="修改密码", dependencies=[DependAuth])
 async def update_user_password(req_in: UpdatePassword):
-    user_controller = UserController()
-    user = await user_controller.get(req_in.id)
+    user_id = CTX_USER_ID.get()
+    user = await user_controller.get(user_id)
     verified = verify_password(req_in.old_password, user.password)
     if not verified:
         return Fail(msg="旧密码验证错误！")

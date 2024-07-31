@@ -52,7 +52,7 @@ def register_routers(app: FastAPI, prefix: str = "/api"):
 async def init_superuser():
     user = await user_controller.model.exists()
     if not user:
-        await user_controller.create(
+        await user_controller.create_user(
             UserCreate(
                 username="admin",
                 email="admin@admin.com",
@@ -75,7 +75,7 @@ async def init_menus():
             icon="carbon:gui-management",
             is_hidden=False,
             component="Layout",
-            keepalive=True,
+            keepalive=False,
             redirect="/system/user",
         )
         children_menu = [
@@ -88,7 +88,7 @@ async def init_menus():
                 icon="material-symbols:person-outline-rounded",
                 is_hidden=False,
                 component="/system/user",
-                keepalive=True,
+                keepalive=False,
             ),
             Menu(
                 menu_type=MenuType.MENU,
@@ -99,7 +99,7 @@ async def init_menus():
                 icon="carbon:user-role",
                 is_hidden=False,
                 component="/system/role",
-                keepalive=True,
+                keepalive=False,
             ),
             Menu(
                 menu_type=MenuType.MENU,
@@ -110,7 +110,7 @@ async def init_menus():
                 icon="material-symbols:list-alt-outline",
                 is_hidden=False,
                 component="/system/menu",
-                keepalive=True,
+                keepalive=False,
             ),
             Menu(
                 menu_type=MenuType.MENU,
@@ -121,7 +121,7 @@ async def init_menus():
                 icon="ant-design:api-outlined",
                 is_hidden=False,
                 component="/system/api",
-                keepalive=True,
+                keepalive=False,
             ),
             Menu(
                 menu_type=MenuType.MENU,
@@ -132,7 +132,7 @@ async def init_menus():
                 icon="mingcute:department-line",
                 is_hidden=False,
                 component="/system/dept",
-                keepalive=True,
+                keepalive=False,
             ),
         ]
         await Menu.bulk_create(children_menu)
@@ -145,7 +145,7 @@ async def init_menus():
             icon="mdi-fan-speed-1",
             is_hidden=False,
             component="Layout",
-            keepalive=True,
+            keepalive=False,
             redirect="",
         )
         await Menu.create(
@@ -157,5 +157,5 @@ async def init_menus():
             icon="mdi-fan-speed-1",
             is_hidden=False,
             component="/top-menu",
-            keepalive=True,
+            keepalive=False,
         )

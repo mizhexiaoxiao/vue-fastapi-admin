@@ -1,12 +1,11 @@
 import logging
 
-from fastapi import APIRouter, Query
-from fastapi.exceptions import HTTPException
+from fastapi import APIRouter, Body, Query
 from tortoise.expressions import Q
 
 from app.controllers.dept import dept_controller
-from app.controllers.user import UserController
-from app.schemas.base import Success, SuccessExtra
+from app.controllers.user import user_controller
+from app.schemas.base import Fail, Success, SuccessExtra
 from app.schemas.users import *
 
 logger = logging.getLogger(__name__)
@@ -22,7 +21,6 @@ async def list_user(
     email: str = Query("", description="邮箱地址"),
     dept_id: int = Query(None, description="部门ID"),
 ):
-    user_controller = UserController()
     q = Q()
     if username:
         q &= Q(username__contains=username)
@@ -43,7 +41,6 @@ async def list_user(
 async def get_user(
     user_id: int = Query(..., description="用户ID"),
 ):
-    user_controller = UserController()
     user_obj = await user_controller.get(id=user_id)
     user_dict = await user_obj.to_dict(exclude_fields=["password"])
     return Success(data=user_dict)
@@ -53,14 +50,10 @@ async def get_user(
 async def create_user(
     user_in: UserCreate,
 ):
-    user_controller = UserController()
     user = await user_controller.get_by_email(user_in.email)
     if user:
-        raise HTTPException(
-            status_code=400,
-            detail="The user with this email already exists in the system.",
-        )
-    new_user = await user_controller.create(obj_in=user_in)
+        return Fail(code=400, msg="The user with this email already exists in the system.")
+    new_user = await user_controller.create_user(obj_in=user_in)
     await user_controller.update_roles(new_user, user_in.role_ids)
     return Success(msg="Created Successfully")
 
@@ -69,8 +62,7 @@ async def create_user(
 async def update_user(
     user_in: UserUpdate,
 ):
-    user_controller = UserController()
-    user = await user_controller.update(obj_in=user_in)
+    user = await user_controller.update(id=user_in.id, obj_in=user_in)
     await user_controller.update_roles(user, user_in.role_ids)
     return Success(msg="Updated Successfully")
 
@@ -79,6 +71,11 @@ async def update_user(
 async def delete_user(
     user_id: int = Query(..., description="用户ID"),
 ):
-    user_controller = UserController()
     await user_controller.remove(id=user_id)
     return Success(msg="Deleted Successfully")
+
+
+@router.post("/reset_password", summary="重置密码")
+async def reset_password(user_id: int = Body(..., description="用户ID")):
+    await user_controller.reset_password(user_id)
+    return Success(msg="密码已重置为123456")

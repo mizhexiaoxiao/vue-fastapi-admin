@@ -22,13 +22,10 @@ class UserController(CRUDBase[User, UserCreate, UserUpdate]):
     async def get_by_username(self, username: str) -> Optional[User]:
         return await self.model.filter(username=username).first()
 
-    async def create(self, obj_in: UserCreate) -> User:
+    async def create_user(self, obj_in: UserCreate) -> User:
         obj_in.password = get_password_hash(password=obj_in.password)
-        obj = await super().create(obj_in.create_dict())
+        obj = await self.create(obj_in)
         return obj
-
-    async def update(self, obj_in: UserUpdate) -> User:
-        return await super().update(id=obj_in.id, obj_in=obj_in)
 
     async def update_last_login(self, id: int) -> None:
         user = await self.model.get(id=id)
@@ -51,6 +48,13 @@ class UserController(CRUDBase[User, UserCreate, UserUpdate]):
         for role_id in role_ids:
             role_obj = await role_controller.get(id=role_id)
             await user.roles.add(role_obj)
+
+    async def reset_password(self, user_id: int):
+        user_obj = await self.get(id=user_id)
+        if user_obj.is_superuser:
+            raise HTTPException(status_code=403, detail="不允许重置超级管理员密码")
+        user_obj.password = get_password_hash(password="123456")
+        await user_obj.save()
 
 
 user_controller = UserController()
