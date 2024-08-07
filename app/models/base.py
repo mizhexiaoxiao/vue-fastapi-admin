@@ -38,9 +38,9 @@ class BaseModel(models.Model):
 
 
 class UUIDModel:
-    uuid = fields.UUIDField(unique=True, pk=False)
+    uuid = fields.UUIDField(unique=True, pk=False, index=True)
 
 
 class TimestampMixin:
-    created_at = fields.DatetimeField(auto_now_add=True)
-    updated_at = fields.DatetimeField(auto_now=True)
+    created_at = fields.DatetimeField(auto_now_add=True, index=True)
+    updated_at = fields.DatetimeField(auto_now=True, index=True)
