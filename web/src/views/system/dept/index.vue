@@ -90,7 +90,7 @@ const columns = [
             {
               size: 'small',
               type: 'primary',
-              style: 'margin-right: 8px;',
+              style: 'margin-left: 8px;',
               onClick: () => {
                 console.log('row', row.parent_id)
                 if (row.parent_id === 0) {
@@ -122,6 +122,7 @@ const columns = [
                   {
                     size: 'small',
                     type: 'error',
+                    style: 'margin-left: 8px;',
                   },
                   {
                     default: () => '删除',

@@ -86,8 +86,8 @@ password：123456
 #### 后端
 启动项目需要以下环境：
 - Python 3.11
-- [Poetry](https://python-poetry.org/docs/#installing-with-the-official-installer)
 
+#### 方法一（推荐）：[Poetry](https://python-poetry.org/docs/#installing-with-the-official-installer) 安装依赖
 1. 创建虚拟环境
 ```sh
 poetry shell
@@ -100,6 +100,24 @@ poetry install
 ```sh
 make run
 ```
+#### 方法二：Pip 安装依赖
+1. 创建虚拟环境
+```sh
+python3.11 -m venv venv
+```
+2. 激活虚拟环境
+```sh
+source venv/bin/activate
+```
+3. 安装依赖
+```sh
+pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+```
+3. 启动服务
+```sh
+python run.py
+```
+
 服务现在应该正在运行，访问 http://localhost:9999/docs 查看API文档
 
 #### 前端

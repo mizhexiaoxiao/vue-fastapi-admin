@@ -17,7 +17,7 @@ export const basicRoutes = [
       {
         path: '',
         component: () => import('@/views/workbench/index.vue'),
-        name: t('views.workbench.label_workbench'),
+        name: `${t('views.workbench.label_workbench')}Default`,
         meta: {
           title: t('views.workbench.label_workbench'),
           icon: 'icon-park-outline:workbench',
@@ -36,7 +36,7 @@ export const basicRoutes = [
       {
         path: '',
         component: () => import('@/views/profile/index.vue'),
-        name: t('views.profile.label_profile'),
+        name: `${t('views.profile.label_profile')}Default`,
         meta: {
           title: t('views.profile.label_profile'),
           icon: 'user',

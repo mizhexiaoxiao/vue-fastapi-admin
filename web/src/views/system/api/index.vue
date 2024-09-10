@@ -156,6 +156,7 @@ const columns = [
                   {
                     size: 'small',
                     type: 'error',
+                    style: 'margin-right: 8px;',
                   },
                   {
                     default: () => '删除',

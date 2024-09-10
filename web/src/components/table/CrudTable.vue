@@ -1,19 +1,21 @@
 <template>
-  <QueryBar v-if="$slots.queryBar" mb-30 @search="handleSearch" @reset="handleReset">
-    <slot name="queryBar" />
-  </QueryBar>
+  <div v-bind="$attrs">
+    <QueryBar v-if="$slots.queryBar" mb-30 @search="handleSearch" @reset="handleReset">
+      <slot name="queryBar" />
+    </QueryBar>
 
-  <n-data-table
-    :remote="remote"
-    :loading="loading"
-    :columns="columns"
-    :data="tableData"
-    :scroll-x="scrollX"
-    :row-key="(row) => row[rowKey]"
-    :pagination="isPagination ? pagination : false"
-    @update:checked-row-keys="onChecked"
-    @update:page="onPageChange"
-  />
+    <n-data-table
+      :remote="remote"
+      :loading="loading"
+      :columns="columns"
+      :data="tableData"
+      :scroll-x="scrollX"
+      :row-key="(row) => row[rowKey]"
+      :pagination="isPagination ? pagination : false"
+      @update:checked-row-keys="onChecked"
+      @update:page="onPageChange"
+    />
+  </div>
 </template>
 
 <script setup>
