@@ -76,6 +76,6 @@ async def delete_user(
 
 
 @router.post("/reset_password", summary="重置密码")
-async def reset_password(user_id: int = Body(..., description="用户ID")):
+async def reset_password(user_id: int = Body(..., description="用户ID", embed=True)):
     await user_controller.reset_password(user_id)
     return Success(msg="密码已重置为123456")

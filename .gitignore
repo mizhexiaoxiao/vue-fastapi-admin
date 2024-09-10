@@ -5,7 +5,7 @@ venv/
 .vscode
 .ruff_cache/
 .pytest_cache/
-
+migrations/
 
 db.sqlite3
 db.sqlite3-journal

@@ -16,7 +16,8 @@ class ApiController(CRUDBase[Api, ApiCreate, ApiUpdate]):
         # 删除废弃API数据
         all_api_list = []
         for route in app.routes:
-            if isinstance(route, APIRoute):
+            # 只更新有鉴权的API
+            if isinstance(route, APIRoute) and len(route.dependencies) > 0:
                 all_api_list.append((list(route.methods)[0], route.path_format))
         delete_api = []
         for api in await Api.all():
@@ -28,7 +29,7 @@ class ApiController(CRUDBase[Api, ApiCreate, ApiUpdate]):
             await Api.filter(method=method, path=path).delete()
 
         for route in app.routes:
-            if isinstance(route, APIRoute):
+            if isinstance(route, APIRoute) and len(route.dependencies) > 0:
                 method = list(route.methods)[0]
                 path = route.path_format
                 summary = route.summary

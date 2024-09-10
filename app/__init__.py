@@ -5,8 +5,7 @@ from tortoise import Tortoise
 
 from app.core.exceptions import SettingNotFound
 from app.core.init_app import (
-    init_menus,
-    init_superuser,
+    init_data,
     make_middlewares,
     register_exceptions,
     register_routers,
@@ -20,10 +19,7 @@ except ImportError:
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    await Tortoise.init(config=settings.TORTOISE_ORM)
-    await Tortoise.generate_schemas()
-    await init_superuser()
-    await init_menus()
+    await init_data()
     yield
     await Tortoise.close_connections()
 

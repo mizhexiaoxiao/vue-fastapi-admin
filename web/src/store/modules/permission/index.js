@@ -5,33 +5,56 @@ import api from '@/api'
 
 // * 后端路由相关函数
 // 根据后端传来数据构建出前端路由
+
 function buildRoutes(routes = []) {
-  return routes.map((e) => ({
-    name: e.name,
-    path: e.path, // 处理目录是一级菜单的情况
-    component: shallowRef(Layout), // ? 不使用 shallowRef 控制台会有 warning
-    isHidden: e.is_hidden,
-    redirect: e.redirect,
-    meta: {
-      title: e.name,
-      icon: e.icon,
-      order: e.order,
-      keepAlive: e.keepalive,
-    },
-    children: e.children.map((e_child) => ({
-      name: e_child.name,
-      path: e_child.path, // 父路径 + 当前菜单路径
-      // ! 读取动态加载的路由模块
-      component: vueModules[`/src/views${e_child.component}/index.vue`],
-      isHidden: e_child.is_hidden,
+  return routes.map((e) => {
+    const route = {
+      name: e.name,
+      path: e.path,
+      component: shallowRef(Layout),
+      isHidden: e.is_hidden,
+      redirect: e.redirect,
       meta: {
-        title: e_child.name,
-        icon: e_child.icon,
-        order: e_child.order,
-        keepAlive: e_child.keepalive,
+        title: e.name,
+        icon: e.icon,
+        order: e.order,
+        keepAlive: e.keepalive,
       },
-    })),
-  }))
+      children: [],
+    }
+
+    if (e.children && e.children.length > 0) {
+      // 有子菜单
+      route.children = e.children.map((e_child) => ({
+        name: e_child.name,
+        path: e_child.path,
+        component: vueModules[`/src/views${e_child.component}/index.vue`],
+        isHidden: e_child.is_hidden,
+        meta: {
+          title: e_child.name,
+          icon: e_child.icon,
+          order: e_child.order,
+          keepAlive: e_child.keepalive,
+        },
+      }))
+    } else {
+      // 没有子菜单，创建一个默认的子路由
+      route.children.push({
+        name: `${e.name}Default`,
+        path: '',
+        component: vueModules[`/src/views${e.component}/index.vue`],
+        isHidden: true,
+        meta: {
+          title: e.name,
+          icon: e.icon,
+          order: e.order,
+          keepAlive: e.keepalive,
+        },
+      })
+    }
+
+    return route
+  })
 }
 
 export const usePermissionStore = defineStore('permission', {

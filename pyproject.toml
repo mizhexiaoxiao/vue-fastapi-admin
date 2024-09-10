@@ -24,6 +24,7 @@ annotated-types = "^0.6.0"
 setuptools = "^70.0.0"
 uvicorn = "^0.30.1"
 h11 = "^0.14.0"
+aerich = "^0.7.2"
 
 [tool.black]
 line-length = 120
@@ -49,3 +50,7 @@ ignore = [
     "F403",
     "F405",
 ]
+[tool.aerich]
+tortoise_orm = "app.settings.TORTOISE_ORM"
+location = "./migrations"
+src_folder = "./."

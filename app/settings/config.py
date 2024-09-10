@@ -16,42 +16,77 @@ class Settings(BaseSettings):
     CORS_ALLOW_HEADERS: typing.List = ["*"]
 
     DEBUG: bool = True
-    DB_URL: str = "sqlite://db.sqlite3"
-    DB_CONNECTIONS: dict = {
-        "default": {
-            "engine": "tortoise.backends.sqlite",
-            "db_url": DB_URL,
-            "credentials": {
-                "host": "",
-                "port": "",
-                "user": "",
-                "password": "",
-                "database": "",
-            },
-        },
-    }
 
     PROJECT_ROOT: str = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
     BASE_DIR: str = os.path.abspath(os.path.join(PROJECT_ROOT, os.pardir))
     LOGS_ROOT: str = os.path.join(BASE_DIR, "app/logs")
     SECRET_KEY: str = "3488a63e1765035d386f05409663f55c83bfae3b3c61a932744b20ad14244dcf"  # openssl rand -hex 32
     JWT_ALGORITHM: str = "HS256"
-    JWT_ACCESS_TOKEN_EXPIRE_MINUTES: int = 24 * 7  # 7 day
+    JWT_ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7  # 7 day
     TORTOISE_ORM: dict = {
         "connections": {
+            # SQLite configuration
             "sqlite": {
                 "engine": "tortoise.backends.sqlite",
-                "credentials": {"file_path": f"{BASE_DIR}/db.sqlite3"},
-            }
+                "credentials": {"file_path": f"{BASE_DIR}/db.sqlite3"},  # Path to SQLite database file
+            },
+            # MySQL/MariaDB configuration
+            # Install with: tortoise-orm[asyncmy]
+            # "mysql": {
+            #     "engine": "tortoise.backends.mysql",
+            #     "credentials": {
+            #         "host": "localhost",  # Database host address
+            #         "port": 3306,  # Database port
+            #         "user": "yourusername",  # Database username
+            #         "password": "yourpassword",  # Database password
+            #         "database": "yourdatabase",  # Database name
+            #     },
+            # },
+            # PostgreSQL configuration
+            # Install with: tortoise-orm[asyncpg]
+            # "postgres": {
+            #     "engine": "tortoise.backends.asyncpg",
+            #     "credentials": {
+            #         "host": "localhost",  # Database host address
+            #         "port": 5432,  # Database port
+            #         "user": "yourusername",  # Database username
+            #         "password": "yourpassword",  # Database password
+            #         "database": "yourdatabase",  # Database name
+            #     },
+            # },
+            # MSSQL/Oracle configuration
+            # Install with: tortoise-orm[asyncodbc]
+            # "oracle": {
+            #     "engine": "tortoise.backends.asyncodbc",
+            #     "credentials": {
+            #         "host": "localhost",  # Database host address
+            #         "port": 1433,  # Database port
+            #         "user": "yourusername",  # Database username
+            #         "password": "yourpassword",  # Database password
+            #         "database": "yourdatabase",  # Database name
+            #     },
+            # },
+            # SQLServer configuration
+            # Install with: tortoise-orm[asyncodbc]
+            # "sqlserver": {
+            #     "engine": "tortoise.backends.asyncodbc",
+            #     "credentials": {
+            #         "host": "localhost",  # Database host address
+            #         "port": 1433,  # Database port
+            #         "user": "yourusername",  # Database username
+            #         "password": "yourpassword",  # Database password
+            #         "database": "yourdatabase",  # Database name
+            #     },
+            # },
         },
         "apps": {
             "models": {
-                "models": ["app.models"],
+                "models": ["app.models", "aerich.models"],
                 "default_connection": "sqlite",
             },
         },
-        "use_tz": False,
-        "timezone": "Asia/Shanghai",
+        "use_tz": False,  # Whether to use timezone-aware datetimes
+        "timezone": "Asia/Shanghai",  # Timezone setting
     }
     DATETIME_FORMAT: str = "%Y-%m-%d %H:%M:%S"
 

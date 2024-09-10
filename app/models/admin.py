@@ -21,11 +21,6 @@ class User(BaseModel, TimestampMixin):
     class Meta:
         table = "user"
 
-    class PydanticMeta:
-        # todo
-        # computed = ["full_name"]
-        ...
-
 
 class Role(BaseModel, TimestampMixin):
     name = fields.CharField(max_length=20, unique=True, description="角色名称", index=True)

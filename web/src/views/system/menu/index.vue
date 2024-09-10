@@ -9,6 +9,8 @@ import {
   NPopconfirm,
   NSwitch,
   NTreeSelect,
+  NRadio,
+  NRadioGroup,
 } from 'naive-ui'
 
 import CommonPage from '@/components/page/CommonPage.vue'
@@ -26,7 +28,6 @@ defineOptions({ name: '菜单管理' })
 const $table = ref(null)
 const queryItems = ref({})
 const vPermission = resolveDirective('permission')
-const menuDisabled = ref(false)
 
 // 表单初始化内容
 const initForm = {
@@ -126,12 +127,11 @@ const columns = [
               size: 'tiny',
               quaternary: true,
               type: 'primary',
-              style: `display: ${row.children ? '' : 'none'};`,
+              style: `display: ${row.children && row.menu_type !== 'menu' ? '' : 'none'};`,
               onClick: () => {
                 initForm.parent_id = row.id
                 initForm.menu_type = 'menu'
                 showMenuType.value = false
-                menuDisabled.value = false
                 handleAdd()
               },
             },
@@ -216,7 +216,6 @@ function handleClickAdd() {
   initForm.order = 1
   initForm.keepalive = true
   showMenuType.value = true
-  menuDisabled.value = true
   handleAdd()
 }
 
@@ -263,6 +262,12 @@ async function getTreeSelect() {
         :label-width="80"
         :model="modalForm"
       >
+        <NFormItem label="菜单类型" path="menu_type">
+          <NRadioGroup v-model:value="modalForm.menu_type">
+            <NRadio label="目录" value="catalog" />
+            <NRadio label="菜单" value="menu" />
+          </NRadioGroup>
+        </NFormItem>
         <NFormItem label="上级菜单" path="parent_id">
           <NTreeSelect
             v-model:value="modalForm.parent_id"
@@ -270,7 +275,6 @@ async function getTreeSelect() {
             label-field="name"
             :options="menuOptions"
             default-expand-all="true"
-            :disabled="menuDisabled"
           />
         </NFormItem>
         <NFormItem
