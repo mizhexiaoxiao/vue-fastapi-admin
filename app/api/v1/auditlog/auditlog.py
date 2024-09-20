@@ -14,7 +14,9 @@ async def get_audit_log_list(
     page_size: int = Query(10, description="每页数量"),
     username: str = Query("", description="操作人名称"),
     module: str = Query("", description="功能模块"),
+    method: str = Query("", description="请求方法"),
     summary: str = Query("", description="接口描述"),
+    status: int = Query(None, description="状态码"),
     start_time: str = Query("", description="开始时间"),
     end_time: str = Query("", description="结束时间"),
 ):
@@ -23,8 +25,12 @@ async def get_audit_log_list(
         q &= Q(username__icontains=username)
     if module:
         q &= Q(module__icontains=module)
+    if method:
+        q &= Q(method__icontains=method)
     if summary:
         q &= Q(summary__icontains=summary)
+    if status:
+        q &= Q(status__icontains=status)
     if start_time and end_time:
         q &= Q(created_at__range=[start_time, end_time])
     elif start_time:

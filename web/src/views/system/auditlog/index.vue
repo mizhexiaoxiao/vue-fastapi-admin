@@ -1,46 +1,17 @@
 <script setup>
-import { onMounted, ref, resolveDirective } from 'vue'
+import { onMounted, ref } from 'vue'
 import { NInput, NSelect } from 'naive-ui'
 
 import CommonPage from '@/components/page/CommonPage.vue'
 import QueryBarItem from '@/components/query-bar/QueryBarItem.vue'
 import CrudTable from '@/components/table/CrudTable.vue'
 
-import { useCRUD } from '@/composables'
 import api from '@/api'
 
-defineOptions({ name: '操作日志' })
+defineOptions({ name: '审计日志' })
 
 const $table = ref(null)
 const queryItems = ref({})
-
-const {
-  modalVisible,
-  modalTitle,
-  modalLoading,
-  handleSave,
-  modalForm,
-  modalFormRef,
-  handleEdit,
-  handleDelete,
-  handleAdd,
-} = useCRUD({
-  name: '操作日志',
-  initForm: {
-    args: {
-      ping_sleep: 1,
-      ping_threshold: 500,
-      agent_data_check_threshold: 2,
-      agent_incoming_traffic_threshold: 30,
-      before_start_clean_sleep: 2,
-      before_stop_disposal_sleep: 20,
-    },
-  },
-  doCreate: api.createHostMonitor,
-  doUpdate: api.updateHostMonitor,
-  doDelete: api.deleteHostMonitor,
-  refresh: () => $table.value?.handleSearch(),
-})
 
 onMounted(() => {
   $table.value?.handleSearch()
@@ -75,14 +46,21 @@ function getEndOfDayTimestamp() {
   return now.getTime()
 }
 
-// 示例使用
 const startOfDayTimestamp = getStartOfDayTimestamp()
 const endOfDayTimestamp = getEndOfDayTimestamp()
 
+queryItems.value.start_time = formatTimestamp(startOfDayTimestamp)
+queryItems.value.end_time = formatTimestamp(endOfDayTimestamp)
+
 const datetimeRange = ref([startOfDayTimestamp, endOfDayTimestamp])
 const handleDateRangeChange = (value) => {
-  queryItems.value.start_time = formatTimestamp(value[0])
-  queryItems.value.end_time = formatTimestamp(value[1])
+  if (value == null) {
+    queryItems.value.start_time = null
+    queryItems.value.end_time = null
+  } else {
+    queryItems.value.start_time = formatTimestamp(value[0])
+    queryItems.value.end_time = formatTimestamp(value[1])
+  }
 }
 
 const methodOptions = [
@@ -200,19 +178,28 @@ const columns = [
         </QueryBarItem>
         <QueryBarItem label="请求方法" :label-width="70">
           <NSelect
-            v-model:value="modalForm.method"
-            style="width: 150px"
+            v-model:value="queryItems.method"
+            style="width: 180px"
             :options="methodOptions"
             clearable
             placeholder="请选择请求方法"
           />
         </QueryBarItem>
-        <QueryBarItem label="API路径" :label-width="70">
+        <QueryBarItem label="请求路径" :label-width="70">
           <NInput
             v-model:value="queryItems.path"
             clearable
             type="text"
-            placeholder="请输入API路径"
+            placeholder="请输入请求路径"
+            @keypress.enter="$table?.handleSearch()"
+          />
+        </QueryBarItem>
+        <QueryBarItem label="状态码" :label-width="70">
+          <NInput
+            v-model:value="queryItems.status"
+            clearable
+            type="text"
+            placeholder="请输入状态码"
             @keypress.enter="$table?.handleSearch()"
           />
         </QueryBarItem>
