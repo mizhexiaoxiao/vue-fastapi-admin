@@ -1,3 +1,5 @@
+import shutil
+
 from aerich import Command
 from fastapi import FastAPI
 from fastapi.middleware import Middleware
@@ -19,6 +21,7 @@ from app.core.exceptions import (
     ResponseValidationError,
     ResponseValidationHandle,
 )
+from app.log import logger
 from app.models.admin import Api, Menu, Role
 from app.schemas.menus import MenuType
 from app.settings.config import settings
@@ -186,7 +189,13 @@ async def init_db():
         pass
 
     await command.init()
-    await command.migrate()
+    try:
+        await command.migrate()
+    except AttributeError:
+        logger.warning("unable to retrieve model history from database, model history will be created from scratch")
+        shutil.rmtree("migrations")
+        await command.init_db(safe=True)
+
     await command.upgrade(run_in_transaction=True)
 
 
