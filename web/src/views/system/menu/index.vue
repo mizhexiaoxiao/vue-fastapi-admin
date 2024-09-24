@@ -11,6 +11,7 @@ import {
   NTreeSelect,
   NRadio,
   NRadioGroup,
+  NTag,
 } from 'naive-ui'
 
 import CommonPage from '@/components/page/CommonPage.vue'
@@ -64,24 +65,49 @@ const showMenuType = ref(false)
 const menuOptions = ref([])
 
 const columns = [
-  { title: 'ID', key: 'id', width: 50, ellipsis: { tooltip: true } },
-  { title: '菜单名称', key: 'name', width: 80, ellipsis: { tooltip: true } },
+  { title: 'ID', key: 'id', width: 50, ellipsis: { tooltip: true }, align: 'center' },
+  { title: '菜单名称', key: 'name', width: 80, ellipsis: { tooltip: true }, align: 'center' },
+  {
+    title: '菜单类型',
+    key: 'menu_type',
+    width: 80,
+    align: 'center',
+    ellipsis: { tooltip: true },
+    render(row) {
+      let round = false
+      let bordered = false
+      if (row.menu_type === 'catalog') {
+        bordered = true
+        round = false
+      } else if (row.menu_type === 'menu') {
+        bordered = false
+        round = true
+      }
+      return h(
+        NTag,
+        { type: 'primary', round: round, bordered: bordered },
+        { default: () => (row.menu_type === 'catalog' ? '目录' : '菜单') }
+      )
+    },
+  },
   {
     title: '图标',
     key: 'icon',
-    width: 30,
+    width: 40,
+    align: 'center',
     render(row) {
       return h(TheIcon, { icon: row.icon, size: 20 })
     },
   },
-  { title: '排序', key: 'order', width: 30, ellipsis: { tooltip: true } },
-  { title: '访问路径', key: 'path', width: 60, ellipsis: { tooltip: true } },
-  { title: '跳转路径', key: 'redirect', width: 60, ellipsis: { tooltip: true } },
-  { title: '组件路径', key: 'component', width: 60, ellipsis: { tooltip: true } },
+  { title: '排序', key: 'order', width: 40, ellipsis: { tooltip: true }, align: 'center' },
+  { title: '访问路径', key: 'path', width: 80, ellipsis: { tooltip: true }, align: 'center' },
+  { title: '跳转路径', key: 'redirect', width: 80, ellipsis: { tooltip: true }, align: 'center' },
+  { title: '组件路径', key: 'component', width: 80, ellipsis: { tooltip: true }, align: 'center' },
   {
     title: '保活',
     key: 'keepalive',
     width: 40,
+    align: 'center',
     render(row) {
       return h(NSwitch, {
         size: 'small',
@@ -95,6 +121,7 @@ const columns = [
     title: '隐藏',
     key: 'is_hidden',
     width: 40,
+    align: 'center',
     render(row) {
       return h(NSwitch, {
         size: 'small',
@@ -107,7 +134,8 @@ const columns = [
   {
     title: '创建日期',
     key: 'created_at',
-    width: 70,
+    width: 80,
+    align: 'center',
     render(row) {
       return h('span', formatDate(row.created_at))
     },
@@ -115,7 +143,7 @@ const columns = [
   {
     title: '操作',
     key: 'actions',
-    width: 80,
+    width: 120,
     align: 'center',
     fixed: 'right',
     render(row) {
