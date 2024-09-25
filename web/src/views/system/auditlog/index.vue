@@ -194,7 +194,7 @@ const columns = [
             @keypress.enter="$table?.handleSearch()"
           />
         </QueryBarItem>
-        <QueryBarItem label="状态码" :label-width="70">
+        <QueryBarItem label="状态码" :label-width="60">
           <NInput
             v-model:value="queryItems.status"
             clearable

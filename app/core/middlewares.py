@@ -66,12 +66,16 @@ class HttpAuditLogMiddleware(BaseHTTPMiddleware):
                 data["module"] = ",".join(route.tags)
                 data["summary"] = route.summary
         # 获取用户信息
-        token = request.headers.get("token")
-        user_obj = None
-        if token:
-            user_obj: User = await AuthControl.is_authed(token)
-        data["user_id"] = user_obj.id if user_obj else 0
-        data["username"] = user_obj.username if user_obj else ""
+        try:
+            token = request.headers.get("token")
+            user_obj = None
+            if token:
+                user_obj: User = await AuthControl.is_authed(token)
+            data["user_id"] = user_obj.id if user_obj else 0
+            data["username"] = user_obj.username if user_obj else ""
+        except Exception as e:
+            data["user_id"] = 0
+            data["username"] = ""
         return data
 
     async def before_request(self, request: Request):
