@@ -225,12 +225,12 @@ const columns = [
                   NButton,
                   {
                     size: 'small',
-                    type: 'error',
+                    type: 'warning',
                     style: 'margin-right: 8px;',
                   },
                   {
                     default: () => '重置密码',
-                    icon: renderIcon('material-symbols:delete-outline', { size: 16 }),
+                    icon: renderIcon('material-symbols:lock-reset', { size: 16 }),
                   }
                 ),
                 [[vPermission, 'post/api/v1/user/reset_password']]
