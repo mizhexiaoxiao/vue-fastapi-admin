@@ -42,3 +42,14 @@ class UserUpdate(BaseModel):
 class UpdatePassword(BaseModel):
     old_password: str = Field(description="旧密码")
     new_password: str = Field(description="新密码")
+
+
+class ForgetPasswordSchema(BaseModel):
+    email: str
+    language: str
+
+
+class ResetPasswordSchema(BaseModel):
+    reset_token: str
+    password: str
+

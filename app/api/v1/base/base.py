@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta, timezone
 
-from fastapi import APIRouter
+from urllib import parse
+from fastapi import APIRouter, Request, HTTPException
 
 from app.controllers.user import user_controller
 from app.core.ctx import CTX_USER_ID
@@ -8,10 +9,11 @@ from app.core.dependency import DependAuth
 from app.models.admin import Api, Menu, Role, User
 from app.schemas.base import Fail, Success
 from app.schemas.login import *
-from app.schemas.users import UpdatePassword
+from app.schemas.users import UpdatePassword, ForgetPasswordSchema, ResetPasswordSchema
+from app.core.bgtask import BgTasks
 from app.settings import settings
 from app.utils.jwt import create_access_token
-from app.utils.password import get_password_hash, verify_password
+from app.utils.password import get_password_hash, verify_password, send_forgot_password_email
 
 router = APIRouter()
 
@@ -35,6 +37,39 @@ async def login_access_token(credentials: CredentialsSchema):
         username=user.username,
     )
     return Success(data=data.model_dump())
+
+
+@router.post("/forgot_password", summary="忘记密码")
+async def forget_password(request: Request, forget_password_schema: ForgetPasswordSchema):
+    email_address = forget_password_schema.email
+    user_obj = await user_controller.get_by_email(email_address)
+    if not user_obj:
+        raise HTTPException(status_code=404, detail="notFound")
+
+    if not user_obj.is_active:
+        raise HTTPException(status_code=403, detail="userHasDisabled")
+
+    uuid_v4 = await user_controller.forgot_password(email_address)
+    referer_url = request.headers.get("referer")
+    if not referer_url:
+        raise HTTPException(status_code=400, detail="refererUrlNotFound")
+
+    reset_url = parse.urljoin(referer_url, f"/reset-password/{uuid_v4}")
+    await BgTasks.add_task(send_forgot_password_email,
+                           language=forget_password_schema.language,
+                           reset_url=reset_url,
+                           app_title=settings.APP_TITLE,
+                           to_address=email_address
+                           )
+
+    return Success(code=200, msg="sendEmailSuccess")
+
+
+@router.post('/rest_password', summary="重置密码")
+async def rest_password(reset_password_schema: ResetPasswordSchema):
+    await user_controller.reset_password_by_token(reset_password_schema.reset_token,
+                                                  reset_password_schema.password)
+    return Success(code=200, msg="resetSuccessful")
 
 
 @router.get("/userinfo", summary="查看用户信息", dependencies=[DependAuth])

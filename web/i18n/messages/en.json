@@ -13,7 +13,8 @@
       "text_login": "Login",
       "message_input_username_password": "Please enter username and password",
       "message_verifying": "Verifying...",
-      "message_login_success": "Login successful"
+      "message_login_success": "Login successful",
+      "forget_password": "Forget password"
     },
     "workbench": {
       "label_workbench": "Workbench",
@@ -49,6 +50,18 @@
     "errors": {
       "label_error": "Error",
       "text_back_to_home": "Back to home"
+    },
+    "forget_password": {
+      "forget_password": "Forgot Password",
+      "send_password_reset_email": "Send password reset email.",
+      "message_forget_password_success": "Password reset email has been sent.",
+      "sendEmailSuccess": "Check your email for instructions on how to reset your password.",
+      "notFound": "Email not found"
+    },
+    "resetPassword": {
+      "resetPassword": "Reset Password",
+      "resetSuccessful": "Password reset successful",
+      "tokenNotFound": "The link has expired."
     }
   },
   "common": {

@@ -5,6 +5,10 @@
       class="m-auto max-w-1500 min-w-345 f-c-c rounded-10 bg-white bg-opacity-60 p-15 card-shadow"
       dark:bg-dark
     >
+      <!-- 给登陆页面加个语言切换按钮 -->
+      <div class="absolute right-0 top-4 mt-2">
+        <Languages />
+      </div>
       <div hidden w-380 px-20 py-35 md:block>
         <icon-custom-front-page pt-10 text-300 color-primary></icon-custom-front-page>
       </div>
@@ -47,6 +51,12 @@
             {{ $t('views.login.text_login') }}
           </n-button>
         </div>
+        <!--添加忘记密码的按钮 -->
+        <div class="mt-20 w-full flex items-start justify-end">
+          <router-link to="/forgot-password">
+            <n-button type="warning" text tag="a">{{ $t('views.login.forget_password') }}</n-button>
+          </router-link>
+        </div>
       </div>
     </div>
   </AppPage>
@@ -58,6 +68,7 @@ import bgImg from '@/assets/images/login_bg.webp'
 import api from '@/api'
 import { addDynamicRoutes } from '@/router'
 import { useI18n } from 'vue-i18n'
+import Languages from '@/layout/components/header/components/Languages.vue'
 
 const router = useRouter()
 const { query } = useRoute()

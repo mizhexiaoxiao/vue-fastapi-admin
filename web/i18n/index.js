@@ -13,4 +13,13 @@ const i18n = createI18n({
   messages: messages,
 })
 
+/**
+ * 如果从来没有切换过i18的语言 那么存储里面会缺少*locale*这个变量
+ * 我也不晓得为啥子上面 createI18n 不设置这个初始变量
+ * 所以用下面的代码来凑合解决一下
+ **/
+if (!lStorage.get('locale')) {
+  lStorage.set('locale', currentLocale || 'cn')
+}
+
 export default i18n
