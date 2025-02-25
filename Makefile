@@ -36,14 +36,15 @@ targets:
 
 .PHONY: install
 install: ## Install dependencies
-	poetry install
+	uv add pyproject.toml
+
 
 .PHONY: run
 run: start
 
 .PHONY: start
 start: ## Starts the server
-	poetry run python run.py
+	python run.py
 
 # Check, lint and format targets
 # ------------------------------
@@ -53,28 +54,24 @@ check: check-format lint
 
 .PHONY: check-format
 check-format: ## Dry-run code formatter
-	poetry run black ./ --check
-	poetry run isort ./ --profile black --check
+	black ./ --check
+	isort ./ --profile black --check
 
 .PHONY: lint
 lint: ## Run ruff
-	poetry run ruff check ./app 
+	ruff check ./app 
  
 .PHONY: format
 format: ## Run code formatter
-	poetry run black ./
-	poetry run isort ./ --profile black
+	black ./
+	isort ./ --profile black
 
-.PHONY: check-lockfile
-check-lockfile: ## Compares lock file with pyproject.toml
-	poetry lock --check
 
 .PHONY: test
 test: ## Run the test suite
 	$(eval include .env)
 	$(eval export $(sh sed 's/=.*//' .env))
-
-	poetry run pytest -vv -s --cache-clear ./
+	pytest -vv -s --cache-clear ./
 
 .PHONY: clean-db
 clean-db: ## 删除migrations文件夹和db.sqlite3
@@ -83,8 +80,8 @@ clean-db: ## 删除migrations文件夹和db.sqlite3
 
 .PHONY: migrate
 migrate: ## 运行aerich migrate命令生成迁移文件
-	poetry run aerich migrate
+	aerich migrate
 
 .PHONY: upgrade
 upgrade: ## 运行aerich upgrade命令应用迁移
-	poetry run aerich upgrade
+	aerich upgrade

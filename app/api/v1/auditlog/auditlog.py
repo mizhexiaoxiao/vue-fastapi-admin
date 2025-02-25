@@ -30,7 +30,7 @@ async def get_audit_log_list(
     if summary:
         q &= Q(summary__icontains=summary)
     if status:
-        q &= Q(status__icontains=status)
+        q &= Q(status=status)
     if start_time and end_time:
         q &= Q(created_at__range=[start_time, end_time])
     elif start_time:

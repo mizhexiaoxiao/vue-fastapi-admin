@@ -43,6 +43,7 @@ def make_middlewares():
             HttpAuditLogMiddleware,
             methods=["GET", "POST", "PUT", "DELETE"],
             exclude_paths=[
+                "/api/v1/base/access_token",
                 "/docs",
                 "/openapi.json",
             ],

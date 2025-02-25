@@ -8,8 +8,7 @@ class BaseDept(BaseModel):
     parent_id: int = Field(0, description="父部门ID")
 
 
-class DeptCreate(BaseDept):
-    ...
+class DeptCreate(BaseDept): ...
 
 
 class DeptUpdate(BaseDept):
