@@ -20,9 +20,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked,id=core-apt \
     && apt-get update \
     && apt-get install -y --no-install-recommends gcc python3-dev bash nginx vim curl procps net-tools
 
-RUN pip install poetry -i https://pypi.tuna.tsinghua.edu.cn/simple \
-    && poetry config virtualenvs.create false \
-    && poetry install
+RUN pip install uv -i https://pypi.tuna.tsinghua.edu.cn/simple \
+    && uv add --requirements requirements.txt
 
 COPY --from=web /opt/vue-fastapi-admin/web/dist /opt/vue-fastapi-admin/web/dist
 ADD /deploy/web.conf /etc/nginx/sites-available/web.conf

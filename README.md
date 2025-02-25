@@ -87,33 +87,49 @@ password：123456
 启动项目需要以下环境：
 - Python 3.11
 
-#### 方法一（推荐）：[Poetry](https://python-poetry.org/docs/#installing-with-the-official-installer) 安装依赖
+#### 方法一（推荐）：使用 uv 安装依赖
+1. 安装 uv
+```sh
+pip install uv
+```
+
+2. 创建并激活虚拟环境
+```sh
+uv venv
+source .venv/bin/activate  # Linux/Mac
+# 或
+.\.venv\Scripts\activate  # Windows
+```
+
+3. 安装依赖
+```sh
+uv add pyproject.toml
+```
+
+4. 启动服务
+```sh
+python run.py
+```
+
+#### 方法二：使用 Pip 安装依赖
 1. 创建虚拟环境
 ```sh
-poetry shell
+python3 -m venv venv
 ```
-2. 安装依赖
-```sh
-poetry install
-```
-3. 启动服务
-```sh
-make run
-```
-#### 方法二：Pip 安装依赖
-1. 创建虚拟环境
-```sh
-python3.11 -m venv venv
-```
+
 2. 激活虚拟环境
 ```sh
-source venv/bin/activate
+source venv/bin/activate  # Linux/Mac
+# 或
+.\venv\Scripts\activate  # Windows
 ```
+
 3. 安装依赖
 ```sh
 pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
-3. 启动服务
+
+4. 启动服务
 ```sh
 python run.py
 ```

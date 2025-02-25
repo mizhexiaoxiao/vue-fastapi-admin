@@ -86,19 +86,48 @@ password：123456
 #### Backend
 The backend service requires the following environment:
 - Python 3.11
-- [Poetry](https://python-poetry.org/docs/#installing-with-the-official-installer)
 
+#### Method 1 (Recommended): Install Dependencies with uv
+1. Install uv
+```sh
+pip install uv
+```
+
+2. Create and activate virtual environment
+```sh
+uv venv
+source .venv/bin/activate  # Linux/Mac
+# or
+.\.venv\Scripts\activate  # Windows
+```
+
+3. Install dependencies
+```sh
+uv add pyproject.toml
+```
+
+4. Start the backend service
+```sh
+python run.py
+```
+
+#### Method 2: Install Dependencies with Pip
 1. Create a Python virtual environment:
 ```sh
-poetry shell
+python3 -m venv venv
+source venv/bin/activate  # Linux/Mac
+# or
+.\venv\Scripts\activate  # Windows
 ```
+
 2. Install project dependencies:
 ```sh
-poetry install
+pip install -r requirements.txt
 ```
+
 3. Start the backend service:
 ```sh
-make run
+python run.py
 ```
 The backend service is now running, and you can visit http://localhost:9999/docs to view the API documentation.
 
