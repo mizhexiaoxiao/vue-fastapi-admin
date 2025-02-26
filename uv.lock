@@ -1,5 +1,9 @@
 version = 1
 requires-python = ">=3.11"
+resolution-markers = [
+    "sys_platform != 'win32'",
+    "sys_platform == 'win32'",
+]
 
 [[package]]
 name = "aerich"
@@ -1083,6 +1087,7 @@ requires-dist = [
     { name = "ujson", specifier = "==5.10.0" },
     { name = "uvicorn", specifier = "==0.34.0" },
     { name = "uvloop", specifier = "==0.21.0" },
+    { name = "uvloop", marker = "sys_platform != 'win32'", specifier = "==0.21.0" },
     { name = "watchfiles", specifier = "==1.0.4" },
     { name = "websockets", specifier = "==14.1" },
 ]
