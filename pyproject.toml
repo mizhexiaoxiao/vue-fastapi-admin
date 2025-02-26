@@ -68,6 +68,7 @@ dependencies = [
     "watchfiles==1.0.4",
     "websockets==14.1",
     "pyproject-toml>=0.1.0",
+    "uvloop==0.21.0 ; sys_platform != 'win32'",
 ]
 
 [tool.black]
