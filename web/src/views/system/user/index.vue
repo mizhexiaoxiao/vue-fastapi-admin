@@ -204,40 +204,41 @@ const columns = [
             default: () => h('div', {}, '确定删除该用户吗?'),
           }
         ),
-        !row.is_superuser && h(
-          NPopconfirm,
-          {
-            onPositiveClick: async () => {
-              try {
-                await api.resetPassword({ user_id: row.id });
-                $message.success('密码已成功重置为123456');
-                await $table.value?.handleSearch();
-              } catch (error) {
-                $message.error('重置密码失败: ' + error.message);
-              }
+        !row.is_superuser &&
+          h(
+            NPopconfirm,
+            {
+              onPositiveClick: async () => {
+                try {
+                  await api.resetPassword({ user_id: row.id })
+                  $message.success('密码已成功重置为123456')
+                  await $table.value?.handleSearch()
+                } catch (error) {
+                  $message.error('重置密码失败: ' + error.message)
+                }
+              },
+              onNegativeClick: () => {},
             },
-            onNegativeClick: () => {},
-          },
-          {
-            trigger: () =>
-              withDirectives(
-                h(
-                  NButton,
-                  {
-                    size: 'small',
-                    type: 'warning',
-                    style: 'margin-right: 8px;',
-                  },
-                  {
-                    default: () => '重置密码',
-                    icon: renderIcon('material-symbols:lock-reset', { size: 16 }),
-                  }
+            {
+              trigger: () =>
+                withDirectives(
+                  h(
+                    NButton,
+                    {
+                      size: 'small',
+                      type: 'warning',
+                      style: 'margin-right: 8px;',
+                    },
+                    {
+                      default: () => '重置密码',
+                      icon: renderIcon('material-symbols:lock-reset', { size: 16 }),
+                    }
+                  ),
+                  [[vPermission, 'post/api/v1/user/reset_password']]
                 ),
-                [[vPermission, 'post/api/v1/user/reset_password']]
-              ),
-            default: () => h('div', {}, '确定重置用户密码为123456吗?'),
-          }
-        ),
+              default: () => h('div', {}, '确定重置用户密码为123456吗?'),
+            }
+          ),
       ]
     },
   },
@@ -307,7 +308,8 @@ const validateAddUser = {
     {
       trigger: ['blur'],
       validator: (rule, value, callback) => {
-        const re = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+        /**很多公司邮箱地址长这样  xxx.xxx@xx.com  原来正则会判断为错误格式**/
+        const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
         if (!re.test(modalForm.value.email)) {
           callback('邮箱格式错误')
           return

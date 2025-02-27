@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import List, Optional
-
+from uuid import uuid4
 from fastapi.exceptions import HTTPException
 
 from app.core.crud import CRUDBase
@@ -54,6 +54,24 @@ class UserController(CRUDBase[User, UserCreate, UserUpdate]):
         if user_obj.is_superuser:
             raise HTTPException(status_code=403, detail="不允许重置超级管理员密码")
         user_obj.password = get_password_hash(password="123456")
+        await user_obj.save()
+
+    async def forgot_password(self, email: str) -> str:
+        user_obj = await self.get_by_email(email)
+        if not user_obj:
+            raise HTTPException(status_code=404, detail="emailNotFound")
+        uuid_str = str(uuid4())
+        user_obj.reset_token = uuid_str
+        user_obj.reset_triggered = datetime.now()
+        await user_obj.save()
+        return uuid_str
+
+    async def reset_password_by_token(self, reset_token: str, password: str):
+        user_obj = await self.model.filter(reset_token=reset_token).first()
+        if not user_obj:
+            raise HTTPException(status_code=404, detail="tokenNotFound")
+        user_obj.password = get_password_hash(password=password)
+        user_obj.reset_token = None
         await user_obj.save()
 
 

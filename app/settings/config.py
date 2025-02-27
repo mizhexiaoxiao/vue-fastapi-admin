@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     APP_TITLE: str = "Vue FastAPI Admin"
     PROJECT_NAME: str = "Vue FastAPI Admin"
     APP_DESCRIPTION: str = "Description"
+    EMAIL_ADDRESS: str = "do_not_reply@vue_fastapi_admin.com"
 
     CORS_ORIGINS: typing.List = ["*"]
     CORS_ALLOW_CREDENTIALS: bool = True
@@ -19,6 +20,7 @@ class Settings(BaseSettings):
 
     PROJECT_ROOT: str = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
     BASE_DIR: str = os.path.abspath(os.path.join(PROJECT_ROOT, os.pardir))
+    TEMPLATES_ROOT: str = os.path.join(BASE_DIR, "app/templates")
     LOGS_ROOT: str = os.path.join(BASE_DIR, "app/logs")
     SECRET_KEY: str = "3488a63e1765035d386f05409663f55c83bfae3b3c61a932744b20ad14244dcf"  # openssl rand -hex 32
     JWT_ALGORITHM: str = "HS256"
@@ -87,6 +89,13 @@ class Settings(BaseSettings):
         },
         "use_tz": False,  # Whether to use timezone-aware datetimes
         "timezone": "Asia/Shanghai",  # Timezone setting
+
+    }
+
+    # Email Server configuration
+    MAIL_AUTH: dict = {
+        "host": "SMTP server address",
+        "port": 25
     }
     DATETIME_FORMAT: str = "%Y-%m-%d %H:%M:%S"
 
