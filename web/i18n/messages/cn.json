@@ -13,7 +13,8 @@
       "text_login": "登录",
       "message_input_username_password": "请输入用户名和密码",
       "message_verifying": "正在验证...",
-      "message_login_success": "登录成功"
+      "message_login_success": "登录成功",
+      "forget_password": "忘记密码"
     },
     "workbench": {
       "label_workbench": "工作台",
@@ -49,6 +50,18 @@
     "errors": {
       "label_error": "错误页",
       "text_back_to_home": "返回首页"
+    },
+        "forget_password": {
+      "forget_password": "忘记密码",
+      "send_password_reset_email": "发送密码重置邮件",
+      "message_forget_password_success": "密码重置邮件已发送",
+      "sendEmailSuccess": "检查您的电子邮件以获取有关如何重置密码的说明",
+      "notFound": "邮件地址不存在"
+    },
+    "resetPassword": {
+      "resetPassword": "重置密码",
+      "resetSuccessful": "密码重置成功",
+      "tokenNotFound": "链接已失效"
     }
   },
   "common": {

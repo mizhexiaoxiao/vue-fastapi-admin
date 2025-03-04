@@ -15,6 +15,8 @@ class User(BaseModel, TimestampMixin):
     is_active = fields.BooleanField(default=True, description="是否激活", index=True)
     is_superuser = fields.BooleanField(default=False, description="是否为超级管理员", index=True)
     last_login = fields.DatetimeField(null=True, description="最后登录时间", index=True)
+    reset_token = fields.CharField(max_length=128, null=True, description="重置密码的token")
+    reset_triggered = fields.DatetimeField(null=True, description="重置触发时间")
     roles = fields.ManyToManyField("models.Role", related_name="user_roles")
     dept_id = fields.IntField(null=True, description="部门ID", index=True)
 

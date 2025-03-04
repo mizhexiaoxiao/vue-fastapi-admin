@@ -116,6 +116,26 @@ export const basicRoutes = [
       title: '登录页',
     },
   },
+    /** 添加了忘记密码和重置密码的路由 **/
+      {
+    name: 'ForGotPassword',
+    path: '/forgot-password',
+    component: () => import('@/views/forgot-password/index.vue'),
+    isHidden: true,
+    meta: {
+      title: t('views.forget_password.forget_password'),
+    },
+  },
+  {
+    name: 'RestPassword',
+    path: '/reset-password/:resetToken',
+    component: () => import('@/views/reset-password/index.vue'),
+    isHidden: true,
+    props: true,
+    meta: {
+      title: t('views.resetPassword.resetPassword'),
+    },
+  },
 ]
 
 export const NOT_FOUND_ROUTE = {
