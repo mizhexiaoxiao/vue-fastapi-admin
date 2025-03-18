@@ -1,4 +1,4 @@
-from typing import Any, Dict, Generic, List, NewType, Tuple, Type, TypeVar, Union
+from typing import Any, Dict, Generic, List, NewType, Tuple, Type, TypeVar, Union,Optional
 
 from pydantic import BaseModel
 from tortoise.expressions import Q
@@ -17,8 +17,14 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     async def get(self, id: int) -> ModelType:
         return await self.model.get(id=id)
 
-    async def list(self, page: int, page_size: int, search: Q = Q(), order: list = []) -> Tuple[Total, List[ModelType]]:
+
+    async def list(self,page: int,page_size: int,search: Q = Q(),order: list = [],prefetch_related_fields: Optional[List[str]] = None) -> Tuple[Total, List[ModelType]]:
         query = self.model.filter(search)
+
+        if prefetch_related_fields:
+            for field in prefetch_related_fields:
+                query = query.prefetch_related(field)
+
         return await query.count(), await query.offset((page - 1) * page_size).limit(page_size).order_by(*order)
 
     async def create(self, obj_in: CreateSchemaType) -> ModelType:
