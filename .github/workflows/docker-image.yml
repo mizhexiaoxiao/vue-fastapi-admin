@@ -31,6 +31,6 @@ jobs:
       with:
         context: .
         file: ./Dockerfile
-        platforms: linux/amd64,linux/arm/v7
+        platforms: linux/amd64
         tags: vue-fastapi-admin:latest
         push: true
