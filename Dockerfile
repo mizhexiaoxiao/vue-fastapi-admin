@@ -5,7 +5,7 @@ COPY /web ./web
 RUN cd /opt/vue-fastapi-admin/web && npm i --registry=https://registry.npmmirror.com && npm run build
 
 
-FROM 3.12.10-slim-bullseye
+FROM python:3.12.10-slim-bullseye
 
 WORKDIR /opt/vue-fastapi-admin
 ADD . .
