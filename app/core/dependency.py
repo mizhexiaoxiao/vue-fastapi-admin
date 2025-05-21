@@ -12,7 +12,7 @@ class AuthControl:
     @classmethod
     async def is_authed(cls, token: str = Header(..., description="token验证")) -> Optional["User"]:
         try:
-            if token == "dev":
+            if token == "dev" and settings.DEBUG:
                 user = await User.filter().first()
                 user_id = user.id
             else:

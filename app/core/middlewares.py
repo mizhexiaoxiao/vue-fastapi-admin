@@ -11,9 +11,10 @@ from starlette.requests import Request
 from starlette.types import ASGIApp, Receive, Scope, Send
 
 from app.core.dependency import AuthControl
-from app.models.admin import AuditLog, User
+from app.models.admin import AuditLog
 
 from .bgtask import BgTasks
+from app.log.log import logger
 
 
 class SimpleBaseMiddleware:
@@ -136,16 +137,28 @@ class HttpAuditLogMiddleware(BaseHTTPMiddleware):
                 data["summary"] = route.summary
         # 获取用户信息
         try:
-            token = request.headers.get("token")
-            user_obj = None
-            if token:
-                user_obj: User = await AuthControl.is_authed(token)
-            data["user_id"] = user_obj.id if user_obj else 0
-            data["username"] = user_obj.username if user_obj else ""
+            user_id, username = await self.get_user_info(request)
+            data["user_id"] = user_id
+            data["username"] = username
         except Exception:
             data["user_id"] = 0
             data["username"] = ""
         return data
+
+    async def get_user_info(self, request: Request) -> tuple[int, str]:
+        try:
+            token = request.headers.get("token")
+            if not token:
+                return 0, ""
+            
+            user_obj = await AuthControl.is_authed(token)
+            if not user_obj:
+                return 0, ""
+            
+            return user_obj.id, user_obj.username
+        except Exception as e:
+            logger.error(f"Failed to get user info: {str(e)}")
+            return 0, ""
 
     async def before_request(self, request: Request):
         request_args = await self.get_request_args(request)
