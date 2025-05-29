@@ -1,4 +1,8 @@
-from enum import Enum # Removed StrEnum from here
+from enum import Enum
+try:
+    from enum import StrEnum
+except ImportError:
+    from strenum import StrEnum
 
 
 class EnumBase(Enum):
@@ -11,7 +15,7 @@ class EnumBase(Enum):
         return [name for name in cls._member_names_]
 
 
-class MethodType(str, Enum): # Changed StrEnum to str, Enum
+class MethodType(StrEnum):
     GET = "GET"
     POST = "POST"
     PUT = "PUT"

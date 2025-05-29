@@ -23,61 +23,86 @@ class Settings(BaseSettings):
     SECRET_KEY: str = "3488a63e1765035d386f05409663f55c83bfae3b3c61a932744b20ad14244dcf"  # openssl rand -hex 32
     JWT_ALGORITHM: str = "HS256"
     JWT_ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7  # 7 day
-
-    # LDAP settings (Re-adding from Subtask 1)
-    LDAP_SERVER_URI: str = ""
-    LDAP_BIND_DN: str = ""
-    LDAP_BIND_PASSWORD: str = ""
-    LDAP_BASE_DN: str = ""
-    LDAP_USER_LOGIN_ATTR: str = ""
-    LDAP_USER_OBJECT_FILTER: str = ""
-    LDAP_USER_EMAIL_ATTR: str = ""
-    LDAP_USER_FULLNAME_ATTR: str = ""
-    LDAP_ADMIN_GROUP_DN: str = ""
-    LDAP_USER_ROLE_GROUP_PREFIX: str = ""
-
-    # TORTOISE_ORM is now defined globally below
-    DATETIME_FORMAT: str = "%Y-%m-%d %H:%M:%S"
-
-    # CA Settings
-    CA_CERT_PATH: str = ""
-    CA_PRIVATE_KEY_PATH: str = ""
-    CA_PRIVATE_KEY_PASSWORD: typing.Optional[str] = None
-
-# Global TORTOISE_ORM configuration
-# Note: BASE_DIR needs to be defined before this block if used, or paths adjusted.
-# For simplicity, using os.path.abspath for db.sqlite3 path if it were active.
-_BASE_DIR_FOR_SQLITE = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir))
-TORTOISE_ORM = {
-    "connections": {
-        # SQLite configuration (commented out)
-        # "sqlite": {
-        #     "engine": "tortoise.backends.sqlite",
-        #     "credentials": {"file_path": f"{_BASE_DIR_FOR_SQLITE}/db.sqlite3"},
-        # },
-        # MySQL/MariaDB configuration
-        "mysql": {
-            "engine": "tortoise.backends.mysql",
-            "credentials": {
-                "host": "localhost",
-                "port": 3306,
-                "user": "yourusername_placeholder",
-                "password": "yourpassword_placeholder",
-                "database": "yourdatabase_placeholder",
+    TORTOISE_ORM: dict = {
+        "connections": {
+            # SQLite configuration
+            "sqlite": {
+                "engine": "tortoise.backends.sqlite",
+                "credentials": {"file_path": f"{BASE_DIR}/db.sqlite3"},  # Path to SQLite database file
+            },
+            # MySQL/MariaDB configuration
+            # Install with: tortoise-orm[asyncmy]
+            "mysql": {
+                "engine": "tortoise.backends.mysql",
+                "credentials": {
+                    "host": "112.74.101.103",  # Database host address
+                    "port": 3306,  # Database port
+                    "user": "root",  # Database username
+                    "password": "mysql_yeYZab",  # Database password
+                    "database": "vuefastapi",  # Database name
+                },
+            },
+            # PostgreSQL configuration
+            # Install with: tortoise-orm[asyncpg]
+            # "postgres": {
+            #     "engine": "tortoise.backends.asyncpg",
+            #     "credentials": {
+            #         "host": "localhost",  # Database host address
+            #         "port": 5432,  # Database port
+            #         "user": "yourusername",  # Database username
+            #         "password": "yourpassword",  # Database password
+            #         "database": "yourdatabase",  # Database name
+            #     },
+            # },
+            # MSSQL/Oracle configuration
+            # Install with: tortoise-orm[asyncodbc]
+            # "oracle": {
+            #     "engine": "tortoise.backends.asyncodbc",
+            #     "credentials": {
+            #         "host": "localhost",  # Database host address
+            #         "port": 1433,  # Database port
+            #         "user": "yourusername",  # Database username
+            #         "password": "yourpassword",  # Database password
+            #         "database": "yourdatabase",  # Database name
+            #     },
+            # },
+            # SQLServer configuration
+            # Install with: tortoise-orm[asyncodbc]
+            # "sqlserver": {
+            #     "engine": "tortoise.backends.asyncodbc",
+            #     "credentials": {
+            #         "host": "localhost",  # Database host address
+            #         "port": 1433,  # Database port
+            #         "user": "yourusername",  # Database username
+            #         "password": "yourpassword",  # Database password
+            #         "database": "yourdatabase",  # Database name
+            #     },
+            # },
+        },
+        "apps": {
+            "models": {
+                "models": ["app.models", "aerich.models"],
+                "default_connection": "mysql",
             },
         },
-    },
-    "apps": {
-        "models": {
-            "models": ["app.models.admin", "app.models.certificate", "aerich.models"], # Updated model paths
-            "default_connection": "mysql",
-        },
-    },
-    "use_tz": False,
-    "timezone": "Asia/Shanghai",
-}
+        "use_tz": False,  # Whether to use timezone-aware datetimes
+        "timezone": "Asia/Shanghai",  # Timezone setting
+    }
+    DATETIME_FORMAT: str = "%Y-%m-%d %H:%M:%S"
+
+    # LDAP Configuration Placeholders
+    LDAP_SERVER_URI: str = "ldap://your-ldap-server:389"
+    LDAP_BIND_DN: str = "cn=admin,dc=example,dc=com"
+    LDAP_BIND_PASSWORD: str = "your_bind_password"
+    LDAP_USER_SEARCH_BASE: str = "ou=users,dc=example,dc=com"
+    LDAP_USER_SEARCH_FILTER: str = "(uid=%s)"  # e.g., "(uid=%s)" or "(sAMAccountName=%s)"
+    LDAP_ATTR_USERNAME: str = "uid"  # Attribute for username
+    LDAP_ATTR_EMAIL: str = "mail"  # Attribute for email
+    LDAP_ATTR_FIRST_NAME: str = "givenName"  # Attribute for first name
+    LDAP_ATTR_LAST_NAME: str = "sn"  # Attribute for last name
+
+    # Certificate Settings
+    CRL_DISTRIBUTION_POINT_URL: str = "http://crl.example.com/ca.crl"
+
 
 settings = Settings()
-# The line "settings.TORTOISE_ORM = TORTOISE_ORM" has been removed
-# as it caused a ValueError during aerich init.
-# Application code should be updated to reference the global TORTOISE_ORM if needed.

@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional # Added Optional
 
 from app.core.crud import CRUDBase
 from app.models.admin import Api, Menu, Role
@@ -11,6 +11,9 @@ class RoleController(CRUDBase[Role, RoleCreate, RoleUpdate]):
 
     async def is_exist(self, name: str) -> bool:
         return await self.model.filter(name=name).exists()
+
+    async def get_by_name(self, name: str) -> Optional[Role]:
+        return await self.model.filter(name=name).first()
 
     async def update_roles(self, role: Role, menu_ids: List[int], api_infos: List[dict]) -> None:
         await role.menus.clear()

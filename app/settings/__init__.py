@@ -1,4 +1,3 @@
-from .config import settings, TORTOISE_ORM # Import both settings instance and global TORTOISE_ORM
+from .config import settings as settings
 
-# TORTOISE_ORM is now directly imported.
-# The line "TORTOISE_ORM = settings.TORTOISE_ORM" is removed as it caused AttributeError.
+TORTOISE_ORM = settings.TORTOISE_ORM

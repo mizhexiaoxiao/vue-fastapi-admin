@@ -49,5 +49,16 @@ class PermissionControl:
             raise HTTPException(status_code=403, detail=f"Permission denied method:{method} path:{path}")
 
 
-DependAuth = Depends(AuthControl.is_authed)
+# current_active_user will now be the callable itself, not Depends(callable)
+current_active_user = AuthControl.is_authed
+
+DependAuth = Depends(current_active_user) # Restored: DependAuth is Depends(AuthControl.is_authed)
 DependPermisson = Depends(PermissionControl.has_permission)
+
+
+async def get_current_active_superuser(user: User = Depends(current_active_user)) -> User:
+    if not user.is_superuser: # Parameter name changed to 'user' for clarity
+        raise HTTPException(
+            status_code=403, detail="The user doesn't have enough privileges"
+        )
+    return user

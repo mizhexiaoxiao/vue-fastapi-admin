@@ -1,10 +1,13 @@
-from enum import Enum # Changed StrEnum to Enum
+try:
+    from enum import StrEnum
+except ImportError:
+    from strenum import StrEnum
 from typing import Optional
 
 from pydantic import BaseModel, Field
 
 
-class MenuType(str, Enum): # Changed StrEnum to str, Enum
+class MenuType(StrEnum):
     CATALOG = "catalog"  # 目录
     MENU = "menu"  # 菜单
 
