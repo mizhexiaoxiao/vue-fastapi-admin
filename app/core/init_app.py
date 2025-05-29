@@ -162,18 +162,131 @@ async def init_menus():
             ),
         ]
         await Menu.bulk_create(children_menu)
-        await Menu.create(
-            menu_type=MenuType.MENU,
-            name="一级菜单",
-            path="/top-menu",
-            order=2,
+        
+        # --- Certificate Services (User) ---
+        cert_services_parent = await Menu.create(
+            menu_type=MenuType.CATALOG,
+            name="Certificate Services",
+            path="/certificate",
+            order=2, # After System Management
             parent_id=0,
-            icon="material-symbols:featured-play-list-outline",
+            icon="mdi:security", # Example icon
             is_hidden=False,
-            component="/top-menu",
+            component="Layout", # Standard layout component
             keepalive=False,
-            redirect="",
+            redirect="/certificate/request",
         )
+        cert_services_children = [
+            Menu(
+                menu_type=MenuType.MENU,
+                name="Request New Certificate",
+                path="request", # Relative to /certificate
+                order=1,
+                parent_id=cert_services_parent.id,
+                icon="mdi:file-document-plus-outline",
+                is_hidden=False,
+                component="/certificate/RequestForm",
+                keepalive=False,
+            ),
+            Menu(
+                menu_type=MenuType.MENU,
+                name="My Certificate Requests",
+                path="my-requests", # Relative to /certificate
+                order=2,
+                parent_id=cert_services_parent.id,
+                icon="mdi:list-box-outline",
+                is_hidden=False,
+                component="/certificate/MyRequestsList",
+                keepalive=False,
+            ),
+        ]
+        await Menu.bulk_create(cert_services_children)
+
+        # --- Tools (User) ---
+        tools_parent = await Menu.create(
+            menu_type=MenuType.CATALOG,
+            name="Tools",
+            path="/tools",
+            order=3, # After Certificate Services
+            parent_id=0,
+            icon="mdi:tools", # Example icon
+            is_hidden=False,
+            component="Layout",
+            keepalive=False,
+            redirect="/tools/pem-to-pfx",
+        )
+        tools_children = [
+            Menu(
+                menu_type=MenuType.MENU,
+                name="PEM to PFX Converter",
+                path="pem-to-pfx", # Relative to /tools
+                order=1,
+                parent_id=tools_parent.id,
+                icon="mdi:key-swap",
+                is_hidden=False,
+                component="/tools/PemToPfxConverter",
+                keepalive=False,
+            ),
+        ]
+        await Menu.bulk_create(tools_children)
+
+        # --- Certificate Admin (Admin, under System Management) ---
+        # Find "System Management" parent menu again to add "Certificate Admin" under it
+        system_management_parent = await Menu.get(path="/system", parent_id=0)
+        if system_management_parent:
+            cert_admin_parent = await Menu.create(
+                menu_type=MenuType.CATALOG, # Or MENU if it's a direct link to a combined view
+                name="Certificate Admin",
+                path="certificate-admin", # Relative to /system
+                order=7, # After existing System Management items
+                parent_id=system_management_parent.id,
+                icon="mdi:shield-key",
+                is_hidden=False,
+                component="Layout", # Or specific parent component for admin views
+                keepalive=False,
+                redirect="/system/certificate-admin/requests",
+            )
+            cert_admin_children = [
+                Menu(
+                    menu_type=MenuType.MENU,
+                    name="Manage Cert Requests",
+                    path="requests", # Relative to /system/certificate-admin
+                    order=1,
+                    parent_id=cert_admin_parent.id,
+                    icon="mdi:clipboard-list-outline",
+                    is_hidden=False,
+                    component="/admin/certificate/RequestManagement",
+                    keepalive=False,
+                ),
+                Menu(
+                    menu_type=MenuType.MENU,
+                    name="Manage CAs",
+                    path="cas", # Relative to /system/certificate-admin
+                    order=2,
+                    parent_id=cert_admin_parent.id,
+                    icon="mdi:shield-crown-outline",
+                    is_hidden=False,
+                    component="/admin/certificate/CAManagement",
+                    keepalive=False,
+                ),
+            ]
+            await Menu.bulk_create(cert_admin_children)
+        else:
+            logger.warning("System Management parent menu not found, cannot add Certificate Admin menus.")
+        
+        # Removed the old "一级菜单" example as it's not relevant
+        # await Menu.create(
+        #     menu_type=MenuType.MENU,
+        #     name="一级菜单",
+        #     path="/top-menu",
+        #     order=2, # This order might conflict if not managed carefully
+        #     parent_id=0,
+        #     icon="material-symbols:featured-play-list-outline",
+        #     is_hidden=False,
+        #     component="/top-menu",
+        #     keepalive=False,
+        #     redirect="",
+        # )
 
 
 async def init_apis():
@@ -215,10 +328,31 @@ async def init_roles():
         # 分配所有API给管理员角色
         all_apis = await Api.all()
         await admin_role.apis.add(*all_apis)
-        # 分配所有菜单给管理员和普通用户
-        all_menus = await Menu.all()
-        await admin_role.menus.add(*all_menus)
-        await user_role.menus.add(*all_menus)
+        
+        # 分配所有菜单给管理员
+        all_menus_for_admin = await Menu.all()
+        await admin_role.menus.add(*all_menus_for_admin)
+
+        # 分配特定菜单给普通用户
+        user_accessible_parent_paths = ["/certificate", "/tools"] # Paths of parent menus for users
+        user_menus = await Menu.filter(
+            Q(path__in=user_accessible_parent_paths, parent_id=0) | 
+            Q(parent__path__in=user_accessible_parent_paths) | # Children of user-accessible parents
+            Q(path="/system/user") # Profile page, assuming it's part of user management
+        ).all()
+        
+        # Also add the "System Management" parent itself if we want users to see their profile link
+        system_management_menu = await Menu.get_or_none(path="/system", parent_id=0)
+        if system_management_menu:
+            user_menus.append(system_management_menu)
+            # Add "User Management" (profile) under "System Management" for users
+            user_management_menu = await Menu.get_or_none(path="user", parent_id=system_management_menu.id)
+            if user_management_menu:
+                user_menus.append(user_management_menu)
+        
+        # Remove duplicates if any by converting to set of IDs then back to list of unique menus
+        unique_user_menus = {menu.id: menu for menu in user_menus}
+        await user_role.menus.add(*list(unique_user_menus.values()))
 
         # 为普通用户分配基本API
         basic_apis = await Api.filter(Q(method__in=["GET"]) | Q(tags="基础模块"))
