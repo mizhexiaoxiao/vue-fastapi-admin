@@ -50,4 +50,4 @@ class PermissionControl:
 
 
 DependAuth = Depends(AuthControl.is_authed)
-DependPermisson = Depends(PermissionControl.has_permission)
+DependPermission = Depends(PermissionControl.has_permission)

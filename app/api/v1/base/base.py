@@ -10,7 +10,7 @@ from app.schemas.base import Fail, Success
 from app.schemas.login import *
 from app.schemas.users import UpdatePassword
 from app.settings import settings
-from app.utils.jwt import create_access_token
+from app.utils.jwt_utils import create_access_token
 from app.utils.password import get_password_hash, verify_password
 
 router = APIRouter()
