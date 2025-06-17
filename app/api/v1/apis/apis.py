@@ -15,6 +15,7 @@ async def list_api(
     path: str = Query(None, description="API路径"),
     summary: str = Query(None, description="API简介"),
     tags: str = Query(None, description="API模块"),
+    method: str = Query(None, description="请求方式"),
 ):
     q = Q()
     if path:
@@ -23,6 +24,8 @@ async def list_api(
         q &= Q(summary__contains=summary)
     if tags:
         q &= Q(tags__contains=tags)
+    if method:
+        q &= Q(method=method)
     total, api_objs = await api_controller.list(page=page, page_size=page_size, search=q, order=["tags", "id"])
     data = [await obj.to_dict() for obj in api_objs]
     return SuccessExtra(data=data, total=total, page=page, page_size=page_size)
