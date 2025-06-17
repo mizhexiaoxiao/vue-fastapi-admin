@@ -15,8 +15,8 @@ const $table = ref(null)
 const queryItems = ref({})
 
 onMounted(() => {
-  $table.value?.handleSearch()
-})
+  // 初始化
+});
 
 function formatTimestamp(timestamp) {
   const date = new Date(timestamp)
@@ -203,6 +203,9 @@ const columns = [
     ellipsis: { tooltip: true },
   },
 ]
+
+
+
 </script>
 
 <template>

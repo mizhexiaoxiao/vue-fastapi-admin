@@ -1,6 +1,6 @@
 <script setup>
 import { h, onMounted, ref, resolveDirective, withDirectives } from 'vue'
-import { NButton, NForm, NFormItem, NInput, NPopconfirm } from 'naive-ui'
+import { NButton, NForm, NFormItem, NInput, NPopconfirm, NSelect } from 'naive-ui'
 
 import CommonPage from '@/components/page/CommonPage.vue'
 import QueryBarItem from '@/components/query-bar/QueryBarItem.vue'
@@ -9,6 +9,7 @@ import CrudTable from '@/components/table/CrudTable.vue'
 import TheIcon from '@/components/icon/TheIcon.vue'
 
 import { renderIcon } from '@/utils'
+import { HTTP_METHOD_OPTIONS } from '@/utils/constants'
 import { useCRUD } from '@/composables'
 // import { loginTypeMap, loginTypeOptions } from '@/constant/data'
 import api from '@/api'
@@ -232,6 +233,15 @@ const columns = [
             @keypress.enter="$table?.handleSearch()"
           />
         </QueryBarItem>
+        <QueryBarItem label="请求方式" :label-width="80">
+          <NSelect
+            v-model:value="queryItems.method"
+            :options="HTTP_METHOD_OPTIONS"
+            clearable
+            placeholder="请选择请求方式"
+            style="width: 180px;"
+          />
+        </QueryBarItem>
       </template>
     </CrudTable>
 
@@ -254,7 +264,11 @@ const columns = [
           <NInput v-model:value="modalForm.path" clearable placeholder="请输入API路径" />
         </NFormItem>
         <NFormItem label="请求方式" path="method">
-          <NInput v-model:value="modalForm.method" clearable placeholder="请输入请求方式" />
+          <NSelect 
+  v-model:value="modalForm.method" 
+  :options="HTTP_METHOD_OPTIONS"
+  placeholder="请选择请求方式"
+/>
         </NFormItem>
         <NFormItem label="API简介" path="summary">
           <NInput v-model:value="modalForm.summary" clearable placeholder="请输入API简介" />

@@ -12,13 +12,17 @@
       :scroll-x="scrollX"
       :row-key="(row) => row[rowKey]"
       :pagination="isPagination ? pagination : false"
+      :default-sort="props.defaultSort"
+      :sorter="sorterState"
       @update:checked-row-keys="onChecked"
       @update:page="onPageChange"
+      @update:sorter="onSorterChange"
     />
   </div>
 </template>
 
 <script setup>
+import { onMounted, nextTick } from 'vue'
 const props = defineProps({
   /**
    * @remote true: 后端分页  false： 前端分页
@@ -49,30 +53,26 @@ const props = defineProps({
   /** queryBar中的参数 */
   queryItems: {
     type: Object,
-    default() {
-      return {}
-    },
+    default: () => ({}),
   },
-  /** 补充参数（可选） */
+  /** 额外的参数 */
   extraParams: {
     type: Object,
-    default() {
-      return {}
-    },
+    default: () => ({}),
   },
-  /**
-   * ! 约定接口入参出参
-   * * 分页模式需约定分页接口入参
-   *    @page_size 分页参数：一页展示多少条，默认10
-   *    @page   分页参数：页码，默认1
-   */
+  /** 获取数据的方法 */
   getData: {
     type: Function,
     required: true,
   },
+  /** 默认排序 */
+  defaultSort: {
+    type: Object,
+    default: () => ({ columnKey: 'created_at', order: 'descend' }),
+  },
 })
 
-const emit = defineEmits(['update:queryItems', 'onChecked', 'onDataChange'])
+const emit = defineEmits(['update:queryItems', 'onChecked', 'onDataChange', 'update:sorter'])
 const loading = ref(false)
 const initQuery = { ...props.queryItems }
 const tableData = ref([])
@@ -126,9 +126,13 @@ async function handleReset() {
   for (const key in queryItems) {
     queryItems[key] = null
   }
+  // 强制重置排序状态为默认倒序
+  sorterState.value = { ...props.defaultSort };
   emit('update:queryItems', { ...queryItems, ...initQuery })
+  emit('update:sorter', sorterState.value);
   await nextTick()
   pagination.page = 1
+  // 强制触发搜索以应用排序状态
   handleQuery()
 }
 function onPageChange(currentPage) {
@@ -143,9 +147,35 @@ function onChecked(rowKeys) {
   }
 }
 
+const sorterState = ref(props.defaultSort)
+
+// 处理排序变化
+function onSorterChange(sorter) {
+  // 如果 sorter.order 为 null (清除排序) 并且是当前默认的排序列
+  if (!sorter.order && sorter.columnKey === props.defaultSort.columnKey) {
+    // 将 sorterState 恢复为默认排序状态
+    sorterState.value = { ...props.defaultSort };
+  } else {
+    sorterState.value = sorter;
+  }
+  // 发送更新后的 sorterState 给父组件
+  emit('update:sorter', sorterState.value);
+}
+
+// 组件挂载时触发初始排序
+onMounted(async () => {
+  if (props.defaultSort) {
+    emit('update:sorter', props.defaultSort);
+  }
+  // Ensure parent onMounted (which sets initial queryItems) runs before initial search
+  await nextTick(); 
+  handleQuery();
+});
+
 defineExpose({
   handleSearch,
   handleReset,
   tableData,
+  sorterState,
 })
 </script>
