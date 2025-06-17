@@ -15,8 +15,7 @@ const $table = ref(null)
 const queryItems = ref({})
 
 onMounted(() => {
-  // 设置默认倒序排序
-  queryItems.value.created_at_order = 'desc';
+  // 初始化
 });
 
 function formatTimestamp(timestamp) {
@@ -202,28 +201,10 @@ const columns = [
     align: 'center',
     width: 'auto',
     ellipsis: { tooltip: true },
-    sorter: true, // 允许排序
   },
 ]
 
-// 处理排序变化
-const handleSortChange = (sorter) => {
-  if (sorter && sorter.columnKey === 'created_at') {
-    // 三态循环：descend → ascend → descend
-// 强制两态循环（descend ↔ ascend）
-if (sorter.order === 'ascend') {
-  queryItems.value.created_at_order = 'desc';
-  sorter.order = 'descend';  // 强制保持排序状态
-} else {
-  queryItems.value.created_at_order = 'asc';
-  sorter.order = 'ascend';   // 强制保持排序状态
-}
-// 同步更新CrudTable的排序状态
-$table.value.sorterState = { ...sorter };
-    // 立即强制刷新表格
-    $table.value?.handleSearch();
-  }
-};
+
 
 </script>
 
@@ -236,8 +217,6 @@ $table.value.sorterState = { ...sorter };
       v-model:query-items="queryItems"
       :columns="columns"
       :get-data="api.getAuditLogList"
-      :default-sort="{ columnKey: 'created_at', order: 'descend' }"
-      @update:sorter="handleSortChange" 
     >
       <template #queryBar>
         <QueryBarItem label="用户名称" :label-width="70">

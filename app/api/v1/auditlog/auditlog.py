@@ -18,8 +18,7 @@ async def get_audit_log_list(
         summary: str = Query("", description="接口描述"),
         status: int = Query(None, description="状态码"),
         start_time: datetime = Query("", description="开始时间"),
-        end_time: datetime = Query("", description="结束时间"),
-        created_at_order: str = Query("desc", description="创建时间排序方式 asc/desc")
+        end_time: datetime = Query("", description="结束时间")
 ):
     q = Q()
     if username:
@@ -39,12 +38,8 @@ async def get_audit_log_list(
     elif end_time:
         q &= Q(created_at__lte=end_time)
 
-    order_by_field = "-created_at"
-    if created_at_order and created_at_order.lower() == "asc":
-        order_by_field = "created_at"
-
-    # Apply ordering before pagination
-    query = AuditLog.filter(q).order_by(order_by_field)
+    # Apply pagination without ordering
+    query = AuditLog.filter(q)
 
     audit_log_objs = await query.offset((page - 1) * page_size).limit(page_size)
     total = await AuditLog.filter(q).count()
