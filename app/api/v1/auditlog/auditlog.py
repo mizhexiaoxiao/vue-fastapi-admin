@@ -17,6 +17,7 @@ async def get_audit_log_list(
     module: str = Query("", description="功能模块"),
     method: str = Query("", description="请求方法"),
     summary: str = Query("", description="接口描述"),
+    path: str = Query("", description="请求路径"),
     status: int = Query(None, description="状态码"),
     start_time: datetime = Query("", description="开始时间"),
     end_time: datetime = Query("", description="结束时间"),
@@ -30,6 +31,8 @@ async def get_audit_log_list(
         q &= Q(method__icontains=method)
     if summary:
         q &= Q(summary__icontains=summary)
+    if path:
+        q &= Q(path__icontains=path)
     if status:
         q &= Q(status=status)
     if start_time and end_time:
