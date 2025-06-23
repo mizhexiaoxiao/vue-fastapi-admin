@@ -87,7 +87,7 @@ async function handleLogin() {
   }
   try {
     loading.value = true
-    $message.loading(t('views.login.message_login_success'))
+    $message.loading(t('views.login.message_verifying'))
     const res = await api.login({ username, password: password.toString() })
     $message.success(t('views.login.message_login_success'))
     setToken(res.data.access_token)
