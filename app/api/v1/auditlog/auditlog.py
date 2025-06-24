@@ -1,3 +1,4 @@
+from datetime import datetime
 from fastapi import APIRouter, Query
 from tortoise.expressions import Q
 
@@ -17,8 +18,8 @@ async def get_audit_log_list(
     method: str = Query("", description="请求方法"),
     summary: str = Query("", description="接口描述"),
     status: int = Query(None, description="状态码"),
-    start_time: str = Query("", description="开始时间"),
-    end_time: str = Query("", description="结束时间"),
+    start_time: datetime = Query("", description="开始时间"),
+    end_time: datetime = Query("", description="结束时间"),
 ):
     q = Q()
     if username:
