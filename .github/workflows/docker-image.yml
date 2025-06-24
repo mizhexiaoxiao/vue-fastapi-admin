@@ -31,6 +31,6 @@ jobs:
       with:
         context: .
         file: ./Dockerfile
-        platforms: linux/arm64,linux/amd64
+        platforms: linux/amd64
         tags: somalia0923/vue-fastapi-admin:latest
         push: true
