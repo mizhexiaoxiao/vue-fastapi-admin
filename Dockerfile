@@ -2,7 +2,7 @@ FROM node:18.12.0-alpine3.16 AS web
 
 WORKDIR /opt/vue-fastapi-admin
 COPY /web ./web
-RUN cd /opt/vue-fastapi-admin/web && npm i --registry=https://registry.npmmirror.com && npm run build
+RUN cd /opt/vue-fastapi-admin/web && npm i && npm run build
 
 
 FROM python:3.12.10-bullseye
